@@ -1,0 +1,76 @@
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+
+    background: linear-gradient(135deg, #4B0C74, #1E1C4A);
+
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin_container {
+    display: flex;
+    align-content: center;
+    justify-content: left;
+    width: 980px;
+    height: 700px;
+    border-radius: 10px;
+    background-color: #182229;
+}
+
+.admin_container_two {
+    display: flex;
+    flex-direction: row;
+    margin-left: 35px;
+    margin-bottom: 0px;
+}
+
+.main_head {
+    letter-spacing: 2px;
+    color: white;
+    font-size: 30pt;
+    margin-top: 40px;
+    margin-left: 35px;
+    margin-bottom: -15px;
+}
+
+.sub_head {
+    letter-spacing: 2px;
+    color: white;
+    font-weight: 100;
+    margin-left: 35px;
+    font-size: 20pt;
+    margin-bottom: -5px;
+}
+
+.body {
+    border-radius: 5px;
+    border: 0.5pt solid white;
+    height: 18px;
+    width: 67px;
+    padding: 10px;
+    color: white;
+    font-weight: 100;
+    margin-right: 20px;
+}
+
+.body_two {
+    border-radius: 5px;
+    border: 0.5pt solid white;
+    height: 18px;
+    width: 170px;
+    padding: 10px;
+    color: white;
+    font-weight: 100;
+    margin-right: 20px;
+}
+
+.admin_card {
+    margin-left: 35px;
+    width: 830px;
+    height: 200px;
+    background-color: #0E1922;
+    border-radius: 10px;
+}
