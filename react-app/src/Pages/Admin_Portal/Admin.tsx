@@ -14,7 +14,13 @@ function Admin() {
                 </div>
                 
                 <div className={styles.admin_card}>
-
+                    <div className={styles.admin_container_three}>
+                        <p className={styles.paragraph}>Name</p>
+                        <p className={styles.paragraph_two}>Join Date</p>
+                        <p className={styles.paragraph_three}>User ID</p>
+                        <p className={styles.paragraph_four}>Status</p>
+                        <p className={styles.paragraph_five}>Action</p>
+                    </div>
                 </div>
             </div> 
 

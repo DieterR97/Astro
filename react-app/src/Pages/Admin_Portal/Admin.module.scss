@@ -68,9 +68,57 @@ body {
 }
 
 .admin_card {
+    padding: 0;
     margin-left: 35px;
-    width: 830px;
+    width: 850px;
     height: 200px;
     background-color: #0E1922;
     border-radius: 10px;
+}
+
+.admin_container_three {
+    height: 45px;
+    padding: 1px;
+    display: flex;
+    flex-direction: row;
+    margin-left: 20px;
+}
+
+.paragraph {
+    font-size: 13pt;
+    font-weight: lighter;
+    color: white;
+    margin-right: 190px;
+    margin-top: 10px;
+}
+
+.paragraph_two {
+    font-size: 13pt;
+    font-weight: lighter;
+    color: white;
+    margin-right: 120px;
+    margin-top: 10px;
+}
+
+.paragraph_three {
+    font-size: 13pt;
+    font-weight: lighter;
+    color: white;
+    margin-right: 90px;
+    margin-top: 10px;
+}
+
+.paragraph_four {
+    font-size: 13pt;
+    font-weight: lighter;
+    color: white;
+    margin-right: 90px;
+    margin-top: 10px;
+}
+
+.paragraph_five {
+    font-size: 13pt;
+    font-weight: lighter;
+    color: white;
+    margin-top: 10px;
 }
