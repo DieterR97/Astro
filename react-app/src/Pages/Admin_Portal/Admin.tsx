@@ -21,6 +21,8 @@ function Admin() {
                         <p className={styles.paragraph_four}>Status</p>
                         <p className={styles.paragraph_five}>Action</p>
                     </div>
+
+
                 </div>
             </div> 
 

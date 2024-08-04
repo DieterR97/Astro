@@ -77,31 +77,33 @@ body {
 }
 
 .admin_container_three {
-    height: 45px;
+    height: 40px;
     padding: 1px;
     display: flex;
     flex-direction: row;
     margin-left: 20px;
+    margin-right: 10px;
+    border-bottom: 2px solid #303030;
 }
 
 .paragraph {
-    font-size: 13pt;
+    font-size: 15pt;
     font-weight: lighter;
     color: white;
-    margin-right: 190px;
+    margin-right: 170px;
     margin-top: 10px;
 }
 
 .paragraph_two {
-    font-size: 13pt;
+    font-size: 15pt;
     font-weight: lighter;
     color: white;
-    margin-right: 120px;
+    margin-right: 100px;
     margin-top: 10px;
 }
 
 .paragraph_three {
-    font-size: 13pt;
+    font-size: 15pt;
     font-weight: lighter;
     color: white;
     margin-right: 90px;
@@ -109,7 +111,7 @@ body {
 }
 
 .paragraph_four {
-    font-size: 13pt;
+    font-size: 15pt;
     font-weight: lighter;
     color: white;
     margin-right: 90px;
@@ -117,7 +119,7 @@ body {
 }
 
 .paragraph_five {
-    font-size: 13pt;
+    font-size: 15pt;
     font-weight: lighter;
     color: white;
     margin-top: 10px;
