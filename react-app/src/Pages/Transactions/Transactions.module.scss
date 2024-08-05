@@ -1,0 +1,274 @@
+
+.mainContainer {
+    background-color: #fff;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.sideNaveContainer {
+    padding: 24px;
+    background-color: #fff;
+    min-width: 264px;
+    min-height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+    gap: 24px;
+    border-right: 1px solid #E5E5E6;
+    box-shadow:
+        2.8px 2.8px 2.2px rgba(0, 0, 0, 0.02),
+        6.7px 6.7px 5.3px rgba(0, 0, 0, 0.028),
+        12.5px 12.5px 10px rgba(0, 0, 0, 0.035),
+        22.3px 22.3px 17.9px rgba(0, 0, 0, 0.042),
+        41.8px 41.8px 33.4px rgba(0, 0, 0, 0.05),
+        100px 100px 80px rgba(0, 0, 0, 0.07);
+}
+
+.sidenavLogoCon {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.logoFill {
+    background-color: #7E4AC0;
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+}
+
+.sidenaveLogoTitle {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.sidenavOptionCon {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.sidenavOptionBtn {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+
+.dividerLine {
+    height: 2px;
+    width: 90%;
+    border-radius: 2px;
+    background-color: #000;
+    opacity: 0.5;
+}
+
+.dividerLine02 {
+    height: 2px;
+    width: 100%;
+    border-radius: 2px;
+    background-color: #000;
+    opacity: 0.5;
+}
+
+.subtitle {
+    font-size: 10px;
+    font-weight: 400;
+    opacity: .5;
+}
+
+.optionFont {
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.loggedUserBlock {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.loggedUserTextBlock h1 {
+    font-size: 16px;
+    font-weight: 400;
+}
+.loggedUserTextBlock p {
+    font-size: 12px;
+    margin-top: -10px;
+    color: #909498;
+}
+
+.contentContainer {
+    background-color: #FCFCFD;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 100%;
+}
+
+.filterContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filterBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.filterOption {
+    border: 1px solid #909498;
+    padding: 0px 20px 0px 20px;
+    cursor: pointer;
+    transition: all ease-in-out .1s;
+}
+
+.filterOption01 {
+    border: 1px solid #909498;
+    padding: 0px 20px 0px 20px;
+    cursor: pointer;
+    border-radius: 10px 0px 0px 10px;
+    transition: all ease-in-out .1s;
+}
+
+.filterOption04 {
+    border: 1px solid #909498;
+    padding: 0px 20px 0px 20px;
+    cursor: pointer;
+    border-radius: 0px 10px 10px 0px;
+    transition: all ease-in-out .1s;
+}
+
+.filterOption:hover {
+    background-color: #909498;
+    transition: all ease-in-out .1s;
+}
+
+.filterOption01:hover {
+    background-color: #909498;
+    transition: all ease-in-out .1s;
+}
+
+.filterOption04:hover {
+    background-color: #909498;
+    transition: all ease-in-out .1s;
+}
+
+.filterOptionText {
+    font-size: 12px;
+    font-weight: 600px;
+}
+
+.secondaryFilterCon {
+    display: flex;
+    gap: 10px;
+}
+
+.filterSearchInput {
+    border: 1px solid #E5E5E6;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #FCFCFD;
+}
+
+.filterButton {
+    background-color: #FCFCFD;
+    border: 1px solid #E5E5E6;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all ease-in-out .1s;
+}
+
+.filterButton:hover {
+    background-color: #7E4AC0;
+    transition: all ease-in-out .1s;
+    color: #fff;
+}
+
+.transactionTableMianCon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    padding: 0px 24px 10px 24px;
+    border-radius: 10px;
+    border: 2px solid #E5E5E6;
+    gap: 10px;
+    // width: 100%;
+}
+
+.tableTopRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.contentRowTile {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 40px;
+    // width: 1072px;
+}
+
+.nameDataBlock {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    // background-color: #7E4AC0;
+}
+
+.userProfilePlacholder {
+    border-radius: 50px;
+    width: 30px;
+    height: 30px;
+    background-color: #7E4AC0;
+}
+
+.userNameData {
+    display: flex;
+    flex-direction: column;
+    height: 50px;
+    // background-color: #7E4AC0;
+}
+
+.dataUsername {
+    font-size: 16px;
+}
+
+.dataIdNumber {
+    line-height: 0px;
+    font-size: 12px;
+    color: #909498;
+    position: relative;
+    top: -25px;
+}
+
+.timeData {
+    line-height: 0px;
+    font-size: 12px;
+    color: #909498;
+    position: relative;
+    top: -10px;
+}
+
+.dateData {
+    font-size: 16px;
+}

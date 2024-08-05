@@ -15,10 +15,10 @@ function App() {
       <Routes>
         {/* <Route path="/" element={<Authentication />}></Route> */}
         <Route path="/" element={<Admin />}></Route>
-        {/* <Route path="/Account" element={<Account />}></Route>
-        <Route path="/Purchasing" element={<Purchasing />}></Route>
+        <Route path="/Account" element={<Account />}></Route>
+        {/* <Route path="/Purchasing" element={<Purchasing />}></Route> */}
         <Route path="/Transactions" element={<Transactions />}></Route>
-        <Route path="/Withdrawals" element={<Withdrawals />}></Route> */}
+        {/* <Route path="/Withdrawals" element={<Withdrawals />}></Route> */}
       </Routes>
     </Router>
   );
