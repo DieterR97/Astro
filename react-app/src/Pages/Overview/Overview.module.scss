@@ -1,9 +1,220 @@
+:root {
+  --fontFamily: "Inter-Regular", Helvetica;
+
+  --positiveColor: #0b9457;
+  --negative: #fc684e;
+  --white: #fff;
+  --black: #000;
+  --primaryColor: #7e4ac0;
+  --grayedTextColor: #909498;
+  --secondaryColor: #0E1922;
+
+  --fontSize-base: 16px;
+  --fontSize-sm: 12px;
+  --fontSize-md: 20px;
+  --fontSize-lg: 24px;
+  --fontSize-xl: 32px;
+
+  --fontWeight-bold: 800;
+  --fontWeight-semibold: 600;
+  --fontWeight-medium: 500;
+  --fontWeight-regular: 400;
+  --fontWeight-light: 300;
+  --fontWeight-thin: 100;
+
+  --lineHeight-base: 1.5;
+  --lineHeight-sm: 1.25;
+  --lineHeight-lg: 1.75;
+}
+
 body {
-    background: #182229;
+  background: #182229;
 }
 .overview {
+  display: flex;
+  flex-direction: column;
+  padding-top: 40px;
+  padding-left: 30px;
+  color: var(--white);
+}
+
+.text-title {
+  color: white;
+  font-size: var(--fontSize-xl);
+  font-weight: var(--fontWeight-semibold);
+  letter-spacing: 1px;
+  margin-top: 20px;
+}
+
+.filterContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filterBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.filterOption {
+  border: 1px solid var(--white);
+  padding: 0px 20px 0px 20px;
+  cursor: pointer;
+  transition: all ease-in-out 0.1s;
+}
+
+.filterOption01 {
+  border: 1px solid var(--white);
+  padding: 0px 20px 0px 20px;
+  cursor: pointer;
+  border-radius: 5px 0px 0px 5px;
+  transition: all ease-in-out 0.1s;
+}
+
+.filterOption04 {
+  border: 1px solid var(--white);
+  padding: 0px 20px 0px 20px;
+  cursor: pointer;
+  border-radius: 0px 5px 5px 0px;
+  transition: all ease-in-out 0.1s;
+}
+
+.filterOption:hover {
+  background-color: #909498;
+  transition: all ease-in-out 0.1s;
+}
+
+.filterOption01:hover {
+  background-color: #909498;
+  transition: all ease-in-out 0.1s;
+}
+
+.filterOption04:hover {
+  background-color: #909498;
+  transition: all ease-in-out 0.1s;
+}
+
+.filterOptionText {
+  font-size: 12px;
+  font-weight: 600px;
+  line-height: 50%;
+}
+
+.secondaryFilterCon {
+  display: flex;
+  gap: 10px;
+}
+
+.searchFieldCon {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  border: 1px solid #e5e5e6;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.searchFieldCon img {
+  width: 16px;
+}
+
+.filterSearchInput {
+  // border: 1px solid #E5E5E6;
+  border-radius: 5px;
+  background-color: #fcfcfd;
+  outline: none;
+  border: none;
+}
+
+.filterButton {
+  background-color: #fcfcfd;
+  border: 1px solid #e5e5e6;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all ease-in-out 0.1s;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+
+.filterButton img {
+  width: 16px;
+}
+
+.filterButton:hover {
+  background-color: #dadada;
+  transition: all ease-in-out 0.1s;
+  // color: #fff;
+}
+
+.statsContainer{
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.portfolio{
     display: flex;
     flex-direction: column;
-    padding-top: 40px;
-    padding-left: 30px;
+    height: 345px;
+    background-color: var(--secondaryColor);
+    padding: 10px 20px 10px 20px;
+    border-radius: 10px;
+
+    .title{
+        color: white;
+        font-size: var(--fontSize-md);
+        font-weight: var(--fontWeight-semibold);
+        letter-spacing: 1px;
+        margin-top: 20px;
+    }
+
+    .value{
+        color: white;
+        font-size: var(--fontSize-xl);
+        font-weight: var(--fontWeight-semibold);
+        letter-spacing: 1px;
+        margin-top: 10px;
+    }
+
+    
 }
+
+.graph{
+    width: 685px;
+    margin-top: 10px;
+}
+
+.assets{
+    display: flex;
+    flex-direction: column;
+    height: 345px;
+    background-color: var(--secondaryColor);
+    padding: 10px 20px 10px 20px;
+    border-radius: 10px;
+
+    .title{
+        color: white;
+        font-size: var(--fontSize-md);
+        font-weight: var(--fontWeight-semibold);
+        letter-spacing: 1px;
+        margin-top: 20px;
+    }
+}
+
+.assetsList{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+
