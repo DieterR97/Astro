@@ -10,6 +10,14 @@ body {
     // align-items: center;
 }
 
+.adminMainContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+
 .admin_container {
     display: flex;
     align-content: center;
