@@ -15,66 +15,67 @@ function Transactions() {
     return (
         <div className={styles.mainContainer}>
 
-            {/* Side nav bar Start */}
+            {/* 
+            
             <div className={styles.sideNaveContainer}>
-                {/* top section of the side nav bar */}
+                {/* top section of the side nav bar 
                 <div className={styles.sideNavTopCon}>
-                    {/* Logo Container */}
+                    {/* Logo Container 
                     <div className={styles.sidenavLogoCon}>
-                        {/* logo */}
+                        {/* logo 
                         <div className={styles.logoFill}>
                             <img src={logo} alt="" />
                         </div>
-                        {/* title */}
+                        {/* title 
                         <h3 className={styles.sidenaveLogoTitle}>Astro</h3>
                     </div>
-                    {/* divider Line */}
+                    {/* divider Line 
                     <div className={styles.dividerLine}></div>
 
                     <p className={styles.subtitle}>MAIN</p>
 
-                    {/* Side Nav Options */}
+                    {/* Side Nav Options 
                     <div className={styles.sidenavOptionCon}>
                         <div className={styles.sidenavOptionBtn}>
-                            {/* icon */}
+                            {/* icon 
                             <img src={homeIcon} alt="" />
-                            {/* title */}
+                            {/* title 
                             <h3 className={styles.optionFont}>Overview</h3>
                         </div>
                         <div className={styles.sidenavOptionBtn}>
-                            {/* icon */}
+                            {/* icon 
                             <img src={coinsIcon} alt="coinsIcon" />
-                            {/* title */}
+                            {/* title 
                             <h3 className={styles.optionFont}>Trade</h3>
                         </div>
                         <div className={styles.sidenavOptionBtn}>
-                            {/* icon */}
+                            {/* icon 
                             <img src={layersIcon} alt="layersIcon" />
-                            {/* title */}
+                            {/* title 
                             <h3 className={styles.optionFont}>Transactions</h3>
                         </div>
                         <div className={styles.sidenavOptionBtn}>
-                            {/* icon */}
+                            {/* icon 
                             <img src={adminIcon} alt="adminIcon" />
-                            {/* title */}
+                            {/* title 
                             <h3 className={styles.optionFont}>Admin</h3>
                         </div>
                     </div>
                 </div>
 
                 <div className={styles.sideNavBottomCon}>
-                    {/* divider Line */}
+                    {/* divider Line 
                     <div className={styles.dividerLine}></div>
-                    {/* currently logged user data block */}
+                    {/* currently logged user data block 
                     <div className={styles.loggedUserCon}>
                         <div className={styles.loggedUserBlock}>
-                            {/* logo */}
+                            {/* logo 
                             <div className={styles.logoFill}></div>
                             <div className={styles.loggedUserTextBlock}>
                                 <h1>Name Surname</h1>
                                 <p>username@example.co.za</p>
                             </div>
-                            {/* the menu Icon */}
+                            {/* the menu Icon 
                             <div>
                                 <button className={styles.loggedUserMenuBtn}>
                                     <img src={verticalDotMenu} alt="MenuIcon" />
@@ -83,8 +84,10 @@ function Transactions() {
                         </div>
                     </div>
                 </div>
-            </div>
-            {/* side nav bar END */}
+            </div> 
+            
+            */}
+
 
             {/* The Content Container */}
             <div className={styles.contentContainer}>
