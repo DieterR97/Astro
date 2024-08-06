@@ -51,6 +51,7 @@ body {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 20px;
 }
 
 .filterBar {
@@ -189,8 +190,10 @@ body {
 }
 
 .graph{
-    width: 685px;
+    max-width: 500px;
+    max-width: 400px;
     margin-top: 10px;
+    width: 100%;
 }
 
 .assets{

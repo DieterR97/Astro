@@ -39,7 +39,7 @@ const Navbar = () => {
           <div
             className={`${styles["text-wrapper-tab"]} ${isActive("/purchasing") ? styles.active : ""}`}
           >
-            Purchasing
+            Trade
           </div>
         </div>
         <div className={styles.tab} onClick={() => navigate("/transactions")}>
