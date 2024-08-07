@@ -35,6 +35,7 @@ body {
   flex-direction: column;
   padding-top: 40px;
   padding-left: 30px;
+  padding-bottom: 40px;
   color: var(--white);
 }
 
@@ -108,14 +109,18 @@ body {
 
 .secondaryFilterCon {
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   gap: 10px;
+  width: 710px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .searchFieldCon {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
   border: 1px solid #e5e5e6;
   padding: 5px;
   border-radius: 5px;
@@ -128,13 +133,12 @@ body {
 .filterSearchInput {
   // border: 1px solid #E5E5E6;
   border-radius: 5px;
-  background-color: #fcfcfd;
   outline: none;
   border: none;
+  background-color: transparent;
 }
 
 .filterButton {
-  background-color: #fcfcfd;
   border: 1px solid #e5e5e6;
   border-radius: 5px;
   cursor: pointer;
@@ -144,6 +148,8 @@ body {
   justify-content: center;
   align-items: center;
   gap: 6px;
+  background-color: transparent;
+  color: var(--white);
 }
 
 .filterButton img {
@@ -151,7 +157,6 @@ body {
 }
 
 .filterButton:hover {
-  background-color: #dadada;
   transition: all ease-in-out 0.1s;
   // color: #fff;
 }
@@ -218,6 +223,56 @@ body {
     flex-direction: row;
     gap: 10px;
     margin-top: 10px;
+}
+
+// <div className={styles.assetTableContainer}>
+//         <div className={styles["titles"]}>
+//           <div className={styles["title"]}>Asset</div>
+//           <div className={styles["title"]}>Price</div>
+//           <div className={styles["title"]}>Balance</div>
+//           <div className={styles["title"]}>Asset Proportion</div>
+//         </div>
+
+//         {/* Table Rows */}
+//         <div className={styles["rows"]}>
+//           <AssetRow  image="" name="Coin" price="R203.00" balance="R203.00" proportion="70%" abreviation="CWN"/>
+//         </div>
+//       </div>
+
+.assetTableContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--secondaryColor);
+  padding: 10px 20px 10px 20px;
+  border-radius: 10px;
+  width: 710px;
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    background-color: var(--grayedTextColor);
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .titles {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-right: 110px;
+  }
+
+  .title {
+    color: white;
+    font-size: var(--fontSize-base);
+  }
+
+  .rows {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 
 

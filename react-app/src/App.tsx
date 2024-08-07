@@ -25,7 +25,7 @@ function NavRoutes() {
   return (
     <>
       {showNavbar && <Navbar />}
-      <div style={{ flex: 1 }}>
+      <div style={{ flex: 1, marginLeft: '264px' }}>
         <Routes>
           <Route path="/" element={<Authentication />}></Route>
           <Route path="/admin" element={<Admin />}></Route>

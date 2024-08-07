@@ -4,6 +4,7 @@ import ShipIcon from "../../../assets/icons/ShipIcon.svg";
 import StatsIcon from "../../../assets/icons/StatsIcon.svg";
 import StackIcon from "../../../assets/icons/StackIcon.svg";
 import LevelIcon from "../../../assets/icons/LevelIcon.svg";
+import MoreIcon from "../../../assets/icons/MoreIcon.svg";
 
 export const Banner = () => {
   return (
@@ -73,6 +74,44 @@ export const Asset = () => {
       <div className={styles["button"]}>
         <div className={styles["details"]}>View Details</div>
       </div>
+    </div>
+  );
+};
+
+type AssetRowProps = {
+  image: string;
+  name: string;
+  price: string;
+  balance: string;
+  proportion: string;
+  abreviation: string;
+};
+
+export const AssetRow = ({
+  image,
+  name,
+  price,
+  balance,
+  proportion,
+  abreviation,
+}: AssetRowProps) => {
+  return (
+    <div className={styles.assetRow}>
+      <div className={styles["imageContainer"]}>
+        <img className={styles["image"]} src={image} alt="" />
+        <div className={styles["nameContainer"]}>
+          <div className={styles["name"]}> {name}</div>
+          <div className={styles["abreviation"]}> {abreviation}</div>
+        </div>
+      </div>
+
+      <div className={styles["price"]}> {price}</div>
+      <div className={styles["balance"]}> {balance}</div>
+      <div className={styles["proportion-container"]}>
+        <div className={styles["proportion-bar"]}></div>
+        <div className={styles["proportion"]}> {proportion}</div>
+      </div>
+      <img className={styles["vector"]} src={MoreIcon} alt=""></img>
     </div>
   );
 };

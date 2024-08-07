@@ -1,9 +1,11 @@
 import React from "react";
 import { Banner } from "./Components/OverviewComponents";
-import { Asset} from "./Components/OverviewComponents";
+import { Asset } from "./Components/OverviewComponents";
 import styles from "./Overview.module.scss";
 import FilterIcon from "../../assets/icons/FilterIcon.svg";
 import SearchIcon from "../../assets/icons/SearchIcon.svg";
+import TempImage from "../../assets/login/logo.png"
+import { AssetRow } from "./Components/OverviewComponents";
 
 const Overview = () => {
   return (
@@ -27,23 +29,6 @@ const Overview = () => {
             <p className={styles.filterOptionText}>24 Hours</p>
           </div>
         </div>
-
-        {/* <div className={styles.secondaryFilterCon}>
-         
-          <button className={styles.filterButton}>
-            <img src={FilterIcon} alt="filter" />
-            Filter
-          </button>
-          
-          <div className={styles.searchFieldCon}>
-            <img src={SearchIcon} alt="searchIcon" />
-            <input
-              className={styles.filterSearchInput}
-              type="text"
-              placeholder="Search"
-            />
-          </div>
-        </div> */}
       </div>
 
       {/* Stats */}
@@ -62,6 +47,46 @@ const Overview = () => {
           </div>
         </div>
       </div>
+
+      {/* Asset Table */}
+      <div className={styles.assetTable}>
+        {/* Table FilterSearch */}
+          <div className={styles.secondaryFilterCon}>
+            <button className={styles.filterButton}>
+              <img src={FilterIcon} alt="filter" />
+              Filter
+            </button>
+
+            <div className={styles.searchFieldCon}>
+              <img src={SearchIcon} alt={SearchIcon} />
+              <input
+                className={styles.filterSearchInput}
+                type="text"
+                placeholder="Search"
+              />
+            </div>
+          </div>
+        </div>
+
+      {/* Table */}
+      <div className={styles.assetTableContainer}>
+        <div className={styles["titles"]}>
+          <div className={styles["title"]}>Asset</div>
+          <div className={styles["title"]}>Price</div>
+          <div className={styles["title"]}>Balance</div>
+          <div className={styles["title"]}>Asset Proportion</div>
+        </div>
+
+        <div className={styles["divider"]}></div>
+
+        {/* Table Rows */}
+        <div className={styles["rows"]}>
+          <AssetRow  image={TempImage} name="Coin" price="R203.00" balance="R203.00" proportion="70%" abreviation="CWN"/>
+          <AssetRow  image={TempImage} name="Coin" price="R203.00" balance="R203.00" proportion="70%" abreviation="CWN"/>
+          <AssetRow  image={TempImage} name="Coin" price="R203.00" balance="R203.00" proportion="70%" abreviation="CWN"/>
+        </div>
+      </div>
+
     </div>
   );
 };

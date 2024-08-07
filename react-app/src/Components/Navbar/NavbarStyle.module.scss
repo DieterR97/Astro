@@ -12,8 +12,7 @@
   display: inline-flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 10px;
-  position: relative;
+  position: fixed;
   height: 100vh;
   padding-bottom: 0px;
   padding-top: 0px;
@@ -24,9 +23,8 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
-  padding: 30px 19px 55px 24px;
+  padding: 24px 20px 24px 24px;
   position: relative;
-  width: 264px;
 }
 
 .frame {
@@ -143,7 +141,7 @@
 }
 
 .active {
-  color: var(--primaryColor); // Change this to your desired highlight color
+  color: var(--primaryColor); 
 }
 
 .user-info {
@@ -152,9 +150,8 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
-  padding: 41px 19px 55px 24px;
+  padding: 0px 19px 55px 20px;
   position: relative;
-  width: 264px;
 }
 
 .vector-2 {

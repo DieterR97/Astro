@@ -33,6 +33,7 @@
   height: 190px;
   max-width: 80%;
   border-radius: 10px;
+  min-width: 700px;
 }
 
 .text-wrapper-1 {
@@ -208,5 +209,71 @@
     position: absolute;
     text-align: center;
     top: 0;
+  }
+}
+
+.assetRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent;
+  color: var(--white);
+
+  .image {
+    width: 31px;
+    height: 31px;
+    border-radius: 50%;
+    background-color: #7e4abf;
+  }
+
+  .nameContainer {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .imageContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .name {
+    color: var(--white);
+  }
+
+  .abreviation {
+    color: var(--grayedTextColor);
+  }
+
+  .price {
+    color: var(--white);
+  }
+
+  .balance {
+    color: var(--white);
+  }
+
+  .proportion-container {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .proportion-bar{
+    height: 5px;
+    width: 100px;
+    border-radius: 5px;
+    background-color: var(--primaryColor);
+  }
+
+  .proportion {
+    font-size: var(--fontSize-sm);
+  }
+
+  .vector {
+    height: 24px;
+    width: 24px;
   }
 }
