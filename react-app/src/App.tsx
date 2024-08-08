@@ -27,10 +27,10 @@ function NavRoutes() {
       {showNavbar && <Navbar />}
       <div style={{ flex: 1, marginLeft: '264px' }}>
         <Routes>
-          <Route path="/A" element={<Authentication />}></Route>
+          <Route path="/" element={<Authentication />}></Route>
           <Route path="/admin" element={<Admin />}></Route>
           <Route path="/overview" element={<Overview />}></Route>
-          <Route path="/" element={<Purchasing />}></Route>
+          <Route path="/purchasing" element={<Purchasing />}></Route>
           <Route path="/transactions" element={<Transactions />}></Route>
           <Route path="/withdrawals" element={<Withdrawals />}></Route>
         </Routes>
