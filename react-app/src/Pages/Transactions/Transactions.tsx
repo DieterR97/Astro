@@ -3,20 +3,22 @@ import styles from './Transactions.module.scss';
 // logo
 import logo from '../Assets/logo.png'
 // icons
-import filterIcon from '../Assets/adjustments-horizontal.png'
-import searchIcon from '../Assets/search.png'
 import verticalDotMenu from '../Assets/dots-vertical.png'
 import coinsIcon from '../Assets/coins.png'
 import homeIcon from '../Assets/home.png'
 import adminIcon from '../Assets/robot.png'
 import layersIcon from '../Assets/layers-subtract.png'
+// Icons SVG
+import VerticalDots from '../../assets/icons/more-vertical-stroke-rounded.svg'
+import FilterIcon from '../../assets/icons/FilterIcon.svg'
+import SearchIcon from '../../assets/icons/SearchIcon.svg'
+
 
 function Transactions() {
     return (
         <div className={styles.mainContainer}>
 
             {/* 
-            
             <div className={styles.sideNaveContainer}>
                 {/* top section of the side nav bar 
                 <div className={styles.sideNavTopCon}>
@@ -85,7 +87,6 @@ function Transactions() {
                     </div>
                 </div>
             </div> 
-            
             */}
 
 
@@ -113,12 +114,12 @@ function Transactions() {
                     <div className={styles.secondaryFilterCon}>
                         {/* filter button */}
                         <button className={styles.filterButton}>
-                            <img src={filterIcon} alt="filter" />
+                            <img src={FilterIcon} alt="filter" />
                             Filter
                         </button>
                         {/* search field */}
                         <div className={styles.searchFieldCon}>
-                            <img src={searchIcon} alt="searchIcon" />
+                            <img src={SearchIcon} alt="searchIcon" />
                             <input className={styles.filterSearchInput} type="text" placeholder='Search' />
                         </div>
                     </div>
@@ -146,18 +147,18 @@ function Transactions() {
                                 <div className={styles.userProfilePlacholder}></div>
                                 {/* User name data and number data block */}
                                 <div className={styles.userNameData}>
-                                    <p className={styles.dataUsername}>Name Surname</p>
+                                    <p className={styles.tableText01}>Name Surname</p>
                                     <p className={styles.dataIdNumber}>302442</p>
                                 </div>
                             </div>
                             {/* Date data block */}
                             <div className={styles.dateDataBlock}>
-                                <p className={styles.dateData}>11 july 2024</p>
+                                <p className={styles.tableText01}>11 july 2024</p>
                                 <p className={styles.timeData}>At 11:00 pm</p>
                             </div>
                             {/* Amount Data Block */}
                             <div className={styles.amountDataBlock}>
-                                <p>R850.99</p>
+                                <p className={styles.tableText01}>R850.99</p>
                             </div>
                             {/* invoice Id Data Block */}
                             <div className={styles.invoiceDataBlock}>
@@ -170,7 +171,7 @@ function Transactions() {
                             {/* Action data block */}
                             <div className={styles.actionDataBlock}>
                                 <button className={styles.detailsBtn}>Details
-                                    <img src={verticalDotMenu} alt="vertical" />
+                                    <img src={VerticalDots} alt="vertical" />
                                 </button>
                             </div>
                         </div>
@@ -182,18 +183,18 @@ function Transactions() {
                                 <div className={styles.userProfilePlacholder}></div>
                                 {/* User name data and number data block */}
                                 <div className={styles.userNameData}>
-                                    <p className={styles.dataUsername}>Name Surname</p>
+                                    <p className={styles.tableText01}>Name Surname</p>
                                     <p className={styles.dataIdNumber}>302442</p>
                                 </div>
                             </div>
                             {/* Date data block */}
                             <div className={styles.dateDataBlock}>
-                                <p className={styles.dateData}>11 july 2024</p>
+                                <p className={styles.tableText01}>11 july 2024</p>
                                 <p className={styles.timeData}>At 11:00 pm</p>
                             </div>
                             {/* Amount Data Block */}
                             <div className={styles.amountDataBlock}>
-                                <p>R850.99</p>
+                                <p className={styles.tableText01}>R850.99</p>
                             </div>
                             {/* invoice Id Data Block */}
                             <div className={styles.invoiceDataBlock}>
@@ -201,12 +202,48 @@ function Transactions() {
                             </div>
                             {/* states data block */}
                             <div className={styles.statusDataBlock}>
-                                <p className={styles.negativeText}>Transfer</p>
+                                <p className={styles.positiveText}>Recieved</p>
                             </div>
                             {/* Action data block */}
                             <div className={styles.actionDataBlock}>
                                 <button className={styles.detailsBtn}>Details
-                                    <img src={verticalDotMenu} alt="vertical" />
+                                    <img src={VerticalDots} alt="vertical" />
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* row of user data */}
+                        <div className={styles.contentRowTile}>
+                            {/* name data block */}
+                            <div className={styles.nameDataBlock}>
+                                <div className={styles.userProfilePlacholder}></div>
+                                {/* User name data and number data block */}
+                                <div className={styles.userNameData}>
+                                    <p className={styles.tableText01}>Name Surname</p>
+                                    <p className={styles.dataIdNumber}>302442</p>
+                                </div>
+                            </div>
+                            {/* Date data block */}
+                            <div className={styles.dateDataBlock}>
+                                <p className={styles.tableText01}>11 july 2024</p>
+                                <p className={styles.timeData}>At 11:00 pm</p>
+                            </div>
+                            {/* Amount Data Block */}
+                            <div className={styles.amountDataBlock}>
+                                <p className={styles.tableText01}>R850.99</p>
+                            </div>
+                            {/* invoice Id Data Block */}
+                            <div className={styles.invoiceDataBlock}>
+                                <p>INV34598</p>
+                            </div>
+                            {/* states data block */}
+                            <div className={styles.statusDataBlock}>
+                                <p className={styles.negativeText}>Withdraw</p>
+                            </div>
+                            {/* Action data block */}
+                            <div className={styles.actionDataBlock}>
+                                <button className={styles.detailsBtn}>Details
+                                    <img src={VerticalDots} alt="vertical" />
                                 </button>
                             </div>
                         </div>

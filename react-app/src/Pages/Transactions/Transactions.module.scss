@@ -5,16 +5,23 @@
     --black: #000;
     --primaryColor: #7E4AC0;
     --grayedTextColor: #909498;
+    --darkBackground: #19252F;
+    --darkBackground02: #0E1922;
+    --darkStroke: #242424;
 }
 
+$base-color: #c6538c; // example of scss color variable
+$border-dark: rgba($base-color, 0.88);
+
 .mainContainer {
-    background-color: var(--white);
+    background-color: var(--darkBackground);
     width: 100%;
     min-width: 100%;
     height: 100%;
     display: flex;
     flex-direction: row;
     user-select: none; // to prevent text highlighting
+    height: 100vh;
 }
 
 .sideNaveContainer {
@@ -82,16 +89,16 @@
     cursor: pointer;
     gap: 6px;
     transition: all ease-in-out .1s;
-}
 
-.sidenavOptionBtn:hover {
-    transform: scale(1.07);
-    transition: all ease-in-out .1s;
-    color: var(--primaryColor);
-}
+    &:hover {
+        transform: scale(1.07);
+        transition: all ease-in-out .1s;
+        color: var(--primaryColor);
+    }
 
-.sidenavOptionBtn img {
-    width: 24px;
+    img {
+        width: 24px;
+    }
 }
 
 .loggedUserMenuBtn {
@@ -99,10 +106,10 @@
     border: none;
     background-color: transparent;
     cursor: pointer;
-}
 
-.loggedUserMenuBtn img {
-    width: 24px;
+    img {
+        width: 24px;
+    }
 }
 
 .dividerLine {
@@ -117,7 +124,7 @@
     height: 2px;
     width: 100%;
     border-radius: 2px;
-    background-color: var(--black);
+    background-color: var(--grayedTextColor);
     opacity: 0.5;
 }
 
@@ -152,11 +159,14 @@
 }
 
 .contentContainer {
-    background-color: #FCFCFD;
+    background-color: var(--darkBackground);
     padding-left: 20px;
     padding-right: 20px;
     width: 100%;
-    min-width: 1000px;
+
+    h1 {
+        color: var(--white);
+    }
 }
 
 .filterContainer {
@@ -174,41 +184,44 @@
 }
 
 .filterOption {
-    border: 1px solid #909498;
+    border: 1px solid var(--white);
     padding: 0px 20px 0px 20px;
     cursor: pointer;
     transition: all ease-in-out .1s;
+    color: var(--white);
+
+    &:hover {
+        background-color: #909498;
+        transition: all ease-in-out .1s;
+    }
 }
 
 .filterOption01 {
-    border: 1px solid #909498;
+    border: 1px solid var(--white);
     padding: 0px 20px 0px 20px;
     cursor: pointer;
     border-radius: 10px 0px 0px 10px;
     transition: all ease-in-out .1s;
+    color: var(--white);
+
+    &:hover {
+        background-color: #909498;
+        transition: all ease-in-out .1s;
+    }
 }
 
 .filterOption04 {
-    border: 1px solid #909498;
+    border: 1px solid var(--white);
     padding: 0px 20px 0px 20px;
     cursor: pointer;
     border-radius: 0px 10px 10px 0px;
     transition: all ease-in-out .1s;
-}
+    color: var(--white);
 
-.filterOption:hover {
-    background-color: #909498;
-    transition: all ease-in-out .1s;
-}
-
-.filterOption01:hover {
-    background-color: #909498;
-    transition: all ease-in-out .1s;
-}
-
-.filterOption04:hover {
-    background-color: #909498;
-    transition: all ease-in-out .1s;
+    &:hover {
+        background-color: #909498;
+        transition: all ease-in-out .1s;
+    }
 }
 
 .filterOptionText {
@@ -229,23 +242,25 @@
     border: 1px solid #E5E5E6;
     padding: 5px;
     border-radius: 5px;
-}
+    gap: 5px;
 
-.searchFieldCon img {
-    width: 16px;
+    img {
+        width: 16px;
+    }
 }
 
 .filterSearchInput {
     // border: 1px solid #E5E5E6;
     border-radius: 5px;
-    background-color: #FCFCFD;
+    background-color: transparent;
     outline: none;
     border: none;
+    color: var(--white);
 }
 
 .filterButton {
-    background-color: #FCFCFD;
-    border: 1px solid #E5E5E6;
+    background-color: transparent;
+    border: 1px solid var(--white);
     border-radius: 5px;
     cursor: pointer;
     transition: all ease-in-out .1s;
@@ -254,16 +269,17 @@
     justify-content: center;
     align-items: center;
     gap: 6px;
-}
+    color: var(--white);
 
-.filterButton img {
-    width: 16px;
-}
+    img {
+        width: 16px;
+    }
 
-.filterButton:hover {
-    background-color: #dadada;
-    transition: all ease-in-out .1s;
-    // color: #fff;
+    &:hover {
+        background-color: #dadada;
+        transition: all ease-in-out .1s;
+        // color: #fff;
+    }
 }
 
 .transactionTableMianCon {
@@ -274,7 +290,8 @@
     margin-top: 20px;
     padding: 0px 24px 10px 24px;
     border-radius: 10px;
-    border: 2px solid #E5E5E6;
+    border: 2px solid var(--darkStroke);
+    background-color: var(--darkBackground02);
     gap: 10px;
     width: 95%;
     // width: 1098px;
@@ -285,6 +302,10 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+
+    p {
+        color: var(--white);
+    }
 }
 
 .innerTableCon {
@@ -324,8 +345,9 @@
     // background-color: #7E4AC0;
 }
 
-.dataUsername {
+.tableText01 {
     font-size: 16px;
+    color: var(--white);
 }
 
 .dataIdNumber {
@@ -348,25 +370,29 @@
     font-size: 16px;
 }
 
-.invoiceDataBlock p {
-    color: var(--grayedTextColor);
+.invoiceDataBlock {
+    p {
+        color: var(--grayedTextColor);
+    }
 }
 
+
 .detailsBtn {
-    background-color: var(--white);
+    background-color: var(--primaryColor);
+    color: var(--white);
     outline: none;
     border: 1px solid #625671;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 4px 10px 4px 10px;
+    padding: 4px 2px 4px 10px;
     border-radius: 5px;
     cursor: pointer;
-}
 
-.detailsBtn img {
-    width: 18px;
+    img {
+        width: 18px;
+    }
 }
 
 .positiveText {
