@@ -29,9 +29,9 @@ function NavRoutes() {
       {/* {showNavbar && <Navbar />} */}
       <div style={{ flex: 1, marginLeft: '264px' }}>
         <Routes>
-          <Route path="/" element={<Login />}></Route>
+          <Route path="/Login" element={<Login />}></Route>
           <Route path="/Authentication" element={<Authentication />}></Route>
-          <Route path="/CreateAccount" element={<CreateAccount />}></Route>
+          <Route path="/" element={<CreateAccount />}></Route>
           <Route path="/admin" element={<Admin />}></Route>
           <Route path="/overview" element={<Overview />}></Route>
           <Route path="/purchasing" element={<Purchasing />}></Route>

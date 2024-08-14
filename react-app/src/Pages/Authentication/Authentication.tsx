@@ -12,7 +12,7 @@ const Authentication = () => {
                     </div>
                     <br />
                     <h1>Hold on! Let's first verify.</h1>
-                    <p className={styles.muted}>Please enter the code we sent to your email to proceed.</p>
+                    <p className={styles.muted}>Please enter the OTP code we sent to your email to proceed.</p>
                     <br />
                     <form>
                         {/* <label htmlFor="pin" className={styles.muted}>Enter pin</label> */}
