@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Admin from './Pages/Admin_Portal/Admin';
 import Authentication from './Pages/Authentication/Authentication';
+import CreateAccount from './Pages/createAccount/createAccount';
+import Login from './Pages/login/login';
 import Overview from './Pages/Overview/Overview';
 import Purchasing from './Pages/Purchasing_Currency/Purchasing';
 import Transactions from './Pages/Transactions/Transactions';
@@ -28,6 +30,8 @@ function NavRoutes() {
       <div style={{ flex: 1, marginLeft: '264px' }}>
         <Routes>
           <Route path="/" element={<Authentication />}></Route>
+          <Route path="/CreateAccount" element={<CreateAccount />}></Route>
+          <Route path="/Login" element={<Login />}></Route>
           <Route path="/admin" element={<Admin />}></Route>
           <Route path="/overview" element={<Overview />}></Route>
           <Route path="/purchasing" element={<Purchasing />}></Route>
