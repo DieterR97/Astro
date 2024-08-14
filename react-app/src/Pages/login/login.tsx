@@ -33,7 +33,7 @@ const LoginPage = () => {
                         <button type="submit" onClick={handleLoginClick}>Continue</button>
                     </form>
                     <br />
-                    <p className={styles.register_link}><span className={styles.muted}>Don’t have an account? </span><a href="/SignUp">Register</a></p>
+                    <p className={styles.register_link}><span className={styles.muted}>Don’t have an account? </span><a href="/CreateAccount">Register</a></p>
                 </div>
                 <div className={styles.login_right}></div>
             </div>
