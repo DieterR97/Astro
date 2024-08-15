@@ -61,7 +61,7 @@ const Signup = () => {
                     alert("Registration successful!");
                     // Store the email in local storage for validation
                     localStorage.setItem('email_to_validate', userData.email);
-                    navigate('/Authentication');
+                    navigate('/authentication');
                 } else {
                     alert(`Error: ${data.message}`);
                 }
@@ -133,7 +133,7 @@ const Signup = () => {
                         <button type="submit" onClick={handleCreationClick}>Continue</button>
                     </form>
                     <br />
-                    <p className={styles.signup_link}><span className={styles.muted}> Already have an account? </span><a href="/Login">Login</a></p>
+                    <p className={styles.signup_link}><span className={styles.muted}> Already have an account? </span><a href="/login">Login</a></p>
                 </div>
                 <div className={styles.signup_right}></div>
             </div>
