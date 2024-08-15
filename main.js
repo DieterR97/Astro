@@ -1,7 +1,11 @@
 // main.js
 
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
+
+// Disable hardware acceleration
+app.disableHardwareAcceleration();
+
 const path = require('node:path')
 
 const createWindow = () => {
@@ -11,6 +15,8 @@ const createWindow = () => {
         height: 670,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js')
+            // nodeIntegration: true, // Allow Node.js integration in the renderer process
+            // contextIsolation: false, // Disable context isolation so that the renderer can access Node.js APIs
         }
     })
 
@@ -34,6 +40,12 @@ app.whenReady().then(() => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow()
     })
 })
+
+// Listen for the blur-focus trigger from the renderer process
+ipcMain.on('trigger-blur-focus', () => {
+    mainWindow.blur(); // Remove focus from the window
+    setTimeout(() => mainWindow.focus(), 100); // Refocus the window after a short delay
+});
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
