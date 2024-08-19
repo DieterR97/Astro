@@ -30,14 +30,17 @@ function Admin() {
 
     useEffect(() => {
         fetch(url)
-            .then(response => response.json()) // Convert response to JSON
-            .then((data: User[]) => {
-                
-                console.log('Fetched data:', data);
-                setUsers(data); // Store the data in state
+            .then(response => response.json())
+            .then(data => {
+                console.log("Fetched data:", data); 
+                setUsers(data.$values); 
             })
-            .catch(error => console.error('Error fetching data:', error));
-    }, []); // Empty dependency array to run once on component mount
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, []);
+
+    console.log("Users" + users); //Test
 
     return (
         <div className={styles.adminMainContainer}>
@@ -66,7 +69,7 @@ function Admin() {
                             <p className={styles.paragraph_five}>Action</p>
                         </div>
 
-                        {users.length > 0 ? (
+                        {users && users.length > 0 ? (
                             users.map(user => (
                             <div className={styles.admin_card_two} key={user.user_id}>
                                 <img src={img3} alt="Logo" className={styles.image2} />
