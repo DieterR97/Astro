@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './Transactions.module.scss';
+
 // logo
-import logo from '../Assets/logo.png'
+import Logo from "../../assets/login/logo.png";
 // icons
-import verticalDotMenu from '../Assets/dots-vertical.png'
 import coinsIcon from '../Assets/coins.png'
 import homeIcon from '../Assets/home.png'
 import adminIcon from '../Assets/robot.png'
@@ -12,87 +12,81 @@ import layersIcon from '../Assets/layers-subtract.png'
 import VerticalDots from '../../assets/icons/more-vertical-stroke-rounded.svg'
 import FilterIcon from '../../assets/icons/FilterIcon.svg'
 import SearchIcon from '../../assets/icons/SearchIcon.svg'
-
-
+// ...
+// ...
 function Transactions() {
+
+    interface Transaction {
+        Transactions_id: number;
+        transaction_type: string;
+        amount: number;
+        timestamp: Date; // Use Date type for timestamps
+    }
+
+    // TODO: If the = the value it must change to according color 
+    // TODO : map all transactions specific to the logged in user 
+    // TODO : sorting functionality 
+    // TODO : filtering function
+    // TODO : the details button
+
+    // TODO : by defualt must be sorted by date
+    function defualtSortingByDate(data: Transaction[]): Transaction[] {
+        return data.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+    }
+
+    const incomingData: Transaction[] = [
+        { Transactions_id: 1, transaction_type: "big", amount: 300, timestamp: new Date('2024-08-19T12:00:00Z') },
+        { Transactions_id: 2, transaction_type: "big", amount: 300, timestamp: new Date('2024-08-19T09:00:00Z') },
+        { Transactions_id: 3, transaction_type: "big", amount: 300, timestamp: new Date('2024-08-19T15:00:00Z') }
+    ];
+
+    // Process and sort the data
+    const sortedData = defualtSortingByDate(incomingData);
+    // console.log(sortedData);
+
+    // * Details button Modal
+    // const [isModalOpen, setIsModalOpen] = useState(false);
+    // const openModal = () => {
+    //     setIsModalOpen(true);
+    // };
+
+    // const closeModal = () => {
+    //     setIsModalOpen(false);
+    // };
+    // const openDetailsModal = (event: React.MouseEvent<HTMLDivElement>) => {
+    //     // Close the modal if the user clicks on the overlay (outside the modal content)
+    //     if (event.target === event.currentTarget) {
+    //         closeModal();
+    //     }
+    // };
+
+
+    // * to fetch the transactions
+    const [transactions, setTransactions] = useState<Transaction[]>([]);
+    // const [transactionAmount, setTransactionAmount] = useState();
+
+    var url = "http://localhost:5122/api/Transaction"
+
+    useEffect(() => {
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                console.log("transaction fetched: ", data);
+                setTransactions(data.$values);
+            })
+            .catch(error => {
+                console.log("Error Fetching Data: ", error);
+            });
+    }, []);
+    console.log(transactions);
+
     return (
         <div className={styles.mainContainer}>
-
-            {/* 
-            <div className={styles.sideNaveContainer}>
-                {/* top section of the side nav bar 
-                <div className={styles.sideNavTopCon}>
-                    {/* Logo Container 
-                    <div className={styles.sidenavLogoCon}>
-                        {/* logo 
-                        <div className={styles.logoFill}>
-                            <img src={logo} alt="" />
-                        </div>
-                        {/* title 
-                        <h3 className={styles.sidenaveLogoTitle}>Astro</h3>
-                    </div>
-                    {/* divider Line 
-                    <div className={styles.dividerLine}></div>
-
-                    <p className={styles.subtitle}>MAIN</p>
-
-                    {/* Side Nav Options 
-                    <div className={styles.sidenavOptionCon}>
-                        <div className={styles.sidenavOptionBtn}>
-                            {/* icon 
-                            <img src={homeIcon} alt="" />
-                            {/* title 
-                            <h3 className={styles.optionFont}>Overview</h3>
-                        </div>
-                        <div className={styles.sidenavOptionBtn}>
-                            {/* icon 
-                            <img src={coinsIcon} alt="coinsIcon" />
-                            {/* title 
-                            <h3 className={styles.optionFont}>Trade</h3>
-                        </div>
-                        <div className={styles.sidenavOptionBtn}>
-                            {/* icon 
-                            <img src={layersIcon} alt="layersIcon" />
-                            {/* title 
-                            <h3 className={styles.optionFont}>Transactions</h3>
-                        </div>
-                        <div className={styles.sidenavOptionBtn}>
-                            {/* icon 
-                            <img src={adminIcon} alt="adminIcon" />
-                            {/* title 
-                            <h3 className={styles.optionFont}>Admin</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div className={styles.sideNavBottomCon}>
-                    {/* divider Line 
-                    <div className={styles.dividerLine}></div>
-                    {/* currently logged user data block 
-                    <div className={styles.loggedUserCon}>
-                        <div className={styles.loggedUserBlock}>
-                            {/* logo 
-                            <div className={styles.logoFill}></div>
-                            <div className={styles.loggedUserTextBlock}>
-                                <h1>Name Surname</h1>
-                                <p>username@example.co.za</p>
-                            </div>
-                            {/* the menu Icon 
-                            <div>
-                                <button className={styles.loggedUserMenuBtn}>
-                                    <img src={verticalDotMenu} alt="MenuIcon" />
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> 
-            */}
-
-
             {/* The Content Container */}
             <div className={styles.contentContainer}>
+
                 <h1>Transactions</h1>
+
                 {/* filter section START */}
                 <div className={styles.filterContainer}>
                     {/* filter bar */}
@@ -113,18 +107,30 @@ function Transactions() {
                     {/* other options group */}
                     <div className={styles.secondaryFilterCon}>
                         {/* filter button */}
-                        <button className={styles.filterButton}>
-                            <img src={FilterIcon} alt="filter" />
-                            Filter
-                        </button>
+                        <div className={styles.dropDownMenu}>
+                            <button className={styles.filterButton}>
+                                <img src={FilterIcon} alt="filter" />
+                                Filter
+                            </button>
+                            <div className={styles.dropDownContent}>
+                                <button>By Date </button>
+                                <button>By Name</button>
+                                <button>By Amount</button>
+                                <button>By Invoice</button>
+                                <button>By Status</button>
+                            </div>
+                        </div>
+
                         {/* search field */}
                         <div className={styles.searchFieldCon}>
                             <img src={SearchIcon} alt="searchIcon" />
-                            <input className={styles.filterSearchInput} type="text" placeholder='Search' />
+                            <input className={styles.filterSearchInput} type="text" placeholder='Search...' />
                         </div>
                     </div>
                 </div>
                 {/* filter section END */}
+
+                <h1>Your Transactions</h1>
 
                 {/* Transactions Table  */}
                 <div className={styles.transactionTableMianCon}>
@@ -140,6 +146,7 @@ function Transactions() {
                     <div className={styles.dividerLine02}></div>
                     {/* Content */}
                     <div className={styles.innerTableCon}>
+
                         {/* row of user data */}
                         <div className={styles.contentRowTile}>
                             {/* name data block */}
@@ -147,7 +154,7 @@ function Transactions() {
                                 <div className={styles.userProfilePlacholder}></div>
                                 {/* User name data and number data block */}
                                 <div className={styles.userNameData}>
-                                    <p className={styles.tableText01}>Name Surname</p>
+                                    <p className={styles.tableText01}>Name Surname{ }</p>
                                     <p className={styles.dataIdNumber}>302442</p>
                                 </div>
                             </div>
@@ -170,11 +177,16 @@ function Transactions() {
                             </div>
                             {/* Action data block */}
                             <div className={styles.actionDataBlock}>
-                                <button className={styles.detailsBtn}>Details
+                                <button className={styles.detailsBtn} value="Get Models">Details
                                     <img src={VerticalDots} alt="vertical" />
                                 </button>
+
                             </div>
                         </div>
+
+                        {/* <li key={Transactions.id}>
+                            {transaction.name}
+                        </li> */}
 
                         {/* row of user data */}
                         <div className={styles.contentRowTile}>
