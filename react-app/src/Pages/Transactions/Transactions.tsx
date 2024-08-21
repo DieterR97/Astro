@@ -17,13 +17,13 @@ import SearchIcon from '../../assets/icons/SearchIcon.svg'
 function Transactions() {
 
     interface Transaction {
-        Transactions_id: number;
+        transactions_id: number;
         transaction_type: string;
         amount: number;
         timestamp: Date; // Use Date type for timestamps
     }
 
-    // TODO: If the = the value it must change to according color 
+    // TODO : If the = the value it must change to according color 
     // TODO : map all transactions specific to the logged in user 
     // TODO : sorting functionality 
     // TODO : filtering function
@@ -35,9 +35,9 @@ function Transactions() {
     }
 
     const incomingData: Transaction[] = [
-        { Transactions_id: 1, transaction_type: "big", amount: 300, timestamp: new Date('2024-08-19T12:00:00Z') },
-        { Transactions_id: 2, transaction_type: "big", amount: 300, timestamp: new Date('2024-08-19T09:00:00Z') },
-        { Transactions_id: 3, transaction_type: "big", amount: 300, timestamp: new Date('2024-08-19T15:00:00Z') }
+        { transactions_id: 1, transaction_type: "big", amount: 300, timestamp: new Date('2024-08-19T12:00:00Z') },
+        { transactions_id: 2, transaction_type: "big", amount: 300, timestamp: new Date('2024-08-19T09:00:00Z') },
+        { transactions_id: 3, transaction_type: "big", amount: 300, timestamp: new Date('2024-08-19T15:00:00Z') }
     ];
 
     // Process and sort the data
@@ -189,76 +189,46 @@ function Transactions() {
                         </li> */}
 
                         {/* row of user data */}
-                        <div className={styles.contentRowTile}>
-                            {/* name data block */}
-                            <div className={styles.nameDataBlock}>
-                                <div className={styles.userProfilePlacholder}></div>
-                                {/* User name data and number data block */}
-                                <div className={styles.userNameData}>
-                                    <p className={styles.tableText01}>Name Surname</p>
-                                    <p className={styles.dataIdNumber}>302442</p>
+                        {/* map testing */}
+                        {transactions && transactions.length > 0 ? (
+                            transactions.map(transaction => (
+                                <div className={styles.contentRowTile}>
+                                    {/* name data block */}
+                                    <div className={styles.nameDataBlock}>
+                                        <div className={styles.userProfilePlacholder}></div>
+                                        {/* User name data and number data block */}
+                                        <div className={styles.userNameData}>
+                                            <p className={styles.tableText01}>Name Surname</p>
+                                            <p className={styles.dataIdNumber}>{transaction.transactions_id}</p>
+                                        </div>
+                                    </div>
+                                    {/* Date data block */}
+                                    <div className={styles.dateDataBlock}>
+                                        <p className={styles.tableText01}>11 july 2024</p>
+                                        <p className={styles.timeData}>At 11:00 pm</p>
+                                    </div>
+                                    {/* Amount Data Block */}
+                                    <div className={styles.amountDataBlock}>
+                                        <p className={styles.tableText01}>R850.99</p>
+                                    </div>
+                                    {/* invoice Id Data Block */}
+                                    <div className={styles.invoiceDataBlock}>
+                                        <p>INV34598</p>
+                                    </div>
+                                    {/* states data block */}
+                                    <div className={styles.statusDataBlock}>
+                                        <p className={styles.positiveText}>Recieved</p>
+                                    </div>
+                                    {/* Action data block */}
+                                    <div className={styles.actionDataBlock}>
+                                        <button className={styles.detailsBtn}>Details
+                                            <img src={VerticalDots} alt="vertical" />
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                            {/* Date data block */}
-                            <div className={styles.dateDataBlock}>
-                                <p className={styles.tableText01}>11 july 2024</p>
-                                <p className={styles.timeData}>At 11:00 pm</p>
-                            </div>
-                            {/* Amount Data Block */}
-                            <div className={styles.amountDataBlock}>
-                                <p className={styles.tableText01}>R850.99</p>
-                            </div>
-                            {/* invoice Id Data Block */}
-                            <div className={styles.invoiceDataBlock}>
-                                <p>INV34598</p>
-                            </div>
-                            {/* states data block */}
-                            <div className={styles.statusDataBlock}>
-                                <p className={styles.positiveText}>Recieved</p>
-                            </div>
-                            {/* Action data block */}
-                            <div className={styles.actionDataBlock}>
-                                <button className={styles.detailsBtn}>Details
-                                    <img src={VerticalDots} alt="vertical" />
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* row of user data */}
-                        <div className={styles.contentRowTile}>
-                            {/* name data block */}
-                            <div className={styles.nameDataBlock}>
-                                <div className={styles.userProfilePlacholder}></div>
-                                {/* User name data and number data block */}
-                                <div className={styles.userNameData}>
-                                    <p className={styles.tableText01}>Name Surname</p>
-                                    <p className={styles.dataIdNumber}>302442</p>
-                                </div>
-                            </div>
-                            {/* Date data block */}
-                            <div className={styles.dateDataBlock}>
-                                <p className={styles.tableText01}>11 july 2024</p>
-                                <p className={styles.timeData}>At 11:00 pm</p>
-                            </div>
-                            {/* Amount Data Block */}
-                            <div className={styles.amountDataBlock}>
-                                <p className={styles.tableText01}>R850.99</p>
-                            </div>
-                            {/* invoice Id Data Block */}
-                            <div className={styles.invoiceDataBlock}>
-                                <p>INV34598</p>
-                            </div>
-                            {/* states data block */}
-                            <div className={styles.statusDataBlock}>
-                                <p className={styles.negativeText}>Withdraw</p>
-                            </div>
-                            {/* Action data block */}
-                            <div className={styles.actionDataBlock}>
-                                <button className={styles.detailsBtn}>Details
-                                    <img src={VerticalDots} alt="vertical" />
-                                </button>
-                            </div>
-                        </div>
+                            ))) : (
+                            <p>No transactions Found</p>
+                        )}
 
                     </div>
                 </div>
