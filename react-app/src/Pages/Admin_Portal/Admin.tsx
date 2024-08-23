@@ -95,15 +95,15 @@ function Admin() {
                                 </div>
                                 <p className={styles.paragraph_eight}>{user.user_id}</p>
                                 <div className={styles.box}></div>
-                                {status && status.length > 0 ? (
+                                {/* {status && status.length > 0 ? (
                                     status.map(status => (
                                         <p className={styles.paragraph_nine}>{status.balance}</p>
                                     ))
                                 ): (
                                     <p className={styles.paragraph}>Loading......</p>
-                                )}
+                                )} */}
 
-                                {/* <p className={styles.paragraph_nine}>Active</p> */}
+                                <p className={styles.paragraph_nine}>Active</p>
                                 
                                 <p className={styles.body_three}>
                                     Details
