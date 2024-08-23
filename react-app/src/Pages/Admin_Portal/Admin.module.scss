@@ -141,7 +141,6 @@ body {
 .admin_card_two {
     padding: 0;
     margin-left: 0px;
-    width: 810px;
     height: 80px;
     display: flex;
     flex-direction: row;
@@ -156,7 +155,8 @@ body {
 }
 
 .name_box {
-    margin-right: 65px;
+    margin-right: 0px;
+    width: 174px;
 }
 
 .paragraph_six {
@@ -175,24 +175,32 @@ body {
 }
 
 .join_date_box {
-    margin-right: 95px;
+    margin-right: 0px;
+    width: 185px;
 }
 
 .paragraph_eight {
     font-size: 13pt;
     font-weight: lighter;
+    text-align: center;
     color: #909498;
     line-height: 0px;
+    width: 80px;
     margin-top: 33px;
-    margin-right: 107px;
+    margin-right: 0px;
+}
+
+.box {
+    width: 80px;
 }
 
 .paragraph_nine {
     font-size: 13pt;
     font-weight: lighter;
     color: #0B9457;
-    line-height: 0px;
+    line-height: 5px;
     margin-top: 33px;
+    width: 125px;
 }
 
 .paragraph_ten {
@@ -222,7 +230,7 @@ body {
     padding-left: 12px;
     color: white;
     font-weight: 100;
-    margin-left: 80px;
+    margin-left: 0px;
     font-size: 12pt;
 }
 

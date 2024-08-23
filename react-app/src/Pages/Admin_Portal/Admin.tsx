@@ -9,24 +9,24 @@ import img4 from '../Assets/More_Option.png';
 interface User {
     user_id: number;
     username: string;
-    Otp: string;
+    otp: string;
     created_at: string;
-  }
+}
+
+interface Status {
+    active: boolean;
+    balance: number;
+}
 
 function Admin() {
 
     const [users, setUsers] = useState<User[]>([]); // Initialize state to store fetched data
 
-    var url = "http://localhost:5122/api/User"
+    const [status, setStatus] = useState<Status[]>([]);
 
-    // fetch(url)
-    //     .then(response => response.json()) // Convert response to JSON
-    //     .then(data => {
-    //         // Now 'data' is a JavaScript object
-    //         const jsonString = JSON.stringify(data); // Convert object to JSON string
-    //         console.log(jsonString); // Output the JSON string
-    //     })
-    //     .catch(error => console.error('Error fetching data:', error));
+    var url = "http://localhost:5122/api/User";
+
+    var url2 = "http://localhost:5122/api/Account";
 
     useEffect(() => {
         fetch(url)
@@ -38,6 +38,18 @@ function Admin() {
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
+    }, []);
+
+    useEffect(() => {
+        fetch(url2)
+        .then(response => response.json())
+        .then(data => {
+            console.log("Fetched data:", data);
+            setStatus(data.$values);
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
     }, []);
 
     console.log("Users" + users); //Test
@@ -75,40 +87,32 @@ function Admin() {
                                 <img src={img3} alt="Logo" className={styles.image2} />
                                 <div className={styles.name_box}>
                                     <p className={styles.paragraph_six}>{user.username}</p>
-                                    <p className={styles.paragraph_seven}>{user.Otp}</p>
+                                    <p className={styles.paragraph_seven}>{user.otp}</p>
                                 </div>
                                 <div className={styles.join_date_box}>
                                     <p className={styles.paragraph_six}>{new Date(user.created_at).toLocaleDateString()}</p>
-                                    <p className={styles.paragraph_seven}>{new Date(user.created_at).toLocaleDateString()}</p>
+                                    <p className={styles.paragraph_seven}>{new Date(user.created_at).toLocaleTimeString()}</p>
                                 </div>
                                 <p className={styles.paragraph_eight}>{user.user_id}</p>
-                                <p className={styles.paragraph_nine}>Inactive</p>
+                                <div className={styles.box}></div>
+                                {status && status.length > 0 ? (
+                                    status.map(status => (
+                                        <p className={styles.paragraph_nine}>{status.balance}</p>
+                                    ))
+                                ): (
+                                    <p className={styles.paragraph}>Loading......</p>
+                                )}
+
+                                {/* <p className={styles.paragraph_nine}>Active</p> */}
+                                
                                 <p className={styles.body_three}>
                                     Details
                                     <img src={img4} alt="Logo" className={styles.image3} />
                                 </p>
                             </div>
                         ))) : (
-                            <p className={styles.paragraph}>No users found.</p>
+                            <p className={styles.paragraph}>Loading......</p>
                         )}
-
-                        <div className={styles.admin_card_two}>
-                            <img src={img3} alt="Logo" className={styles.image2} />
-                            <div className={styles.name_box}>
-                                <p className={styles.paragraph_six}>Name Surname</p>
-                                <p className={styles.paragraph_seven}>302442</p>
-                            </div>
-                            <div className={styles.join_date_box}>
-                                <p className={styles.paragraph_six}>11 July 2024</p>
-                                <p className={styles.paragraph_seven}>At 11:00 PM</p>
-                            </div>
-                            <p className={styles.paragraph_eleven}>32142</p>
-                            <p className={styles.paragraph_ten}>Inactive</p>
-                            <p className={styles.body_four}>
-                                Details
-                                <img src={img4} alt="Logo" className={styles.image3} />
-                            </p>
-                        </div>
 
                     </div>
                 </div>
