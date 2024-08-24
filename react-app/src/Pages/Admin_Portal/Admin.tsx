@@ -16,6 +16,7 @@ interface User {
 interface Status {
     active: boolean;
     balance: number;
+    user_id: number;
 }
 
 function Admin() {
@@ -82,44 +83,50 @@ function Admin() {
                         </div>
 
                         {users && users.length > 0 ? (
-                            users.map(user => (
-                            <div className={styles.admin_card_two} key={user.user_id}>
-                                <img src={img3} alt="Logo" className={styles.image2} />
-                                <div className={styles.name_box}>
-                                    <p className={styles.paragraph_six}>{user.username}</p>
-                                    <p className={styles.paragraph_seven}>{user.otp}</p>
-                                </div>
-                                <div className={styles.join_date_box}>
-                                    <p className={styles.paragraph_six}>{new Date(user.created_at).toLocaleDateString()}</p>
-                                    <p className={styles.paragraph_seven}>{new Date(user.created_at).toLocaleTimeString()}</p>
-                                </div>
-                                <p className={styles.paragraph_eight}>{user.user_id}</p>
-                                <div className={styles.box}></div>
-                                {/* {status && status.length > 0 ? (
-                                    status.map(status => (
-                                        <p className={styles.paragraph_nine}>{status.balance}</p>
-                                    ))
-                                ): (
-                                    <p className={styles.paragraph}>Loading......</p>
-                                )} */}
+                            users.map(user => {
+                                const userStatus = status.find(s => s.user_id === user.user_id);
 
-                                <p className={styles.paragraph_nine}>Active</p>
-                                
-                                <p className={styles.body_three}>
-                                    Details
-                                    <img src={img4} alt="Logo" className={styles.image3} />
-                                </p>
-                            </div>
-                        ))) : (
-                            <p className={styles.paragraph}>Loading......</p>
+                                return (
+                                    <div className={styles.admin_card_two} key={user.user_id}>
+                                        <img src={img3} alt="Logo" className={styles.image2} />
+                                        <div className={styles.name_box}>
+                                            <p className={styles.paragraph_six}>{user.username}</p>
+                                            <p className={styles.paragraph_seven}>{user.otp}</p>
+                                        </div>
+                                        <div className={styles.join_date_box}>
+                                            <p className={styles.paragraph_six}>{new Date(user.created_at).toLocaleDateString()}</p>
+                                            <p className={styles.paragraph_seven}>{new Date(user.created_at).toLocaleTimeString()}</p>
+                                        </div>
+                                        <p className={styles.paragraph_eight}>{user.user_id}</p>
+                                        <div className={styles.box}></div>
+                                        {userStatus ? (
+                                            <p 
+                                                className={styles.paragraph_nine}
+                                                style={{ color: userStatus.active ? '#0B9457' : '#FC684E' }}
+                                            >
+                                                {userStatus.active ? 'Active' : 'Inactive'}
+                                            </p>
+                                        ) : (
+                                            <p className={styles.paragraph_nine}>Loading...</p>
+                                        )}
+                                        <p className={styles.body_three}>
+                                            Details
+                                            <img src={img4} alt="Logo" className={styles.image3} />
+                                        </p>
+                                    </div>
+                                );
+                            })
+                        ) : (
+                            <p className={styles.paragraph}>Loading...</p>
                         )}
-
+                    </div>
+                    <div>
+                        <p className={styles.spacing}>Hallo</p>
                     </div>
                 </div>
-
             </div>
         </div>
-    )
+    );
 }
 
 export default Admin;
