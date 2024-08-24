@@ -14,7 +14,23 @@ import FilterIcon from '../../assets/icons/FilterIcon.svg'
 import SearchIcon from '../../assets/icons/SearchIcon.svg'
 // ...
 // ...
+// {
+//     "$id": "4",
+//     "user_id": 3,
+//     "username": "UngererHattingh",
+//     "email": "221302@virtualwindow.co.za",
+//     "role": "user",
+//     "created_at": "2024-08-24T07:02:33.225092Z",
+//     "otp": "591138",
+//     "otpExpiry": "2024-08-24T07:07:33.545741Z",
+//     "authentication_logs": null,
+//     "user_security": null,
+//     "account": null
+//   }
+
+
 function Transactions() {
+
 
     interface Transaction {
         transactions_id: number;
@@ -24,15 +40,7 @@ function Transactions() {
     }
 
     // TODO : If the = the value it must change to according color 
-    // TODO : map all transactions specific to the logged in user 
-    // TODO : sorting functionality 
-    // TODO : filtering function
-    // TODO : the details button
 
-    // TODO : by defualt must be sorted by date
-    function defualtSortingByDate(data: Transaction[]): Transaction[] {
-        return data.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
-    }
 
     const incomingData: Transaction[] = [
         { transactions_id: 1, transaction_type: "big", amount: 300, timestamp: new Date('2024-08-19T12:00:00Z') },
@@ -44,6 +52,8 @@ function Transactions() {
     const sortedData = defualtSortingByDate(incomingData);
     // console.log(sortedData);
 
+
+    // TODO : the details button
     // * Details button Modal
     // const [isModalOpen, setIsModalOpen] = useState(false);
     // const openModal = () => {
@@ -61,8 +71,9 @@ function Transactions() {
     // };
 
 
-    // * to fetch the transactions
-    const [transactions, setTransactions] = useState<Transaction[]>([]);
+    // TODO : map all transactions specific to the logged in user 
+    // * to fetch all the transactions
+    const [userTransactions, setUserTransactions] = useState<Transaction[]>([]);
     // const [transactionAmount, setTransactionAmount] = useState();
 
     var url = "http://localhost:5122/api/Transaction"
@@ -72,13 +83,53 @@ function Transactions() {
             .then(response => response.json())
             .then(data => {
                 console.log("transaction fetched: ", data);
-                setTransactions(data.$values);
+                setUserTransactions(data.$values);
             })
             .catch(error => {
                 console.log("Error Fetching Data: ", error);
             });
     }, []);
-    console.log(transactions);
+    console.log(userTransactions);
+
+
+    // TODO : by defualt must be sorted by date
+    function defualtSortingByDate(data: Transaction[]): Transaction[] {
+        return data.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+    }
+
+
+    // TODO : filtering function for all - 7days - 24Hours 
+    const filterRecentData = (items: Transaction[]): Transaction[] => {
+        const now = new Date();
+        const thirtyDaysAgo = new Date(now.setDate(now.getDate() - 30)); // 30 days
+        const sevenDaysAgo = new Date(now.setDate(now.getDate() - 7)); // 7 days
+        // Filter transactions from the past 24 hours
+        const twentyFourHoursAgo = new Date(now.setDate(now.getDate() - 24 * 60 * 60 * 1000)); // 24 hours
+
+        return items.filter(item => {
+            const itemDate = new Date(item.timestamp);
+            return itemDate >= thirtyDaysAgo;
+        });
+    };
+
+    // TODO : sorting functionality 
+    // soring options like : by name - by amount - by date - by status 
+    const filterAndSortTransactions = (items: Transaction[]): Transaction[] => {
+        const now = new Date();
+    
+        // Filter transactions from the past 24 hours
+        const recentTransactions = items.filter(item => {
+          const itemDate = new Date(item.timestamp); // TODO : Timestamps need to be sorted into date and
+          return itemDate ;
+        });
+    
+        // Sort transactions by amount in descending order
+        return recentTransactions.sort((a, b) => b.amount - a.amount);
+      };
+    
+
+
+    // ...
 
     return (
         <div className={styles.mainContainer}>
@@ -98,7 +149,7 @@ function Transactions() {
                             <p className={styles.filterOptionText}>30 Days</p>
                         </div>
                         <div className={styles.filterOption}>
-                            <p className={styles.filterOptionText}>7 Days</p>
+                            <p className={styles.filterOptionText} onClick={function () { }}>7 Days</p>
                         </div>
                         <div className={styles.filterOption04}>
                             <p className={styles.filterOptionText}>24 Hours</p>
@@ -190,8 +241,8 @@ function Transactions() {
 
                         {/* row of user data */}
                         {/* map testing */}
-                        {transactions && transactions.length > 0 ? (
-                            transactions.map(transaction => (
+                        {userTransactions && userTransactions.length > 0 ? (
+                            userTransactions.map(transaction => (
                                 <div className={styles.contentRowTile}>
                                     {/* name data block */}
                                     <div className={styles.nameDataBlock}>
