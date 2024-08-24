@@ -42,15 +42,29 @@ function Transactions() {
     // TODO : If the = the value it must change to according color 
 
 
+    // TODO : Converting the timestamp to date and time
+
+
+    // Dummy Data
     const incomingData: Transaction[] = [
-        { transactions_id: 1, transaction_type: "big", amount: 300, timestamp: new Date('2024-08-19T12:00:00Z') },
-        { transactions_id: 2, transaction_type: "big", amount: 300, timestamp: new Date('2024-08-19T09:00:00Z') },
-        { transactions_id: 3, transaction_type: "big", amount: 300, timestamp: new Date('2024-08-19T15:00:00Z') }
+        { transactions_id: 1, transaction_type: "big", amount: 2500, timestamp: new Date('2024-08-17T12:00:00Z') },
+        { transactions_id: 2, transaction_type: "small", amount: 3000, timestamp: new Date('2024-08-20T09:00:00Z') },
+        { transactions_id: 3, transaction_type: "medium", amount: 500, timestamp: new Date('2024-08-21T15:00:00Z') },
+        { transactions_id: 4, transaction_type: "medium", amount: 50000, timestamp: new Date('2024-08-22T15:00:00Z') },
+        { transactions_id: 5, transaction_type: "medium", amount: 54500, timestamp: new Date('2024-08-23T15:00:00Z') },
+        { transactions_id: 6, transaction_type: "medium", amount: 67000, timestamp: new Date('2024-08-24T15:00:00Z') },
     ];
+
+    // Define the color mapping for transaction types
+    const transactionTypeColors: { [key: string]: string } = {
+        big: 'red',
+        medium: 'orange',
+        small: 'green',
+    };
 
     // Process and sort the data
     const sortedData = defualtSortingByDate(incomingData);
-    // console.log(sortedData);
+    console.log(sortedData);
 
 
     // TODO : the details button
@@ -89,7 +103,7 @@ function Transactions() {
                 console.log("Error Fetching Data: ", error);
             });
     }, []);
-    console.log(userTransactions);
+    // console.log(userTransactions);
 
 
     // TODO : by defualt must be sorted by date
@@ -116,17 +130,20 @@ function Transactions() {
     // soring options like : by name - by amount - by date - by status 
     const filterAndSortTransactions = (items: Transaction[]): Transaction[] => {
         const now = new Date();
-    
+
         // Filter transactions from the past 24 hours
         const recentTransactions = items.filter(item => {
-          const itemDate = new Date(item.timestamp); // TODO : Timestamps need to be sorted into date and
-          return itemDate ;
+            const itemDate = new Date(item.timestamp); // TODO : Timestamps need to be sorted into date and
+            return itemDate;
         });
-    
+
         // Sort transactions by amount in descending order
         return recentTransactions.sort((a, b) => b.amount - a.amount);
-      };
-    
+
+        // Sort the data by timestamp in ascending order
+        const sortedData = [...incomingData].sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+    };
+
 
 
     // ...
@@ -269,6 +286,57 @@ function Transactions() {
                                     {/* states data block */}
                                     <div className={styles.statusDataBlock}>
                                         <p className={styles.positiveText}>Recieved</p>
+                                    </div>
+                                    {/* Action data block */}
+                                    <div className={styles.actionDataBlock}>
+                                        <button className={styles.detailsBtn}>Details
+                                            <img src={VerticalDots} alt="vertical" />
+                                        </button>
+                                    </div>
+                                </div>
+                            ))) : (
+                            <p>No transactions Found</p>
+                        )}
+
+                        <h3>Testing Dummy data below:</h3>
+                        <p>Defualt Sorting is by Date </p>
+
+                        {sortedData && sortedData.length > 0 ? (
+                            sortedData.map(transaction => (
+                                <div className={styles.contentRowTile}>
+                                    {/* name data block */}
+                                    <div className={styles.nameDataBlock}>
+                                        <div className={styles.userProfilePlacholder}></div>
+                                        {/* User name data and number data block */}
+                                        <div className={styles.userNameData}>
+                                            <p className={styles.tableText01}>Name Surname</p>
+                                            <p className={styles.dataIdNumber}>{transaction.transactions_id}</p>
+                                        </div>
+                                    </div>
+                                    {/* Date data block */}
+                                    <div className={styles.dateDataBlock}>
+                                        <div className={styles.transactionDateBlock}>
+                                            <p className={styles.tableText01}>{transaction.timestamp.getDate()} :</p>
+                                            <p className={styles.tableText01}>{transaction.timestamp.getMonth()} :</p>
+                                            <p className={styles.tableText01}>{transaction.timestamp.getFullYear()}</p>
+                                        </div>
+
+                                        <div className={styles.timeDataBlock}>
+                                            <p className={styles.timeData}>At {transaction.timestamp.getHours()} : </p>
+                                            <p className={styles.timeData}>{transaction.timestamp.getMinutes()}</p>
+                                        </div>
+                                    </div>
+                                    {/* Amount Data Block */}
+                                    <div className={styles.amountDataBlock}>
+                                        <p className={styles.tableText01}>{transaction.amount}</p>
+                                    </div>
+                                    {/* invoice Id Data Block */}
+                                    <div className={styles.invoiceDataBlock}>
+                                        <p>INV34598</p>
+                                    </div>
+                                    {/* states data block */}
+                                    <div className={styles.statusDataBlock}>
+                                        <p className={styles.positiveText}>{transaction.transaction_type}</p>
                                     </div>
                                     {/* Action data block */}
                                     <div className={styles.actionDataBlock}>
