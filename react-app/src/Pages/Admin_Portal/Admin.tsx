@@ -21,14 +21,19 @@ interface Status {
 
 function Admin() {
 
-    const [users, setUsers] = useState<User[]>([]); // Initialize state to store fetched data
-
+    // Initialize state to store fetched data from the users and accounts table
+    const [users, setUsers] = useState<User[]>([]); 
     const [status, setStatus] = useState<Status[]>([]);
 
-    var url = "http://localhost:5122/api/User";
+    // Initiaize state for the popup box at details
+    const [popupVisible, setPopupVisible] = useState<{ [key: number]: boolean }>({});
+    const [selectedStatus, setSelectedStatus] = useState<{ [key: number]: 'active' | 'inactive' | null }>({});
 
+    // Calling both url's from backend to display users and status of their account
+    var url = "http://localhost:5122/api/User";
     var url2 = "http://localhost:5122/api/Account";
 
+    // Useeffect is used here to set each url to a specific usestate to be able to map it later on
     useEffect(() => {
         fetch(url)
             .then(response => response.json())
@@ -52,6 +57,26 @@ function Admin() {
             console.error('Error fetching data:', error);
         });
     }, []);
+
+    // Click function to activate the popup state
+    const handleDetailsClick = (userId: number) => {
+        setPopupVisible(prevState => ({
+            ...prevState,
+            [userId]: !prevState[userId]
+        }));
+    };
+
+    // Click function to be able to click between different option on the popup box
+    const handleOptionClick = (userId: number, option: 'active' | 'inactive') => {
+        setSelectedStatus(prevState => ({
+            ...prevState,
+            [userId]: option
+        }));
+        setPopupVisible(prevState => ({
+            ...prevState,
+            [userId]: false
+        })); // Close the pop-up after selection
+    };
 
     console.log("Users" + users); //Test
 
@@ -82,6 +107,7 @@ function Admin() {
                             <p className={styles.paragraph_five}>Action</p>
                         </div>
 
+                        {/* map all the users that created an account */}
                         {users && users.length > 0 ? (
                             users.map(user => {
                                 const userStatus = status.find(s => s.user_id === user.user_id);
@@ -99,6 +125,7 @@ function Admin() {
                                         </div>
                                         <p className={styles.paragraph_eight}>{user.user_id}</p>
                                         <div className={styles.box}></div>
+                                        {/* Map the status to say active(true) and inactive(false) */}
                                         {userStatus ? (
                                             <p 
                                                 className={styles.paragraph_nine}
@@ -109,10 +136,25 @@ function Admin() {
                                         ) : (
                                             <p className={styles.paragraph_nine}>Loading...</p>
                                         )}
-                                        <p className={styles.body_three}>
-                                            Details
-                                            <img src={img4} alt="Logo" className={styles.image3} />
-                                        </p>
+                                        <div>
+                                            <p className={styles.body_three} onClick={() => handleDetailsClick(user.user_id)}>
+                                                Details
+                                                <img src={img4} alt="Logo" className={styles.image3} />
+                                            </p>
+
+                                            {/* Pop up box to display different options */}
+                                            {popupVisible[user.user_id] && (
+                                                <div className={styles.popup}>
+                                                    <p onClick={() => handleOptionClick(user.user_id, 'active')}>Active</p>
+                                                    <p onClick={() => handleOptionClick(user.user_id, 'inactive')}>Inactive</p>
+                                                </div>
+                                            )}
+
+                                            {selectedStatus[user.user_id] && (
+                                                <p>You selected: {selectedStatus[user.user_id]}</p>
+                                            )}
+
+                                        </div>
                                     </div>
                                 );
                             })
