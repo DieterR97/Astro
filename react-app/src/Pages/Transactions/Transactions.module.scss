@@ -24,6 +24,14 @@ $border-dark: rgba($base-color, 0.88);
     user-select: none; // to prevent text highlighting
     height: 100vh;
     margin-bottom: 40px;
+
+    h3 {
+        color: var(--white);
+    }
+
+    p {
+        color: var(--white);
+    }
 }
 
 .sideNaveContainer {
@@ -201,7 +209,8 @@ $border-dark: rgba($base-color, 0.88);
             font-size: 12px;
             margin: 0;
         }
-        .totalBox{
+
+        .totalBox {
             background-color: var(--primaryColor);
             width: fit-content;
             padding: 5px 12px 5px 12px;
@@ -516,4 +525,13 @@ $border-dark: rgba($base-color, 0.88);
 
 .negativeText {
     color: var(--negative);
+}
+
+.transactionDateBlock,
+.timeDataBlock {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
 }
