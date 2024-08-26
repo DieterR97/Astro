@@ -3,11 +3,6 @@ import styles from './Transactions.module.scss';
 
 // logo
 import Logo from "../../assets/login/logo.png";
-// icons
-import coinsIcon from '../Assets/coins.png'
-import homeIcon from '../Assets/home.png'
-import adminIcon from '../Assets/robot.png'
-import layersIcon from '../Assets/layers-subtract.png'
 // Icons SVG
 import VerticalDots from '../../assets/icons/more-vertical-stroke-rounded.svg'
 import FilterIcon from '../../assets/icons/FilterIcon.svg'
@@ -34,27 +29,39 @@ function Transactions() {
 
     interface Transaction {
         transactions_id: number;
+        userName: string;
+        from_account_id: number;
         transaction_type: string;
         amount: number;
         timestamp: Date; // Use Date type for timestamps
     }
 
-    // TODO : If the = the value it must change to according color 
 
-
+    // TODO : get the username from the account id's
     // TODO : Converting the timestamp to date and time
 
 
-    // Dummy Data
+    // * DUMMY DATA ...............................................................................
     const incomingData: Transaction[] = [
-        { transactions_id: 1, transaction_type: "big", amount: 2500, timestamp: new Date('2024-08-17T12:00:00Z') },
-        { transactions_id: 2, transaction_type: "small", amount: 3000, timestamp: new Date('2024-08-20T09:00:00Z') },
-        { transactions_id: 3, transaction_type: "medium", amount: 500, timestamp: new Date('2024-08-21T15:00:00Z') },
-        { transactions_id: 4, transaction_type: "medium", amount: 50000, timestamp: new Date('2024-08-22T15:00:00Z') },
-        { transactions_id: 5, transaction_type: "medium", amount: 54500, timestamp: new Date('2024-08-23T15:00:00Z') },
-        { transactions_id: 6, transaction_type: "medium", amount: 67000, timestamp: new Date('2024-08-24T15:00:00Z') },
+        { transactions_id: 1, userName: 'Ungerer Hattingh', from_account_id: 4, transaction_type: "big", amount: 2500, timestamp: new Date('2024-06-12T12:00:00Z') },
+        { transactions_id: 1, userName: 'Ungerer Hattingh', from_account_id: 4, transaction_type: "big", amount: 2500, timestamp: new Date('2024-06-13T12:00:00Z') },
+        { transactions_id: 1, userName: 'Ungerer Hattingh', from_account_id: 4, transaction_type: "big", amount: 2500, timestamp: new Date('2024-06-27T12:00:00Z') },
+        { transactions_id: 2, userName: 'Ungerer Hattingh', from_account_id: 4, transaction_type: "big", amount: 2500, timestamp: new Date('2024-07-17T12:00:00Z') },
+        { transactions_id: 2, userName: 'Ungerer Hattingh', from_account_id: 4, transaction_type: "big", amount: 2500, timestamp: new Date('2024-07-18T12:00:00Z') },
+        { transactions_id: 2, userName: 'Ungerer Hattingh', from_account_id: 4, transaction_type: "big", amount: 2500, timestamp: new Date('2024-07-15T12:00:00Z') },
+        { transactions_id: 3, userName: 'Ungerer Hattingh', from_account_id: 4, transaction_type: "small", amount: 3000, timestamp: new Date('2024-08-01T09:00:00Z') },
+        { transactions_id: 4, userName: 'Test for date sorting', from_account_id: 4, transaction_type: "medium", amount: 500, timestamp: new Date('2024-08-21T15:00:00Z') },
+        { transactions_id: 5, userName: 'Ungerer Hattingh', from_account_id: 4, transaction_type: "medium", amount: 5000000, timestamp: new Date('2024-08-22T15:00:00Z') },
+        { transactions_id: 6, userName: 'Ungerer Hattingh', from_account_id: 4, transaction_type: "medium", amount: 54500, timestamp: new Date('2024-08-23T15:00:00Z') },
+        { transactions_id: 7, userName: 'Ungerer Hattingh', from_account_id: 4, transaction_type: "medium", amount: 67000, timestamp: new Date('2024-08-24T15:00:00Z') },
+        { transactions_id: 8, userName: 'Test for date sorting', from_account_id: 4, transaction_type: "medium", amount: 500, timestamp: new Date('2024-08-25T16:40:00Z') },
+        { transactions_id: 9, userName: 'Test for date sorting', from_account_id: 4, transaction_type: "medium", amount: 500, timestamp: new Date('2024-08-25T16:45:00Z') },
+        { transactions_id: 9, userName: 'Test for date sorting', from_account_id: 4, transaction_type: "medium", amount: 500, timestamp: new Date('2024-08-25T16:45:00Z') },
     ];
+    // to change months from numbers to names
+    // console.table(incomingData)
 
+    // TODO : If the status = the status value of the data - it must change to according color 
     // Define the color mapping for transaction types
     const transactionTypeColors: { [key: string]: string } = {
         big: 'red',
@@ -62,13 +69,9 @@ function Transactions() {
         small: 'green',
     };
 
-    // Process and sort the data
-    const sortedData = defualtSortingByDate(incomingData);
-    console.log(sortedData);
 
-
+    // * Details button Modal .....................................................................
     // TODO : the details button
-    // * Details button Modal
     // const [isModalOpen, setIsModalOpen] = useState(false);
     // const openModal = () => {
     //     setIsModalOpen(true);
@@ -85,8 +88,8 @@ function Transactions() {
     // };
 
 
+    // * GET all the users transactions ...........................................................
     // TODO : map all transactions specific to the logged in user 
-    // * to fetch all the transactions
     const [userTransactions, setUserTransactions] = useState<Transaction[]>([]);
     // const [transactionAmount, setTransactionAmount] = useState();
 
@@ -106,27 +109,24 @@ function Transactions() {
     // console.log(userTransactions);
 
 
-    // TODO : by defualt must be sorted by date
+    // * SORTING FUNCTOINALITY ....................................................................
+    // TODO : by DEFUALT must be sorted by date
     function defualtSortingByDate(data: Transaction[]): Transaction[] {
-        return data.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+        return data.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
     }
 
+    // ? how to execute this...
+    function sortingByAmount(data: Transaction[]): Transaction[] {
+        return data.sort((a, b) => b.amount - a.amount); // sorting by the amount (decending = biggest to smallest)
+    }
 
-    // TODO : filtering function for all - 7days - 24Hours 
-    const filterRecentData = (items: Transaction[]): Transaction[] => {
-        const now = new Date();
-        const thirtyDaysAgo = new Date(now.setDate(now.getDate() - 30)); // 30 days
-        const sevenDaysAgo = new Date(now.setDate(now.getDate() - 7)); // 7 days
-        // Filter transactions from the past 24 hours
-        const twentyFourHoursAgo = new Date(now.setDate(now.getDate() - 24 * 60 * 60 * 1000)); // 24 hours
+    // Process and sort the data
+    const sortedData = defualtSortingByDate(incomingData);
+    // const resultDataOfAmount = sortingByAmount(incomingData);   
+    // console.log(sortedData);
 
-        return items.filter(item => {
-            const itemDate = new Date(item.timestamp);
-            return itemDate >= thirtyDaysAgo;
-        });
-    };
 
-    // TODO : sorting functionality 
+    // TODO : sorting functionality Testing -----
     // soring options like : by name - by amount - by date - by status 
     const filterAndSortTransactions = (items: Transaction[]): Transaction[] => {
         const now = new Date();
@@ -141,10 +141,100 @@ function Transactions() {
         return recentTransactions.sort((a, b) => b.amount - a.amount);
 
         // Sort the data by timestamp in ascending order
-        const sortedData = [...incomingData].sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime());
+        const sortedData = [...incomingData].sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime()); // useless for now as the defualt sorting does this already
     };
 
 
+    // * FILTERING FUNCTOINALITY ....................................................................
+    // TODO : filtering function for all - 7days - 24Hours 
+    // const filterRecentData = (items: Transaction[]): Transaction[] => {
+    //     const now = new Date();
+
+    //     const thirtyDaysAgo = new Date(now.setDate(now.getDate() - 30)); // 30 days
+    //     const sevenDaysAgo = new Date(now.setDate(now.getDate() - 7)); // 7 days
+    //     // Filter transactions from the past 24 hours
+    //     const twentyFourHoursAgo = new Date(now.setDate(now.getDate() - 24 * 60 * 60 * 1000)); // 24 hours
+
+    //     return items.filter(item => {
+    //         const itemDate = new Date(item.timestamp);
+    //         return itemDate >= thirtyDaysAgo;
+    //     });
+    // };
+
+    // * Thirty days ago filter:
+    function thrityDaysFilter() {
+        const nowThrity = new Date();
+        const thirtyDaysAgo = new Date(nowThrity.setDate(nowThrity.getDate() - 30)); // 30 days
+        // console.log("THIRTY DAYS AGO:", thirtyDaysAgo); //  returns the date from 30 days ago
+        const thirtyDaysAgoData = incomingData.filter((a) => a.timestamp > thirtyDaysAgo);
+        // console.log(thirtyDaysAgoData);
+    };
+
+    // * Seven Days ago filter:
+    function sevenDaysFilter() {
+        const nowSeven = new Date();
+        // console.log("Current date:",nowSeven);
+        const sevenDaysAgo = new Date(nowSeven.setDate(nowSeven.getDate() - 7)); // 7 days
+        // console.log("DATE 7 DYAS AGO:", sevenDaysAgo);
+        const sevenDaysAgoData = incomingData.filter((a) => a.timestamp > sevenDaysAgo);
+        // console.log(sevenDaysAgoData);
+        const sortedData = defualtSortingByDate(incomingData);
+        {incomingData && incomingData.length > 0 ? (
+                            incomingData.map(transaction => (
+                                <div className={styles.contentRowTile}>
+                                    {/* name data block */}
+                                    <div className={styles.nameDataBlock}>
+                                        <div className={styles.userProfilePlacholder}></div>
+                                        {/* User name data and number data block */}
+                                        <div className={styles.userNameData}>
+                                            <p className={styles.tableText01}>{transaction.userName}</p>
+                                            <p className={styles.dataIdNumber}>{transaction.transactions_id}</p>
+                                        </div>
+                                    </div>
+                                    {/* Date data block */}
+                                    <div className={styles.dateDataBlock}>
+                                        <div className={styles.transactionDateBlock}>
+                                            <p className={styles.tableText01}>{transaction.timestamp.getDate()} :</p>
+                                            <p className={styles.tableText01}>{transaction.timestamp.getMonth()} :</p>
+                                            <p className={styles.tableText01}>{transaction.timestamp.getFullYear()}</p>
+                                        </div>
+                                        <div className={styles.timeDataBlock}>
+                                            <p className={styles.timeData}>At {transaction.timestamp.getHours()} : </p>
+                                            <p className={styles.timeData}>{transaction.timestamp.getMinutes()}</p>
+                                        </div>
+                                    </div>
+                                    {/* Amount Data Block */}
+                                    <div className={styles.amountDataBlock}>
+                                        <p className={styles.tableText01}>R{transaction.amount}</p>
+                                    </div>
+                                    {/* invoice Id Data Block */}
+                                    <div className={styles.invoiceDataBlock}>
+                                        <p>INV34598</p>
+                                    </div>
+                                    {/* states data block */}
+                                    <div className={styles.statusDataBlock}>
+                                        <p className={styles.positiveText}>{transaction.transaction_type}</p>
+                                    </div>
+                                    {/* Action data block */}
+                                    <div className={styles.actionDataBlock}>
+                                        <button className={styles.detailsBtn}>Details
+                                            <img src={VerticalDots} alt="vertical" />
+                                        </button>
+                                    </div>
+                                </div>
+                            ))) : (
+                            <p>No transactions Found</p>
+                        )}
+    };
+
+
+    // * OTHER ....................................................................................
+    const monthNames = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    // Get the current month index (0-11)
+    // const currentMonthIndex = currentDate.getMonth();
 
     // ...
 
@@ -152,9 +242,7 @@ function Transactions() {
         <div className={styles.mainContainer}>
             {/* The Content Container */}
             <div className={styles.contentContainer}>
-
                 <h1>Transactions</h1>
-
                 {/* filter section START */}
                 <div className={styles.filterContainer}>
                     {/* filter bar */}
@@ -163,10 +251,10 @@ function Transactions() {
                             <p className={styles.filterOptionText}>All</p>
                         </div>
                         <div className={styles.filterOption}>
-                            <p className={styles.filterOptionText}>30 Days</p>
+                            <p className={styles.filterOptionText} onClick={thrityDaysFilter}>30 Days</p>
                         </div>
                         <div className={styles.filterOption}>
-                            <p className={styles.filterOptionText} onClick={function () { }}>7 Days</p>
+                            <p className={styles.filterOptionText} onClick={sevenDaysFilter}>7 Days</p>
                         </div>
                         <div className={styles.filterOption04}>
                             <p className={styles.filterOptionText}>24 Hours</p>
@@ -188,7 +276,6 @@ function Transactions() {
                                 <button>By Status</button>
                             </div>
                         </div>
-
                         {/* search field */}
                         <div className={styles.searchFieldCon}>
                             <img src={SearchIcon} alt="searchIcon" />
@@ -197,11 +284,10 @@ function Transactions() {
                     </div>
                 </div>
                 {/* filter section END */}
-
                 <h1>Your Transactions</h1>
-
                 {/* Transactions Table  */}
                 <div className={styles.transactionTableMianCon}>
+                    {/* TOP ROW COLUMNS */}
                     <div className={styles.tableTopRow}>
                         <p>Name</p>
                         <p>Date</p>
@@ -214,8 +300,7 @@ function Transactions() {
                     <div className={styles.dividerLine02}></div>
                     {/* Content */}
                     <div className={styles.innerTableCon}>
-
-                        {/* row of user data */}
+                        {/* // * row of user data */}
                         <div className={styles.contentRowTile}>
                             {/* name data block */}
                             <div className={styles.nameDataBlock}>
@@ -248,14 +333,11 @@ function Transactions() {
                                 <button className={styles.detailsBtn} value="Get Models">Details
                                     <img src={VerticalDots} alt="vertical" />
                                 </button>
-
                             </div>
                         </div>
-
                         {/* <li key={Transactions.id}>
                             {transaction.name}
                         </li> */}
-
                         {/* row of user data */}
                         {/* map testing */}
                         {userTransactions && userTransactions.length > 0 ? (
@@ -300,16 +382,16 @@ function Transactions() {
 
                         <h3>Testing Dummy data below:</h3>
                         <p>Defualt Sorting is by Date </p>
-
-                        {sortedData && sortedData.length > 0 ? (
-                            sortedData.map(transaction => (
+                        {/* mapping the data */}
+                        {incomingData && incomingData.length > 0 ? (
+                            incomingData.map(transaction => (
                                 <div className={styles.contentRowTile}>
                                     {/* name data block */}
                                     <div className={styles.nameDataBlock}>
                                         <div className={styles.userProfilePlacholder}></div>
                                         {/* User name data and number data block */}
                                         <div className={styles.userNameData}>
-                                            <p className={styles.tableText01}>Name Surname</p>
+                                            <p className={styles.tableText01}>{transaction.userName}</p>
                                             <p className={styles.dataIdNumber}>{transaction.transactions_id}</p>
                                         </div>
                                     </div>
@@ -320,7 +402,6 @@ function Transactions() {
                                             <p className={styles.tableText01}>{transaction.timestamp.getMonth()} :</p>
                                             <p className={styles.tableText01}>{transaction.timestamp.getFullYear()}</p>
                                         </div>
-
                                         <div className={styles.timeDataBlock}>
                                             <p className={styles.timeData}>At {transaction.timestamp.getHours()} : </p>
                                             <p className={styles.timeData}>{transaction.timestamp.getMinutes()}</p>
@@ -328,7 +409,7 @@ function Transactions() {
                                     </div>
                                     {/* Amount Data Block */}
                                     <div className={styles.amountDataBlock}>
-                                        <p className={styles.tableText01}>{transaction.amount}</p>
+                                        <p className={styles.tableText01}>R{transaction.amount}</p>
                                     </div>
                                     {/* invoice Id Data Block */}
                                     <div className={styles.invoiceDataBlock}>
@@ -348,7 +429,6 @@ function Transactions() {
                             ))) : (
                             <p>No transactions Found</p>
                         )}
-
                     </div>
                 </div>
             </div>
