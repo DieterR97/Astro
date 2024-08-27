@@ -221,3 +221,22 @@
   position: relative;
   width: 24px;
 }
+
+.dropdown {
+  position: absolute;
+  top: -40px; // Adjust depending on your layout
+  right: 10px; // Adjust depending on your layout
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  z-index: 1000;
+}
+
+.dropdownItem {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.dropdownItem:hover {
+  background-color: #f0f0f0;
+}

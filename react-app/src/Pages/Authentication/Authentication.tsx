@@ -14,6 +14,7 @@ const Authentication = () => {
         setOtp(e.target.value);
     };
 
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
@@ -29,6 +30,8 @@ const Authentication = () => {
 
             if (response.ok) {
                 const data = await response.json();
+                console.log('Received token:', data.token);
+                localStorage.setItem('token', data.token); // Store token in local storage
                 alert(data.message); // Display success message
                 navigate('/overview');
             } else {
@@ -42,6 +45,7 @@ const Authentication = () => {
             setLoading(false);
         }
     };
+
 
     const handleResendOtp = async () => {
         const email = localStorage.getItem('email_to_validate');

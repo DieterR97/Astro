@@ -20,15 +20,12 @@ const LoginPage = () => {
         }
     }, [isSubmitting]);
 
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault(); // Prevent default form submission
 
         e.stopPropagation();
 
         setIsSubmitting(true); // Set submitting state
-
-        // setTriggerRender(!triggerRender); // Force re-render
 
         try {
             const response = await fetch('http://localhost:5122/api/Auth/login', {
@@ -39,21 +36,25 @@ const LoginPage = () => {
                 body: JSON.stringify({ email, password }),
             });
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                alert(errorData.message || "Invalid credentials. Please try again.");
-                // Send a message to the main process to blur and refocus the window
-                // ipcRenderer.send('trigger-blur-focus');
-            } else {
+            const contentType = response.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
                 const data = await response.json();
-                localStorage.setItem('token', data.token);
-                alert("Welcome Back!");
-                navigate('/overview');
+                if (!response.ok) {
+                    alert(data.message || "Invalid credentials. Please try again.");
+                } else {
+                    // Store the email in local storage for validation
+                    localStorage.setItem('email_to_validate', email);
+                    alert(data.message); // Inform user that OTP is sent
+                    navigate('/authentication');
+                }
+            } else {
+                const textResponse = await response.text();
+                console.error("Non-JSON response:", textResponse);
+                alert("An unexpected error occurred. Please try again.");
             }
         } catch (error) {
+            console.error("Fetch error:", error);
             alert("An error occurred. Please try again.");
-            
-            // document.getElementById("emailField")?.focus();
         } finally {
             setIsSubmitting(false); // Reset submitting state
         }
