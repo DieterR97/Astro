@@ -62,7 +62,7 @@ export const Frame = ({ title, content, description, icon }: FrameProps) => {
   );
 };
 
-export const Asset = () => {
+export const AssetComponent = () => {
   return (
     <div className={styles.asset}>
       <div className={styles["image"]} />
@@ -84,7 +84,7 @@ type AssetRowProps = {
   price: string;
   balance: string;
   proportion: string;
-  abreviation: string;
+  abbreviation: string;
 };
 
 export const AssetRow = ({
@@ -93,7 +93,7 @@ export const AssetRow = ({
   price,
   balance,
   proportion,
-  abreviation,
+  abbreviation,
 }: AssetRowProps) => {
   return (
     <div className={styles.assetRow}>
@@ -101,7 +101,7 @@ export const AssetRow = ({
         <img className={styles["image"]} src={image} alt="" />
         <div className={styles["nameContainer"]}>
           <div className={styles["name"]}> {name}</div>
-          <div className={styles["abreviation"]}> {abreviation}</div>
+          <div className={styles["abreviation"]}> {abbreviation}</div>
         </div>
       </div>
 
