@@ -92,10 +92,14 @@ function Admin() {
                             <img src={img} alt="Logo" className={styles.image} />
                             Filter
                         </h4>
-                        <h4 className={styles.body_two}>
-                            <img src={img2} alt="Logo" className={styles.image} />
-                            Search
-                        </h4>
+                        <div className={styles.searchFieldCon}>
+                            <img src={img2} alt="search Icon" />
+                            <input
+                                className={styles.filterSearchInput}
+                                type="text"
+                                placeholder="Search"
+                            />
+                        </div>
                     </div>
 
                     <div className={styles.admin_card}>
@@ -145,13 +149,10 @@ function Admin() {
                                             {/* Pop up box to display different options */}
                                             {popupVisible[user.user_id] && (
                                                 <div className={styles.popup}>
-                                                    <p onClick={() => handleOptionClick(user.user_id, 'active')}>Active</p>
-                                                    <p onClick={() => handleOptionClick(user.user_id, 'inactive')}>Inactive</p>
+                                                    <p onClick={() => handleOptionClick(user.user_id, 'active')}>Profile</p>
+                                                    <p onClick={() => handleOptionClick(user.user_id, 'inactive')}>Transactions</p>
+                                                    <p onClick={() => handleOptionClick(user.user_id, 'inactive')}>Freeze acct.</p>
                                                 </div>
-                                            )}
-
-                                            {selectedStatus[user.user_id] && (
-                                                <p>You selected: {selectedStatus[user.user_id]}</p>
                                             )}
 
                                         </div>
