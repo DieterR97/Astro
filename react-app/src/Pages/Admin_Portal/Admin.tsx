@@ -79,7 +79,33 @@ function Admin() {
         setPopupVisible(prevState => ({
             ...prevState,
             [userId]: false
-        })); // Close the pop-up after selection
+        }));
+
+        //To change the sate of the user status for when a account is frozen from active to inactive
+        if (option === 'inactive') {
+            // Make a PUT request to update the status
+            fetch(`http://localhost:5122/api/Account/${userId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ active: false }), // Set the account status to inactive
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Account status updated:", data);
+                // Update the status in the local state after successful response
+                setStatus(prevStatus => 
+                    prevStatus.map(s => 
+                        s.user_id === userId ? { ...s, active: false } : s
+                    )
+                );
+            })
+            .catch(error => {
+                console.error('Error updating account status:', error);
+            });
+        }
+
     };
 
     console.log("Users" + users); //Test
