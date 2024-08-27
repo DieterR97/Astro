@@ -4,6 +4,7 @@ import img from '../Assets/Filter_Option.png';
 import img2 from '../Assets/Search_Option.png';
 import img3 from '../Assets/Purple_Circle.png';
 import img4 from '../Assets/More_Option.png';
+import { useNavigate } from 'react-router-dom';
 
 // To define the shape of a User object
 interface User {
@@ -20,6 +21,9 @@ interface Status {
 }
 
 function Admin() {
+
+    //navigation to transactions page
+    const navigate = useNavigate();
 
     // Initialize state to store fetched data from the users and accounts table
     const [users, setUsers] = useState<User[]>([]); 
@@ -150,7 +154,7 @@ function Admin() {
                                             {popupVisible[user.user_id] && (
                                                 <div className={styles.popup}>
                                                     <p onClick={() => handleOptionClick(user.user_id, 'active')}>Profile</p>
-                                                    <p onClick={() => handleOptionClick(user.user_id, 'inactive')}>Transactions</p>
+                                                    <p onClick={() => userStatus && navigate("/transactions", { state: { user_id: userStatus.user_id } })}>Transactions</p>
                                                     <p onClick={() => handleOptionClick(user.user_id, 'inactive')}>Freeze acct.</p>
                                                 </div>
                                             )}

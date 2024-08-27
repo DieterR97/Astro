@@ -7,6 +7,7 @@ import Logo from "../../assets/login/logo.png";
 import VerticalDots from '../../assets/icons/more-vertical-stroke-rounded.svg'
 import FilterIcon from '../../assets/icons/FilterIcon.svg'
 import SearchIcon from '../../assets/icons/SearchIcon.svg'
+import { useParams } from 'react-router-dom';
 // ...
 // ...
 // {
@@ -26,6 +27,13 @@ import SearchIcon from '../../assets/icons/SearchIcon.svg'
 
 function Transactions() {
 
+    //recieve the id from the accounts and users tabel
+    const { user_id } = useParams<{ user_id: string }>();
+
+    useEffect(() => {
+        console.log("User ID from params:", user_id);
+        // Fetch and display transactions for the user_id
+    }, [user_id]);
 
     interface Transaction {
         transactions_id: number;
