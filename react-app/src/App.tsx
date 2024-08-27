@@ -49,6 +49,7 @@ function NavRoutes() {
           <Route path="/purchasing" element={<Purchasing />} />
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/withdrawals" element={<Withdrawals />} />
+          <Route path="/transactions/:user_id" element={<Transactions />} />
         </Routes>
       </div>
     </>

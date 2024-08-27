@@ -10,24 +10,25 @@ import SearchIcon from '../../assets/icons/SearchIcon.svg'
 import { useParams } from 'react-router-dom';
 // ...
 // ...
-// {
-//     "$id": "4",
-//     "user_id": 3,
-//     "username": "UngererHattingh",
-//     "email": "221302@virtualwindow.co.za",
-//     "role": "user",
-//     "created_at": "2024-08-24T07:02:33.225092Z",
-//     "otp": "591138",
-//     "otpExpiry": "2024-08-24T07:07:33.545741Z",
-//     "authentication_logs": null,
-//     "user_security": null,
-//     "account": null
-//   }
 
 type FilterOption = 'ALL' | 'LAST_7_DAYS' | 'LAST_30_DAYS' | 'LAST_24_HOURS';
 
-
 function Transactions() {
+
+    // * recieve the id from the accounts and users tabel
+    // const { user_id } = useParams<{ user_id: string }>();
+
+    // useEffect(() => {
+    //     if (user_id) {
+    //         console.log("User ID from params:", user_id);
+    //         // Fetch and display transactions for the user_id
+    //     } else {
+    //         console.error("User ID is undefined");
+    //     }
+    //     // console.log("User ID from params:", user_id);
+    //     // Fetch and display transactions for the user_id
+    // }, [user_id]);
+
     //recieve the id from the accounts and users tabel
     const { user_id } = useParams<{ user_id: string }>();
 
@@ -36,6 +37,7 @@ function Transactions() {
         // Fetch and display transactions for the user_id
     }, [user_id]);
 
+
     interface Transaction {
         transactions_id: number;
         userName: string;
@@ -43,6 +45,10 @@ function Transactions() {
         transaction_type: string;
         amount: number;
         timestamp: Date; // Use Date type for timestamps
+    }
+
+    interface User {
+        user_id: number;
     }
 
     // TODO : get the username from the account id's
@@ -78,12 +84,13 @@ function Transactions() {
         small: 'green',
     };
 
-
-    // * GET all the users transactions ...........................................................
-    // TODO : map all transactions specific to the logged in user 
+    // * useStates ....................................................................................
     const [userTransactions, setUserTransactions] = useState<Transaction[]>([]); // the usestate
     const [filterOption, setFilterOption] = useState<FilterOption>('ALL');
+    const [users, setUsers] = useState<User[]>([]);
 
+    // * GET all Transactions for the current logged user .........................................
+    // TODO : map all transactions specific to the logged in user 
     // the transactions need to be specific to the user ia
     var url = "http://localhost:5122/api/Transaction"
 
@@ -100,9 +107,10 @@ function Transactions() {
     }, []);
     // console.log(userTransactions);
 
-
-    // * FILTERING FUNCTOINALITY ....................................................................
     
+
+    // * FILTERING FUNCTOINALITY ..................................................................
+
     const filteredData = (() => {
         const today = new Date();
         switch (filterOption) {
@@ -120,8 +128,7 @@ function Transactions() {
                 return incomingData;
         }
     })();
-
-    console.log(filteredData.length);
+    // console.log(filteredData.length);
 
 
     // * SORTING FUNCTOINALITY ....................................................................

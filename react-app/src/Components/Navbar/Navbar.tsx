@@ -7,7 +7,7 @@ import AdminIcon from "../../assets/icons/AdminIcon.svg";
 import MoreIcon from "../../assets/icons/MoreIcon.svg";
 import Logo from "../../assets/login/logo.png";
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 
 const Navbar = () => {
   const navigate = useNavigate();

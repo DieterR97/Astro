@@ -154,7 +154,7 @@ function Admin() {
                                             {popupVisible[user.user_id] && (
                                                 <div className={styles.popup}>
                                                     <p onClick={() => handleOptionClick(user.user_id, 'active')}>Profile</p>
-                                                    <p onClick={() => userStatus && navigate("/transactions", { state: { user_id: userStatus.user_id } })}>Transactions</p>
+                                                    <p onClick={() => userStatus && navigate(`/transactions/${userStatus.user_id}`)}>Transactions</p>
                                                     <p onClick={() => handleOptionClick(user.user_id, 'inactive')}>Freeze acct.</p>
                                                 </div>
                                             )}
