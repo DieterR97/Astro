@@ -24,9 +24,10 @@ import { useParams } from 'react-router-dom';
 //     "account": null
 //   }
 
+type FilterOption = 'ALL' | 'LAST_7_DAYS' | 'LAST_30_DAYS' | 'LAST_24_HOURS';
+
 
 function Transactions() {
-
     //recieve the id from the accounts and users tabel
     const { user_id } = useParams<{ user_id: string }>();
 
@@ -44,10 +45,8 @@ function Transactions() {
         timestamp: Date; // Use Date type for timestamps
     }
 
-
     // TODO : get the username from the account id's
     // TODO : Converting the timestamp to date and time
-
 
     // * DUMMY DATA ...............................................................................
     const incomingData: Transaction[] = [
@@ -64,7 +63,9 @@ function Transactions() {
         { transactions_id: 7, userName: 'Ungerer Hattingh', from_account_id: 4, transaction_type: "medium", amount: 67000, timestamp: new Date('2024-08-24T15:00:00Z') },
         { transactions_id: 8, userName: 'Test for date sorting', from_account_id: 4, transaction_type: "medium", amount: 500, timestamp: new Date('2024-08-25T16:40:00Z') },
         { transactions_id: 9, userName: 'Test for date sorting', from_account_id: 4, transaction_type: "medium", amount: 500, timestamp: new Date('2024-08-25T16:45:00Z') },
-        { transactions_id: 9, userName: 'Test for date sorting', from_account_id: 4, transaction_type: "medium", amount: 500, timestamp: new Date('2024-08-25T16:45:00Z') },
+        { transactions_id: 10, userName: 'Test for date sorting', from_account_id: 4, transaction_type: "medium", amount: 500, timestamp: new Date('2024-08-25T16:45:00Z') },
+        { transactions_id: 11, userName: 'Test for date sorting', from_account_id: 4, transaction_type: "medium", amount: 500, timestamp: new Date('2024-08-27T16:45:00Z') },
+        { transactions_id: 12, userName: 'Test for date sorting', from_account_id: 4, transaction_type: "medium", amount: 500, timestamp: new Date('2024-08-26T14:45:00Z') },
     ];
     // to change months from numbers to names
     // console.table(incomingData)
@@ -78,14 +79,12 @@ function Transactions() {
     };
 
 
-
-
-
     // * GET all the users transactions ...........................................................
     // TODO : map all transactions specific to the logged in user 
-    const [userTransactions, setUserTransactions] = useState<Transaction[]>([]);
-    // const [transactionAmount, setTransactionAmount] = useState();
+    const [userTransactions, setUserTransactions] = useState<Transaction[]>([]); // the usestate
+    const [filterOption, setFilterOption] = useState<FilterOption>('ALL');
 
+    // the transactions need to be specific to the user ia
     var url = "http://localhost:5122/api/Transaction"
 
     useEffect(() => {
@@ -103,56 +102,26 @@ function Transactions() {
 
 
     // * FILTERING FUNCTOINALITY ....................................................................
+    
+    const filteredData = (() => {
+        const today = new Date();
+        switch (filterOption) {
+            case 'LAST_24_HOURS':
+                const twentyFourHoursAgo = new Date(today.setDate(today.getDate() - 24 / 60 / 60 / 1000)); // 24 hours
+                return incomingData.filter(item => new Date(item.timestamp) >= twentyFourHoursAgo);
+            case 'LAST_7_DAYS':
+                const sevenDaysAgo = new Date(today.setDate(today.getDate() - 7)); // 7 days
+                return incomingData.filter(item => new Date(item.timestamp) >= sevenDaysAgo);
+            case 'LAST_30_DAYS':
+                const thirtyDaysAgo = new Date(today.setDate(today.getDate() - 30)); // 30 days
+                return incomingData.filter(item => new Date(item.timestamp) >= thirtyDaysAgo);
+            case 'ALL':
+            default:
+                return incomingData;
+        }
+    })();
 
-    // TODO : filtering function for all - 7days - 24Hours 
-    // const filterRecentData = (items: Transaction[]): Transaction[] => {
-    //     const now = new Date();
-
-    //     const thirtyDaysAgo = new Date(now.setDate(now.getDate() - 30)); // 30 days
-    //     const sevenDaysAgo = new Date(now.setDate(now.getDate() - 7)); // 7 days
-    //     // Filter transactions from the past 24 hours
-    //     const twentyFourHoursAgo = new Date(now.setDate(now.getDate() - 24 * 60 * 60 * 1000)); // 24 hours
-
-    //     return items.filter(item => {
-    //         const itemDate = new Date(item.timestamp);
-    //         return itemDate >= thirtyDaysAgo;
-    //     });
-    // };
-    // * all Filter:
-    function allFilter() {
-        alert("all items filter");
-    };
-
-    // * Thirty days ago filter:
-    function thrityDaysFilter() {
-        const nowThrity = new Date();
-        const thirtyDaysAgo = new Date(nowThrity.setDate(nowThrity.getDate() - 30)); // 30 days
-        // console.log("THIRTY DAYS AGO:", thirtyDaysAgo); //  returns the date from 30 days ago
-        const thirtyDaysAgoData = incomingData.filter((a) => a.timestamp > thirtyDaysAgo);
-        // console.log(thirtyDaysAgoData);
-
-        alert("30 days filter button function was triggered ");
-
-    };
-
-    // * Seven Days ago filter:
-    function sevenDaysFilter() {
-        const nowSeven = new Date();
-        // console.log("Current date:",nowSeven);
-        const sevenDaysAgo = new Date(nowSeven.setDate(nowSeven.getDate() - 7)); // 7 days
-        // console.log("DATE 7 DYAS AGO:", sevenDaysAgo);
-        const sevenDaysAgoData = incomingData.filter((a) => a.timestamp > sevenDaysAgo);
-        // console.log(sevenDaysAgoData);
-        const sortedData = defualtSortingByDate(incomingData);
-
-        alert("7 days filter button function was triggered ");
-
-    };
-
-    // * 24 hours filter option:
-    function twentyFourHoursFilter() {
-        alert("within 24 hours filter button function was triggered ");
-    }
+    console.log(filteredData.length);
 
 
     // * SORTING FUNCTOINALITY ....................................................................
@@ -230,22 +199,23 @@ function Transactions() {
                     {/* filter bar */}
                     <div className={styles.filterBar}>
                         <div className={styles.filterOption01}>
-                            <button id={styles.allFilterBtn} onClick={allFilter}>
+                            <button id={styles.allFilterBtn} onClick={() => setFilterOption('ALL')}>
                                 <p className={styles.filterOptionText}>All</p>
                             </button>
                         </div>
                         <div className={styles.filterOption}>
-                            <button id={styles.thrityDaysFilterBtn} onClick={thrityDaysFilter}>
+                            <button id={styles.thrityDaysFilterBtn} onClick={() => setFilterOption('LAST_30_DAYS')}>
+                                {/* {showRecent ? 'Show All Data' : 'Show Data from Last 30 Days'} */}
                                 <p className={styles.filterOptionText} >30 Days</p>
                             </button>
                         </div>
                         <div className={styles.filterOption} >
-                            <button id={styles.sevenDaysFilterBtn} onClick={sevenDaysFilter}>
+                            <button id={styles.sevenDaysFilterBtn} onClick={() => setFilterOption('LAST_7_DAYS')}>
                                 <p className={styles.filterOptionText} >7 Days</p>
                             </button>
                         </div>
                         <div className={styles.filterOption04}>
-                            <button id={styles.twentyFourHoursFilterBtn} onClick={twentyFourHoursFilter}>
+                            <button id={styles.twentyFourHoursFilterBtn} onClick={() => setFilterOption('LAST_24_HOURS')}>
                                 <p className={styles.filterOptionText}>24 Hours</p>
                             </button>
                         </div>
@@ -259,7 +229,7 @@ function Transactions() {
                                 Filter
                             </button>
                             <div className={styles.dropDownContent}>
-                                <button value={"timestamp"}>By Date </button> 
+                                <button value={"timestamp"}>By Date </button>
                                 <button value={"byName"}>By Name</button>
                                 <button value={"amount"}>By Amount</button>
                                 <button value={""}>By Invoice</button>
@@ -369,11 +339,13 @@ function Transactions() {
                             ))) : (
                             <p>No transactions Found</p>
                         )}
+
                         <h3>Testing Dummy data below:</h3>
                         <p>Defualt Sorting is by Date </p>
-                        {/* // * mapping the Dummy data */}
-                        {incomingData && incomingData.length > 0 ? (
-                            incomingData.map(transaction => (
+
+                        {/* // * MAPPING FROM DUMMY DATA -------------------------------------------------------------- */}
+                        {filteredData && filteredData.length > 0 ? (
+                            filteredData.map(transaction => (
                                 <div className={styles.contentRowTile}>
                                     {/* name data block */}
                                     <div className={styles.nameDataBlock}>
