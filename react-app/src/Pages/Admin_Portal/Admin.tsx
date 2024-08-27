@@ -117,7 +117,7 @@ function Admin() {
 
                         {/* map all the users that created an account */}
                         {users && users.length > 0 ? (
-                            users.map(user => {
+                            users.sort((a, b) => a.user_id - b.user_id).map(user => {
                                 const userStatus = status.find(s => s.user_id === user.user_id);
 
                                 return (
