@@ -15,7 +15,7 @@ $base-color: #c6538c; // example of scss color variable
 $border-dark: rgba($base-color, 0.88);
 
 // * color sheet
-$negative:#FC684E;
+$negative: #FC684E;
 $positiveColor: #0B9457;
 $primaryColor: #7E4AC0;
 $white: #fff;
@@ -37,7 +37,7 @@ $black: #000;
     margin-bottom: 40px;
 
     h3 {
-        color:$white;
+        color: $white;
     }
 
     p {
@@ -160,10 +160,11 @@ $black: #000;
 
     .filterOption {
         border: 1px solid $white;
-        padding: 0px 20px 0px 20px;
+        // padding: 0px 20px 0px 20px;
         cursor: pointer;
         transition: all ease-in-out .1s;
         color: $white;
+        overflow: hidden;
 
         &:hover {
             // background-color: #909498;
@@ -175,16 +176,41 @@ $black: #000;
             -webkit-backdrop-filter: blur(4px);
             // border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+       
+
+        #thrityDaysFilterBtn {
+            background-color: transparent;
+            outline: none;
+            border: none;
+            margin: 0;
+            padding: 0px 20px 0px 20px;
+            width: auto;
+            height: auto;
+            cursor: pointer;
+        }
+
+        #sevenDaysFilterBtn {
+            background-color: transparent;
+            outline: none;
+            border: none;
+            margin: 0;
+            padding: 0px 20px 0px 20px;
+            width: auto;
+            height: auto;
+            cursor: pointer;
         }
     }
 
     .filterOption01 {
         border: 1px solid $white;
-        padding: 0px 20px 0px 20px;
+        // padding: 0px 20px 0px 20px;
         cursor: pointer;
         border-radius: 10px 0px 0px 10px;
         transition: all ease-in-out .1s;
         color: $white;
+        overflow: hidden;
 
         &:hover {
             // background-color: #909498;
@@ -197,15 +223,27 @@ $black: #000;
             // border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.18);
         }
+
+        #allFilterBtn {
+            background-color: transparent;
+            outline: none;
+            border: none;
+            margin: 0;
+            padding: 0px 20px 0px 20px;
+            width: auto;
+            height: auto;
+            cursor: pointer;
+        }
     }
 
     .filterOption04 {
         border: 1px solid var(--white);
-        padding: 0px 20px 0px 20px;
+        // padding: 0px 20px 0px 20px;
         cursor: pointer;
         border-radius: 0px 10px 10px 0px;
         transition: all ease-in-out .1s;
         color: var(--white);
+        overflow: hidden;
 
         &:hover {
             // background-color: #909498;
@@ -217,6 +255,17 @@ $black: #000;
             -webkit-backdrop-filter: blur(4px);
             // border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        #twentyFourHoursFilterBtn{
+            background-color: transparent;
+            outline: none;
+            border: none;
+            margin: 0;
+            padding: 0px 20px 0px 20px;
+            width: auto;
+            height: auto;
+            cursor: pointer;
         }
     }
 
