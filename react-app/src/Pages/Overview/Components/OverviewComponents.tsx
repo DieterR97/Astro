@@ -25,19 +25,13 @@ export const Banner: React.FC<BannerProps> = ({
     (status) => status.status_id === user.account.account_status_id + 1
   );
 
-  const transactionsFrom = user.account.transactionsFrom.$values;
-  const transactionsTo = user.account.transactionsTo.$values;
+  const transactions = user.account.transactions.$values;
 
-  const totalTransactions = transactionsFrom.length + transactionsTo.length;
-  const totalAmountFrom = transactionsFrom.reduce(
+  const totalTransactions = transactions.length;
+  const totalAmount = transactions.reduce(
     (sum, transaction) => sum + transaction.amount,
     0
   );
-  const totalAmountTo = transactionsTo.reduce(
-    (sum, transaction) => sum + transaction.amount,
-    0
-  );
-  const totalAmount = totalAmountFrom + totalAmountTo;
 
   const canUpgrade =
     nextStatus &&
@@ -59,7 +53,9 @@ export const Banner: React.FC<BannerProps> = ({
         />
         <Frame
           title="Interest Rate"
-          content={`${(currentAccountStatus?.annual_interest_rate || 0 ) * 100}%`}
+          content={`${
+            (currentAccountStatus?.annual_interest_rate || 0) * 100
+          }%`}
           description={`Next -> ${
             (nextStatus?.annual_interest_rate || 0) * 100
           }%`}
@@ -123,7 +119,9 @@ export const Frame = ({
         {content}
       </div>
       <div className={styles["text-wrapper-3"]}>{description}</div>
-      <div className={`${styles.vector} ${className ? styles.greenVector : ""}`} />
+      <div
+        className={`${styles.vector} ${className ? styles.greenVector : ""}`}
+      />
     </div>
   );
 };
@@ -136,7 +134,7 @@ export const AssetComponent = (asset: Asset) => {
         <div className={styles["name"]}>
           {asset.name} ({asset.abbreviation})
         </div>
-        <div className={styles["amount"]}>R{asset.amount * asset.price}</div>
+        <div className={styles["amount"]}>R{asset.tokens * asset.price}</div>
         <div className={styles["change"]}>R{asset.price}</div>
       </div>
       <div className={styles["button"]}>
@@ -180,6 +178,33 @@ export const AssetRow = ({
         <div className={styles["proportion"]}> {proportion}</div>
       </div>
       <img className={styles["vector"]} src={MoreIcon} alt=""></img>
+    </div>
+  );
+};
+
+type TransactionRowProps = {
+  icon: string;
+  transactionType: string;
+  date: string;
+  amount: string;
+};
+
+export const TransactionRow: React.FC<TransactionRowProps> = ({
+  icon,
+  transactionType,
+  date,
+  amount,
+}) => {
+  return (
+    <div className={styles.transactionRow}>
+      <div className={styles.iconContainer}>
+        <img className={styles.icon} src={icon} alt="Transaction Icon" />
+      </div>
+      <div className={styles.detailsContainer}>
+        <div className={styles.transactionType}>{transactionType}</div>
+        <div className={styles.date}>{date}</div>
+      </div>
+      <div className={styles.amount}>{amount}</div>
     </div>
   );
 };

@@ -7,7 +7,7 @@
   --black: #000;
   --primaryColor: #7e4ac0;
   --grayedTextColor: #909498;
-  --secondaryColor: #0E1922;
+  --secondaryColor: #0e1922;
 
   --fontSize-base: 16px;
   --fontSize-sm: 12px;
@@ -161,68 +161,66 @@ body {
   // color: #fff;
 }
 
-.statsContainer{
+.statsContainer {
   display: flex;
   flex-direction: row;
   gap: 20px;
 }
 
-.portfolio{
-    display: flex;
-    flex-direction: column;
-    height: 345px;
-    background-color: var(--secondaryColor);
-    padding: 10px 20px 10px 20px;
-    border-radius: 10px;
+.portfolio {
+  display: flex;
+  flex-direction: column;
+  height: 345px;
+  background-color: var(--secondaryColor);
+  padding: 10px 20px 10px 20px;
+  border-radius: 10px;
 
-    .title{
-        color: white;
-        font-size: var(--fontSize-md);
-        font-weight: var(--fontWeight-semibold);
-        letter-spacing: 1px;
-        margin-top: 20px;
-    }
+  .title {
+    color: white;
+    font-size: var(--fontSize-md);
+    font-weight: var(--fontWeight-semibold);
+    letter-spacing: 1px;
+    margin-top: 20px;
+  }
 
-    .value{
-        color: white;
-        font-size: var(--fontSize-xl);
-        font-weight: var(--fontWeight-semibold);
-        letter-spacing: 1px;
-        margin-top: 10px;
-    }
-
-    
-}
-
-.graph{
-    max-width: 500px;
-    max-width: 400px;
+  .value {
+    color: white;
+    font-size: var(--fontSize-xl);
+    font-weight: var(--fontWeight-semibold);
+    letter-spacing: 1px;
     margin-top: 10px;
-    width: 100%;
+  }
 }
 
-.assets{
-    display: flex;
-    flex-direction: column;
-    height: 345px;
-    background-color: var(--secondaryColor);
-    padding: 10px 20px 10px 20px;
-    border-radius: 10px;
-
-    .title{
-        color: white;
-        font-size: var(--fontSize-md);
-        font-weight: var(--fontWeight-semibold);
-        letter-spacing: 1px;
-        margin-top: 20px;
-    }
+.graph {
+  max-width: 500px;
+  max-width: 400px;
+  margin-top: 10px;
+  width: 100%;
 }
 
-.assetsList{
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    margin-top: 10px;
+.assets {
+  display: flex;
+  flex-direction: column;
+  height: 345px;
+  background-color: var(--secondaryColor);
+  padding: 10px 20px 10px 20px;
+  border-radius: 10px;
+
+  .title {
+    color: white;
+    font-size: var(--fontSize-md);
+    font-weight: var(--fontWeight-semibold);
+    letter-spacing: 1px;
+    margin-top: 20px;
+  }
+}
+
+.assetsList {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 // <div className={styles.assetTableContainer}>
@@ -267,21 +265,21 @@ body {
       font-size: var(--fontSize-base);
 
       &:nth-child(1) {
-        width: 35px; 
+        width: 35px;
       }
 
       &:nth-child(2) {
-        width: 50px; 
+        width: 50px;
         text-align: right;
       }
 
       &:nth-child(3) {
-        width: 50px; 
+        width: 50px;
         text-align: right;
       }
 
       &:nth-child(4) {
-        width: 50px; 
+        width: 50px;
         text-align: right;
       }
     }
@@ -294,5 +292,27 @@ body {
   }
 }
 
+.transactionTable {
+  width: 360px;
+  background-color: var(--secondaryColor);
+  border-radius: 10px;
+  padding-left: 20px;
+  padding-top: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
+.transactionTitle {
+  margin-top: 10px;
 
+  .title {
+    font-size: var(--fontSize-md);
+    font-weight: bold;
+    color: var(--textColorPrimary);
+  }
+}
+
+.AssetTransactionContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}

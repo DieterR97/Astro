@@ -14,6 +14,7 @@ const Navbar = () => {
   const location = useLocation();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [user, setUser] = useState<any>(null);
 
   const isActive = (path: string) => {
     return location.pathname === path;
@@ -46,6 +47,30 @@ const Navbar = () => {
   //     // Optionally, handle the error (e.g., show a notification)
   //   }
   // };
+
+  const fetchUserDetails = async () => {
+    const email = localStorage.getItem('email_to_validate');
+    if (!email) {
+      console.error('No email found');
+      return;
+    }
+  
+    const url = `http://localhost:5122/api/User/email?email=${encodeURIComponent(email)}`;
+  
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Failed to fetch user details');
+      }
+      const data = await response.json();
+      setUser({
+        name: data.username,
+        email: data.email
+      });
+    } catch (err) {
+      console.error('Error fetching user details:', err);
+    }
+  };
 
 
   const handleLogout = async () => {
@@ -92,6 +117,8 @@ const Navbar = () => {
         setDropdownOpen(false);
       }
     };
+
+    fetchUserDetails();
 
     // Add the event listener
     document.addEventListener("mousedown", handleClickOutside);
@@ -155,8 +182,8 @@ const Navbar = () => {
         <div className={styles["frame-2"]}>
           <div className={styles.ellipse}></div>
           <div className={styles["group-2"]}>
-            <div className={styles["text-wrapper-5"]}>Name Surname</div>
-            <div className={styles["text-wrapper-6"]}>namesurname@gmail.com</div>
+            <div className={styles["text-wrapper-5"]}>{user?.name}</div>
+            <div className={styles["text-wrapper-6"]}>{user?.email}</div>
           </div>
           <img
             className={styles["frame-3"]}

@@ -23,7 +23,8 @@ export interface Asset {
   name: string;
   abbreviation: string;
   price: number;
-  amount: number;
+  tokens: number;
+  astro_price: number;
 }
 
 export interface Account {
@@ -35,12 +36,11 @@ export interface Account {
   status: Status;
   account_status_id: number;
   active: boolean;
-  transactionsFrom: {
+  transactions: {
     $values: Transaction[];
-  };
-  transactionsTo: {
-    $values: Transaction[];
-  };
+  }
+  astro: Astro;
+  totalTransactions: number;
 }
 
 export interface User {
@@ -48,6 +48,14 @@ export interface User {
   email: string;
   username: string;
   account: Account;
+}
+
+export interface Astro {
+  astro_id: number;
+  name: string;
+  abbreviation: string;
+  price: number;
+  tokens: number;
 }
 
 export {};

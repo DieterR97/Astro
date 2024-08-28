@@ -3,6 +3,7 @@ import {
   Banner,
   AssetComponent,
   AssetRow,
+  TransactionRow,
 } from "./Components/OverviewComponents";
 import styles from "./Overview.module.scss";
 import FilterIcon from "../../assets/icons/FilterIcon.svg";
@@ -68,7 +69,6 @@ const Overview: React.FC = () => {
       })
         .then((response) => {
           if (response.ok) {
-            // Update the user's account status locally
             setUser((prev) =>
               prev
                 ? {
@@ -135,33 +135,62 @@ const Overview: React.FC = () => {
         </div>
       </div>
 
-      <div className={styles.assetTableContainer}>
-        <div className={styles.titles}>
-          <div className={styles.title}>Asset</div>
-          <div className={styles.title}>Price</div>
-          <div className={styles.title}>Balance</div>
-          <div className={styles.title}>Proportion</div>
+      <div className={styles.AssetTransactionContainer}>
+        <div className={styles.assetTableContainer}>
+          <div className={styles.titles}>
+            <div className={styles.title}>Asset</div>
+            <div className={styles.title}>Price</div>
+            <div className={styles.title}>Balance</div>
+            <div className={styles.title}>Proportion</div>
+          </div>
+          <div className={styles.divider}></div>
+          <div className={styles.rows}>
+            {account && Array.isArray(account.assets.$values) ? (
+              account.assets.$values.map((asset) => (
+                <AssetRow
+                  key={asset.asset_id}
+                  image={TempImage}
+                  name={asset.name}
+                  price={`R${asset.price.toFixed(2)}`}
+                  balance={`R${(asset.price * asset.tokens).toFixed(2)}`}
+                  proportion={`${(
+                    ((asset.price * asset.tokens) / account.balance) *
+                    100
+                  ).toFixed(2)}%`}
+                  abbreviation={asset.abbreviation}
+                />
+              ))
+            ) : (
+              <p>No assets to display</p>
+            )}
+          </div>
         </div>
-        <div className={styles.divider}></div>
-        <div className={styles.rows}>
-          {account && Array.isArray(account.assets.$values) ? (
-            account.assets.$values.map((asset) => (
-              <AssetRow
-                key={asset.asset_id}
-                image={TempImage}
-                name={asset.name}
-                price={`R${asset.price.toFixed(2)}`}
-                balance={`R${(asset.price * asset.amount).toFixed(2)}`}
-                proportion={`${(
-                  ((asset.price * asset.amount) / account.balance) *
-                  100
-                ).toFixed(2)}%`}
-                abbreviation={asset.abbreviation}
-              />
-            ))
-          ) : (
-            <p>No assets to display</p>
-          )}
+
+        <div className={styles.transactionTable}>
+          <div className={styles.transactionTitle}>
+            <div className={styles.title}>Recent Transactions</div>
+          </div>
+          <div className={styles.transactionTableContainer}>
+            <TransactionRow
+              icon={TempImage}
+              transactionType="DUMMY"
+              date="Jul 25 2024 11:00"
+              amount="+R230.00"
+            />
+            {account && Array.isArray(account.transactions.$values) ? (
+              account.transactions.$values.map((transaction) => (
+                <TransactionRow
+                  key={transaction.transaction_id}
+                  icon={TempImage}
+                  transactionType={transaction.transaction_type}
+                  date={transaction.timestamp.toString()}
+                  amount={`+R${transaction.amount.toFixed(2)}`}
+                />
+              ))
+            ) : (
+              <p>No transactions to display</p>
+            )}
+          </div>
         </div>
       </div>
     </div>
