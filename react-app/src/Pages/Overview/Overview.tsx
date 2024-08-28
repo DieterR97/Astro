@@ -60,27 +60,31 @@ const Overview: React.FC = () => {
       const accountId = account?.accountId;
 
       fetch(`http://localhost:5122/api/Account/upgradeStatus`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ accountId, newStatusId }),
       })
-        .then(response => {
+        .then((response) => {
           if (response.ok) {
             // Update the user's account status locally
-            setUser(prev => prev ? {
-                ...prev,
-                account: {
-                  ...prev.account,
-                  account_status_id: newStatusId
-                }
-              } : null);
+            setUser((prev) =>
+              prev
+                ? {
+                    ...prev,
+                    account: {
+                      ...prev.account,
+                      account_status_id: newStatusId,
+                    },
+                  }
+                : null
+            );
           } else {
             throw new Error("Failed to upgrade account status");
           }
         })
-        .catch(err => console.error("Error upgrading account status:", err));
+        .catch((err) => console.error("Error upgrading account status:", err));
     }
   };
 
@@ -91,7 +95,9 @@ const Overview: React.FC = () => {
 
   return (
     <div className={styles.overview}>
-      {user && <Banner user={user} statuses={statuses} onUpgrade={handleUpgrade} />}
+      {user && (
+        <Banner user={user} statuses={statuses} onUpgrade={handleUpgrade} />
+      )}
       <div className={styles["text-title"]}>Overview</div>
 
       <div className={styles.filterContainer}>
@@ -111,9 +117,11 @@ const Overview: React.FC = () => {
           <div className={styles["title"]}>Top Assets</div>
           <div className={styles.assetsList}>
             {account && Array.isArray(account.assets.$values) ? (
-              account.assets.$values.map((asset) => (
-                <AssetComponent key={asset.asset_id} {...asset} />
-              ))
+              account.assets.$values
+                .slice(0, 2)
+                .map((asset) => (
+                  <AssetComponent key={asset.asset_id} {...asset} />
+                ))
             ) : (
               <p>No assets to display</p>
             )}
@@ -128,15 +136,14 @@ const Overview: React.FC = () => {
       </div>
 
       <div className={styles.assetTableContainer}>
-        <div className={styles["titles"]}>
-          <div className={styles["title"]}>Asset</div>
-          <div className={styles["title"]}>Price</div>
-          <div className={styles["title"]}>Balance</div>
-          <div className={styles["title"]}>Proportion</div>
-          
+        <div className={styles.titles}>
+          <div className={styles.title}>Asset</div>
+          <div className={styles.title}>Price</div>
+          <div className={styles.title}>Balance</div>
+          <div className={styles.title}>Proportion</div>
         </div>
-        <div className={styles["divider"]}></div>
-        <div className={styles["rows"]}>
+        <div className={styles.divider}></div>
+        <div className={styles.rows}>
           {account && Array.isArray(account.assets.$values) ? (
             account.assets.$values.map((asset) => (
               <AssetRow
