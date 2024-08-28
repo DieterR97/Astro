@@ -91,8 +91,8 @@ Get backend at [https://github.com/DieterR97/Astro-Backend.git](https://github.c
    Run without debugging
    ```
 
-4. Run backend server </br>
-Run the following in the backend command-line:
+4. Run front-end server </br>
+Run the following in the front-end command-line:
    ```sh
    npm run dev
    ```
