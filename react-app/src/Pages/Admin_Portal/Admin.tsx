@@ -72,6 +72,8 @@ function Admin() {
 
     // Click function to be able to click between different option on the popup box
     const handleOptionClick = (userId: number, option: 'active' | 'inactive') => {
+        const isFreezing = option === 'inactive';
+
         setSelectedStatus(prevState => ({
             ...prevState,
             [userId]: option
@@ -82,29 +84,45 @@ function Admin() {
         }));
 
         //To change the sate of the user status for when a account is frozen from active to inactive
-        if (option === 'inactive') {
-            // Make a PUT request to update the status
-            fetch(`http://localhost:5122/api/Account/${userId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ active: false }), // Set the account status to inactive
-            })
+        fetch(`http://localhost:5122/api/Account/${userId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ active: !isFreezing }), // Toggle account status
+        })
             .then(response => response.json())
             .then(data => {
                 console.log("Account status updated:", data);
-                // Update the status in the local state after successful response
-                setStatus(prevStatus => 
-                    prevStatus.map(s => 
-                        s.user_id === userId ? { ...s, active: false } : s
+                setStatus(prevStatus =>
+                    prevStatus.map(s =>
+                        s.user_id === userId ? { ...s, active: !isFreezing } : s
                     )
                 );
             })
-            .catch(error => {
-                console.error('Error updating account status:', error);
-            });
-        }
+            .catch(error => console.error('Error updating account status:', error));
+        // if (option === 'inactive') {
+        //     // Make a PUT request to update the status
+        //     fetch(`http://localhost:5122/api/Account/${userId}`, {
+        //         method: 'PUT',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify({ active: !isFreezing }), // Set the account status to inactive
+        //     })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         console.log("Account status updated:", data);
+        //         setStatus(prevStatus =>
+        //             prevStatus.map(s =>
+        //                 s.user_id === userId ? { ...s, active: !isFreezing } : s
+        //             )
+        //         );
+        //     })
+        //     .catch(error => {
+        //         console.error('Error updating account status:', error);
+        //     });
+        // }
 
     };
 
@@ -181,7 +199,10 @@ function Admin() {
                                                 <div className={styles.popup}>
                                                     <p onClick={() => handleOptionClick(user.user_id, 'active')}>Profile</p>
                                                     <p onClick={() => userStatus && navigate(`/transactions/${userStatus.user_id}`)}>Transactions</p>
-                                                    <p onClick={() => handleOptionClick(user.user_id, 'inactive')}>Freeze acct.</p>
+                                                    <p onClick={() => handleOptionClick(user.user_id, userStatus?.active ? 'inactive' : 'active')}>
+                                                        {userStatus?.active ? 'Freeze acct.' : 'Unfreeze acct.'}
+                                                    </p>
+                                                    {/* <p onClick={() => handleOptionClick(user.user_id, 'inactive')}>Freeze acct.</p> */}
                                                 </div>
                                             )}
 
