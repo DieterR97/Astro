@@ -4,6 +4,7 @@ import img from '../Assets/Filter_Option.png';
 import img2 from '../Assets/Search_Option.png';
 import img3 from '../Assets/Purple_Circle.png';
 import img4 from '../Assets/More_Option.png';
+import { useNavigate } from 'react-router-dom';
 
 // To define the shape of a User object
 interface User {
@@ -20,6 +21,9 @@ interface Status {
 }
 
 function Admin() {
+
+    //navigation to transactions page
+    const navigate = useNavigate();
 
     // Initialize state to store fetched data from the users and accounts table
     const [users, setUsers] = useState<User[]>([]); 
@@ -75,7 +79,33 @@ function Admin() {
         setPopupVisible(prevState => ({
             ...prevState,
             [userId]: false
-        })); // Close the pop-up after selection
+        }));
+
+        //To change the sate of the user status for when a account is frozen from active to inactive
+        if (option === 'inactive') {
+            // Make a PUT request to update the status
+            fetch(`http://localhost:5122/api/Account/${userId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ active: false }), // Set the account status to inactive
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Account status updated:", data);
+                // Update the status in the local state after successful response
+                setStatus(prevStatus => 
+                    prevStatus.map(s => 
+                        s.user_id === userId ? { ...s, active: false } : s
+                    )
+                );
+            })
+            .catch(error => {
+                console.error('Error updating account status:', error);
+            });
+        }
+
     };
 
     console.log("Users" + users); //Test
@@ -92,10 +122,14 @@ function Admin() {
                             <img src={img} alt="Logo" className={styles.image} />
                             Filter
                         </h4>
-                        <h4 className={styles.body_two}>
-                            <img src={img2} alt="Logo" className={styles.image} />
-                            Search
-                        </h4>
+                        <div className={styles.searchFieldCon}>
+                            <img src={img2} alt="search Icon" />
+                            <input
+                                className={styles.filterSearchInput}
+                                type="text"
+                                placeholder="Search"
+                            />
+                        </div>
                     </div>
 
                     <div className={styles.admin_card}>
@@ -109,7 +143,7 @@ function Admin() {
 
                         {/* map all the users that created an account */}
                         {users && users.length > 0 ? (
-                            users.map(user => {
+                            users.sort((a, b) => a.user_id - b.user_id).map(user => {
                                 const userStatus = status.find(s => s.user_id === user.user_id);
 
                                 return (
@@ -145,13 +179,10 @@ function Admin() {
                                             {/* Pop up box to display different options */}
                                             {popupVisible[user.user_id] && (
                                                 <div className={styles.popup}>
-                                                    <p onClick={() => handleOptionClick(user.user_id, 'active')}>Active</p>
-                                                    <p onClick={() => handleOptionClick(user.user_id, 'inactive')}>Inactive</p>
+                                                    <p onClick={() => handleOptionClick(user.user_id, 'active')}>Profile</p>
+                                                    <p onClick={() => userStatus && navigate(`/transactions/${userStatus.user_id}`)}>Transactions</p>
+                                                    <p onClick={() => handleOptionClick(user.user_id, 'inactive')}>Freeze acct.</p>
                                                 </div>
-                                            )}
-
-                                            {selectedStatus[user.user_id] && (
-                                                <p>You selected: {selectedStatus[user.user_id]}</p>
                                             )}
 
                                         </div>
