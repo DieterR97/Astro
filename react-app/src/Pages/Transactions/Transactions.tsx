@@ -16,29 +16,10 @@ type SortOption = 'TIMESTAMP' | 'AMOUNT' | 'TRANSACTION_ID';
 
 function Transactions() {
 
-    // * recieve the id from the accounts and users tabel
-    // const { user_id } = useParams<{ user_id: string }>();
+    // TODO : get the username from the account id's
+    // TODO : Converting the timestamp to date and time
 
-    // useEffect(() => {
-    //     if (user_id) {
-    //         console.log("User ID from params:", user_id);
-    //         // Fetch and display transactions for the user_id
-    //     } else {
-    //         console.error("User ID is undefined");
-    //     }
-    //     // console.log("User ID from params:", user_id);
-    //     // Fetch and display transactions for the user_id
-    // }, [user_id]);
-
-    //recieve the id from the accounts and users tabel
-    const { user_id } = useParams<{ user_id: string }>();
-
-    useEffect(() => {
-        console.log("User ID from params:", user_id);
-        // Fetch and display transactions for the user_id
-    }, [user_id]);
-
-
+    // * Interfaces ...............................................................................
     interface Transaction {
         transactions_id: number;
         userName: string;
@@ -52,27 +33,24 @@ function Transactions() {
         user_id: number;
     }
 
-    // TODO : get the username from the account id's
-    // TODO : Converting the timestamp to date and time
-
     // * DUMMY DATA ...............................................................................
     const incomingData: Transaction[] = [
         { transactions_id: 1, userName: 'Ungerer Hattingh', from_account_id: 2, transaction_type: "big", amount: 2500, timestamp: new Date('2024-06-12T12:00:00Z') },
         { transactions_id: 2, userName: 'Ungerer Hattingh', from_account_id: 2, transaction_type: "big", amount: 2500, timestamp: new Date('2024-06-13T12:00:00Z') },
         { transactions_id: 3, userName: 'Ungerer Hattingh', from_account_id: 2, transaction_type: "big", amount: 2500, timestamp: new Date('2024-06-27T12:00:00Z') },
-        { transactions_id: 4, userName: 'Ungerer Hattingh', from_account_id: 2, transaction_type: "big", amount: 2500, timestamp: new Date('2024-07-17T12:00:00Z') },
-        { transactions_id: 5, userName: 'Ungerer Hattingh', from_account_id: 2, transaction_type: "big", amount: 2500, timestamp: new Date('2024-07-18T12:00:00Z') },
+        { transactions_id: 4, userName: 'Ungerer Hattingh', from_account_id: 12, transaction_type: "big", amount: 2500, timestamp: new Date('2024-07-17T12:00:00Z') },
+        { transactions_id: 5, userName: 'Ungerer Hattingh', from_account_id: 10, transaction_type: "big", amount: 2500, timestamp: new Date('2024-07-18T12:00:00Z') },
         { transactions_id: 6, userName: 'Ungerer Hattingh', from_account_id: 2, transaction_type: "big", amount: 2500, timestamp: new Date('2024-07-15T12:00:00Z') },
         { transactions_id: 7, userName: 'Ungerer Hattingh', from_account_id: 2, transaction_type: "small", amount: 3000, timestamp: new Date('2024-08-01T09:00:00Z') },
         { transactions_id: 8, userName: 'Test for date sorting', from_account_id: 2, transaction_type: "medium", amount: 500, timestamp: new Date('2024-08-21T15:00:00Z') },
         { transactions_id: 9, userName: 'Ungerer Hattingh', from_account_id: 2, transaction_type: "medium", amount: 5000000, timestamp: new Date('2024-08-22T15:00:00Z') },
         { transactions_id: 10, userName: 'Ungerer Hattingh', from_account_id: 2, transaction_type: "medium", amount: 54500, timestamp: new Date('2024-08-23T15:00:00Z') },
-        { transactions_id: 11, userName: 'Ungerer Hattingh', from_account_id: 2, transaction_type: "medium", amount: 67000, timestamp: new Date('2024-08-24T15:00:00Z') },
-        { transactions_id: 12, userName: 'Test for date sorting', from_account_id: 2, transaction_type: "medium", amount: 500, timestamp: new Date('2024-08-25T16:40:00Z') },
-        { transactions_id: 13, userName: 'Test for date sorting', from_account_id: 2, transaction_type: "medium", amount: 500, timestamp: new Date('2024-08-25T16:45:00Z') },
+        { transactions_id: 11, userName: 'Ungerer Hattingh', from_account_id: 4, transaction_type: "medium", amount: 67000, timestamp: new Date('2024-08-24T15:00:00Z') },
+        { transactions_id: 12, userName: 'Test for date sorting', from_account_id: 5, transaction_type: "medium", amount: 500, timestamp: new Date('2024-08-25T16:40:00Z') },
+        { transactions_id: 13, userName: 'Test for date sorting', from_account_id: 7, transaction_type: "medium", amount: 500, timestamp: new Date('2024-08-25T16:45:00Z') },
         { transactions_id: 14, userName: 'Test for date sorting', from_account_id: 4, transaction_type: "medium", amount: 500, timestamp: new Date('2024-08-25T16:45:00Z') },
         { transactions_id: 15, userName: 'Test for date sorting', from_account_id: 4, transaction_type: "medium", amount: 500, timestamp: new Date('2024-08-27T16:45:00Z') },
-        { transactions_id: 16, userName: 'Test for date sorting', from_account_id: 2, transaction_type: "medium", amount: 500, timestamp: new Date('2024-08-26T14:45:00Z') },
+        { transactions_id: 16, userName: 'Test for date sorting', from_account_id: 3, transaction_type: "medium", amount: 500, timestamp: new Date('2024-08-26T14:45:00Z') },
     ];
     // to change months from numbers to names
     // console.table(incomingData)
@@ -85,17 +63,26 @@ function Transactions() {
         small: 'green',
     };
 
-    // * useStates ....................................................................................
+    // * useStates ................................................................................
     const [userTransactions, setUserTransactions] = useState<Transaction[]>([]); // the usestate
     const [filterOption, setFilterOption] = useState<FilterOption>('ALL'); // filter useState
     const [sortOptions, setSortOptions] = useState<{ primary: 'timestamp' | 'amount' | 'transactions_id', secondary?: 'timestamp' | 'amount' | 'transactions_id' }>({
         primary: 'timestamp',
         secondary: 'amount'
     });
-    // const [sortMethod, setSortMethod] = useState<'timestamp' | 'amount'>('timestamp');
-    const [users, setUsers] = useState<User[]>([]);
+    const [user, setUser] = useState<User | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+    // const [userId, setUserId] = useState<User[]>([]);
+    const [error, setError] = useState<string | null>(null);
 
-    // * GET all Transactions for the current logged user .........................................
+    // for the get data acording to from_account_id
+    const [currentUser, setCurrentUser] = useState();
+    // const [fromAccountId, setFromAccountId] = useState(4); // the usetate for the from_account_id data for the logged user - // TODO: need to get current account number and make it equal to the from account id
+    const [fromAccountId, setFromAccountId] = useState<number | null>(null);
+    // const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>([]); // to filter incoming date to produce specific date
+
+
+    // * GET all Transactions .....................................................................
     // TODO : map all transactions specific to the logged in user 
     // the transactions need to be specific to the user ia
     var url = "http://localhost:5122/api/Transaction"
@@ -114,15 +101,45 @@ function Transactions() {
     // console.log(userTransactions);
 
 
+    // * recieve the id from the accounts and users tabel .........................................
+    //recieve the id from the accounts and users tabel
+    const { user_id } = useParams<{ user_id: string }>();
+    // Effect to update state when user_id changes
+    useEffect(() => {
+        if (user_id) {
+            setFromAccountId(Number(user_id));
+        }
+    }, [user_id]);
+
+    // Old code - DONT REMOVE YET
+    // useEffect(() => {
+    //     console.log("User ID from params:", user_id);
+    //     // Fetch and display transactions for the user_id
+    // }, [user_id]);
+
+
+    // * filtering Currently Logged in user transaction .................................................
+    // filters all the transaction data and only displays the data with the according from_account_id
+
+    // useEffect(() => {
+    //     const filtered = incomingData.filter(transaction => transaction.from_account_id === fromAccountId);
+    //     setFilteredTransactions(filtered);
+    // }, [fromAccountId]);
+    // console.table(filteredTransactions); // displays data only specific to the from_account_id
+
+    // Filter transactions based on fromAccountId number
+    const filteredTransactions = incomingData.filter(transaction => transaction.from_account_id === fromAccountId);
+    console.table(filteredTransactions);
 
     // * FILTERING FUNCTOINALITY ..................................................................
-
+    // the filtering functionality that will filter by different options - all | 30 days | 7 days | 24 hours
+    // takes in the incoming data which will be filter to show only the users transactions from_account_id
     const filteredData = (() => {
         const today = new Date();
         switch (filterOption) {
             case 'LAST_24_HOURS':
                 const twentyFourHoursAgo = new Date(today.setDate(today.getDate() - 24 / 60 / 60 / 1000)); // 24 hours
-                return incomingData.filter(item => new Date(item.timestamp) >= twentyFourHoursAgo);
+                return incomingData.filter(item => new Date(item.timestamp) >= twentyFourHoursAgo); // change incoming data to filteredTransactions
             case 'LAST_7_DAYS':
                 const sevenDaysAgo = new Date(today.setDate(today.getDate() - 7)); // 7 days
                 return incomingData.filter(item => new Date(item.timestamp) >= sevenDaysAgo);
@@ -145,9 +162,9 @@ function Transactions() {
             // Primary sorting
             // Determines the initial order of items based on the selection.
             if (primary === 'timestamp') {
-                comparison = a.timestamp.getTime() - b.timestamp.getTime();
+                comparison = a.timestamp.getTime() - b.timestamp.getTime(); // compare the timestamp data
             } else if (primary === 'amount') {
-                comparison = a.amount - b.amount;
+                comparison = a.amount - b.amount; //directly compares the amounts of the two transactions.
             } else if (primary === 'transactions_id') {
                 comparison = a.transactions_id - b.transactions_id;
             }
@@ -155,7 +172,7 @@ function Transactions() {
             // If two items are equal based on the primary criterion, this further sorts them based on the secondary criterion.
             if (comparison === 0 && secondary) {
                 if (secondary === 'timestamp') {
-                    comparison = a.timestamp.getTime() - b.timestamp.getTime();
+                    comparison = a.timestamp.getTime() - b.timestamp.getTime(); //
                 } else if (secondary === 'amount') {
                     comparison = a.amount - b.amount;
                 } else if (secondary === 'transactions_id') {
@@ -166,7 +183,8 @@ function Transactions() {
             return comparison;
         });
     };
-    // Combining the filtering functioniality and the sorting functionality into one filtered variable
+
+    // * Combining the filtering functioniality and the sorting functionality into one filtered variable
     // by taking the filteredData, both soted options and puting it all together
     const sortedAndFilteredData = sortData(filteredData, sortOptions.primary, sortOptions.secondary);
 
@@ -270,7 +288,7 @@ function Transactions() {
                     {/* Content */}
                     <div className={styles.innerTableCon}>
                         {/* // * row of user data */}
-                       
+
                         {/* row of user data */}
                         {/* map testing */}
                         {userTransactions && userTransactions.length > 0 ? (

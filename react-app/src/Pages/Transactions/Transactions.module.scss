@@ -338,9 +338,6 @@ $black: #000;
     .dropDownContent {
         display: none;
         position: absolute;
-        // right: 165px;
-        right: 150px;
-        // background-color: var(--darkBackground02);
         box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
         z-index: 1;
 
@@ -436,6 +433,7 @@ $black: #000;
     width: auto;
 
     // background-color: $primaryColor;
+    border: 1px solid $primaryColor;
     padding: 2px 20px 2px 20px;
     border-radius: 20px;
 
