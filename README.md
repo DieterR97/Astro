@@ -3,7 +3,7 @@
 <h5 align="center" style="padding:0;margin:0;">221122 | 221147 | 221302 | 221326 | 21100366</h5>
 <h6 align="center">Interactive Development 300</h6>
 <p align="center">
-    <img src="src/assets/Logo.jpg" alt="Logo" width="80" height="80">
+    <img src="react-app/src/assets/Logo.jpg" alt="Logo" width="80" height="80">
   <h3 align="center">Astro</h3>
   <p align="center">
     Cross-Platform Desktop Development <br>
@@ -130,15 +130,15 @@ The `Conceptual Process` is the set of actions, activities and research that was
 
 ### Ideation
 
-![Moodboard](src/assets/Moodboard.jpg)
+![Moodboard](react-app/src/assets/Moodboard.jpg)
 
 ### Wireframes
 
-![Wireframe1](src/assets/Wireframe1.jpg)![Wireframe2](src/assets/Wireframe2.jpg)![Wireframe3](src/assets/Wireframe3.jpg)![Wireframe4](src/assets/Wireframe4.jpg)![Wireframe5](src/assets/Wireframe5.jpg)![Wireframe6](src/assets/Wireframe6.jpg)![Wireframe7](src/assets/Wireframe7.jpg)![Wireframe8](src/assets/Wireframe8.jpg)![Wireframe9](src/assets/Wireframe9.jpg)![Wireframe10](src/assets/Wireframe10.jpg)
+![Wireframe1](react-app/src/assets/Wireframe1.jpg)![Wireframe2](react-app/src/assets/Wireframe2.jpg)![Wireframe3](react-app/src/assets/Wireframe3.jpg)![Wireframe4](react-app/src/assets/Wireframe4.jpg)![Wireframe5](react-app/src/assets/Wireframe5.jpg)![Wireframe6](react-app/src/assets/Wireframe6.jpg)![Wireframe7](react-app/src/assets/Wireframe7.jpg)![Wireframe8](react-app/src/assets/Wireframe8.jpg)![Wireframe9](react-app/src/assets/Wireframe9.jpg)![Wireframe10](react-app/src/assets/Wireframe10.jpg)
 
 ### User-flow
 
-![ER Diagram](src/assets/ER%20Diagram.jpg)![User Flow](src/assets/User%20Flow.jpg)
+![ER Diagram](react-app/src/assets/ER%20Diagram.jpg)![User Flow](react-app/src/assets/User%20Flow.jpg)
 
 <!-- DEVELOPMENT PROCESS -->
 ## Development Process
