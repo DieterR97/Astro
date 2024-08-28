@@ -8,25 +8,11 @@ import styles from "./Overview.module.scss";
 import FilterIcon from "../../assets/icons/FilterIcon.svg";
 import SearchIcon from "../../assets/icons/SearchIcon.svg";
 import TempImage from "../../assets/login/logo.png";
-
-interface Asset {
-    asset_id: number;
-    name: string;
-    abbreviation: string;
-    price: number;
-    amount: number;
-  }
-  
-  interface Account {
-    account_id: number;
-    balance: number;
-    assets: {
-      $values: Asset[];
-    };
-  }
+import { Account, User } from "../../Models/models";
 
 const Overview: React.FC = () => {
   const [account, setAccount] = useState<Account | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -50,7 +36,8 @@ const Overview: React.FC = () => {
         return response.json();
       })
       .then((data) => {
-        setAccount(data.account); // Assuming the user object contains an account field
+        setUser(data);
+        setAccount(data.account);
         setLoading(false);
       })
       .catch((err) => {
@@ -66,7 +53,7 @@ const Overview: React.FC = () => {
 
   return (
     <div className={styles.overview}>
-      <Banner />
+      <Banner user={user} />
       <div className={styles["text-title"]}>Overview</div>
 
       <div className={styles.filterContainer}>

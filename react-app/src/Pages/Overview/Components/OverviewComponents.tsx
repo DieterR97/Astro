@@ -5,35 +5,40 @@ import StatsIcon from "../../../assets/icons/StatsIcon.svg";
 import StackIcon from "../../../assets/icons/StackIcon.svg";
 import LevelIcon from "../../../assets/icons/LevelIcon.svg";
 import MoreIcon from "../../../assets/icons/MoreIcon.svg";
+import { User } from "../../../Models/models";
 
-export const Banner = () => {
+interface BannerProps {
+  user: User | null;
+}
+
+export const Banner: React.FC<BannerProps> = ({ user }) => {
   return (
     <div className={styles.banner}>
-      <div className={styles["text-wrapper-1"]}>Welcome back, Name</div>
+      <div className={styles["text-wrapper-1"]}>Welcome back, {user?.username}</div>
 
       <div className={styles.frameContainer}>
         <Frame
           title="Current Level"
-          content="12"
-          description="Cosmic Explorer"
+          content={user?.account.status.status_name || "Not Yet"}
+          description={`Criteria: ${user?.account.status.transactions_criteria} transactions`}
           icon={ShipIcon}
         />
         <Frame
           title="Interest Rate"
-          content="1%"
-          description="Next -> 2%"
+          content={`${user?.account.status.annual_interest_rate}%`}
+          description={`Next -> ${user?.account.status.annual_interest_rate? + 1 : 0}%`}
           icon={StatsIcon}
         />
         <Frame
           title="Transaction Fee"
-          content="5 Coins"
+          content={`${user?.account.status.transaction_fee} Coins`}
           description="Per Transaction"
           icon={StackIcon}
         />
         <Frame
           title="Next Upgrade"
           content="Not Yet"
-          description="CNeed 15 more Coins"
+          description={`Need ${user?.account.status.total_amount_criteria? - user.account.balance : 0} more Coins`}
           icon={LevelIcon}
         />
       </div>
