@@ -5,12 +5,15 @@ import StatsIcon from "../../../assets/icons/StatsIcon.svg";
 import StackIcon from "../../../assets/icons/StackIcon.svg";
 import LevelIcon from "../../../assets/icons/LevelIcon.svg";
 import MoreIcon from "../../../assets/icons/MoreIcon.svg";
-import { User, Status, Asset } from "../../../Models/models";
+import { User, Status, Asset, Astro } from "../../../Models/models";
+import { Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend } from 'chart.js';
+
 
 interface BannerProps {
   user: User;
   statuses: Status[];
-  onUpgrade: (newStatusId: number) => void; // Function to handle status upgrade
+  onUpgrade: (newStatusId: number) => void; 
 }
 
 export const Banner: React.FC<BannerProps> = ({
@@ -28,10 +31,7 @@ export const Banner: React.FC<BannerProps> = ({
   const transactions = user.account.transactions.$values;
 
   const totalTransactions = transactions.length;
-  const totalAmount = transactions.reduce(
-    (sum, transaction) => sum + transaction.amount,
-    0
-  );
+  const totalAmount = user.account.balance;
 
   const canUpgrade =
     nextStatus &&
@@ -48,7 +48,7 @@ export const Banner: React.FC<BannerProps> = ({
         <Frame
           title="Current Level"
           content={currentAccountStatus?.status_name || "Unknown"}
-          description={`Criteria: ${currentAccountStatus?.transactions_criteria} transactions`}
+          description={`Criteria: ${currentAccountStatus?.transactions_criteria} transactions or R${currentAccountStatus?.total_amount_criteria.toFixed(2)}`}
           icon={ShipIcon}
         />
         <Frame
@@ -76,10 +76,10 @@ export const Banner: React.FC<BannerProps> = ({
               : `Need ${Math.max(
                   nextStatus!.transactions_criteria - totalTransactions || 0,
                   0
-                )} more transactions or ${Math.max(
+                )} more transactions or R${Math.max(
                   nextStatus!.total_amount_criteria - totalAmount || 0,
                   0
-                )} more Coins`
+                ).toFixed(2)} more`
           }
           icon={LevelIcon}
           onClick={() =>
@@ -126,16 +126,30 @@ export const Frame = ({
   );
 };
 
-export const AssetComponent = (asset: Asset) => {
+type AssetComponentProps = {
+  name: string;
+  abbreviation: string;
+  price: number;
+  tokens: number;
+  astro_price?: number;
+};
+
+export const AssetComponent = ({
+  name,
+  abbreviation,
+  price,
+  tokens,
+  astro_price,
+}: AssetComponentProps) => {
   return (
     <div className={styles.asset}>
       <div className={styles["image"]} />
       <div className={styles["content"]}>
         <div className={styles["name"]}>
-          {asset.name} ({asset.abbreviation})
+          {name} ({abbreviation})
         </div>
-        <div className={styles["amount"]}>R{asset.tokens * asset.price}</div>
-        <div className={styles["change"]}>R{asset.price}</div>
+        <div className={styles["amount"]}>R{tokens * price}</div>
+        <div className={styles["change"]}>R{price}</div>
       </div>
       <div className={styles["button"]}>
         <div className={styles["details"]}>View Details</div>
@@ -205,6 +219,65 @@ export const TransactionRow: React.FC<TransactionRowProps> = ({
         <div className={styles.date}>{date}</div>
       </div>
       <div className={styles.amount}>{amount}</div>
+    </div>
+  );
+};
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+
+interface AssetChartProps {
+  assets: Asset[];
+  astro: Astro[];
+}
+
+export const AssetChart: React.FC<AssetChartProps> = ({ assets, astro }) => {
+  const combinedAssets = [
+    ...assets.map(asset => ({ name: asset.name, tokens: asset.tokens })),
+    ...astro.map(a => ({ name: a.name, tokens: a.tokens })),
+  ];
+
+  const data = {
+    labels: combinedAssets.map(item => item.name),
+    datasets: [
+      {
+        label: 'Amount Owned',
+        data: combinedAssets.map(item => item.tokens),
+        backgroundColor: "#7E4AC0",
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false, 
+      },
+      title: {
+        display: true,
+        color: 'white', 
+      },
+      tooltip: {
+        bodyColor: 'white', 
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: 'white', 
+        },
+      },
+      y: {
+        ticks: {
+          color: 'white',
+        },
+      },
+    },
+  };
+
+  return (
+    <div className={styles.chartContainer}>
+      <Bar data={data} options={options} />
     </div>
   );
 };

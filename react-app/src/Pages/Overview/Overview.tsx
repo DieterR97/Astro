@@ -4,12 +4,14 @@ import {
   AssetComponent,
   AssetRow,
   TransactionRow,
+  AssetChart,
 } from "./Components/OverviewComponents";
 import styles from "./Overview.module.scss";
 import FilterIcon from "../../assets/icons/FilterIcon.svg";
 import SearchIcon from "../../assets/icons/SearchIcon.svg";
 import TempImage from "../../assets/login/logo.png";
 import { Account, User, Status } from "../../Models/models";
+import Loader from "../../Components/Navbar/Loader";
 
 const Overview: React.FC = () => {
   const [account, setAccount] = useState<Account | null>(null);
@@ -19,41 +21,43 @@ const Overview: React.FC = () => {
   const [statuses, setStatuses] = useState<Status[]>([]);
 
   useEffect(() => {
-    const email = localStorage.getItem("email_to_validate");
-    if (!email) {
-      setError("No email found");
-      setLoading(false);
-      return;
-    }
+    const fetchData = async () => {
+      setLoading(true);
+      const email = localStorage.getItem("email_to_validate");
 
-    const url = `http://localhost:5122/api/User/email?email=${encodeURIComponent(
-      email
-    )}`;
-
-    fetch(url)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch account details");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setUser(data);
-        setAccount(data.account);
+      if (!email) {
+        setError("No email found");
         setLoading(false);
-      })
-      .catch((err) => {
+        return;
+      }
+
+      try {
+        const userResponse = await fetch(
+          `http://localhost:5122/api/User/email?email=${encodeURIComponent(
+            email
+          )}`
+        );
+        if (!userResponse.ok)
+          throw new Error("Failed to fetch account details");
+
+        const userData = await userResponse.json();
+        setUser(userData);
+        setAccount(userData.account);
+
+        const statusResponse = await fetch("http://localhost:5122/api/Status");
+        if (!statusResponse.ok) throw new Error("Failed to fetch statuses");
+
+        const statusData = await statusResponse.json();
+        setStatuses(statusData.$values);
+      } catch (err: any) {
         console.error("Error:", err);
         setError(err.toString());
+      } finally {
         setLoading(false);
-      });
+      }
+    };
 
-    // Fetch all statuses
-    fetch("http://localhost:5122/api/Status")
-      .then((response) => response.json())
-      .then((data) => setStatuses(data.$values))
-      .catch((err) => console.error("Error fetching statuses:", err))
-      .finally(() => setLoading(false));
+    fetchData();
   }, []);
 
   const handleUpgrade = (newStatusId: number) => {
@@ -89,8 +93,7 @@ const Overview: React.FC = () => {
   };
 
   console.log(account);
-  console.log(statuses);
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loader />;
   if (error) return <p>Error: {error}</p>;
 
   return (
@@ -110,21 +113,37 @@ const Overview: React.FC = () => {
           <div className={styles["value"]}>
             {account ? `R${account.balance.toFixed(2)}` : "R0.00"}
           </div>
-          <div className={styles.graph}>GRAPH</div>
+          <div className={styles.graph}>
+            <AssetChart
+              assets={account?.assets.$values ?? []}
+              astro={account?.astro ? [account.astro] : []} 
+            />
+          </div>
         </div>
 
         <div className={styles.assets}>
           <div className={styles["title"]}>Top Assets</div>
           <div className={styles.assetsList}>
-            {account && Array.isArray(account.assets.$values) ? (
-              account.assets.$values
-                .slice(0, 2)
-                .map((asset) => (
-                  <AssetComponent key={asset.asset_id} {...asset} />
-                ))
-            ) : (
-              <p>No assets to display</p>
+            {account && (
+              <>
+                {/* Display the astro asset */}
+                {account.astro && (
+                  <AssetComponent
+                    key={account.astro.astro_id}
+                    {...account.astro}
+                  />
+                )}
+
+                {/* Display other assets */}
+                {Array.isArray(account.assets.$values) &&
+                  account.assets.$values
+                    .slice(0, 2)
+                    .map((asset) => (
+                      <AssetComponent key={asset.asset_id} {...asset} />
+                    ))}
+              </>
             )}
+            {!account && <p>No assets to display</p>}
           </div>
         </div>
       </div>
@@ -145,7 +164,28 @@ const Overview: React.FC = () => {
           </div>
           <div className={styles.divider}></div>
           <div className={styles.rows}>
-            {account && Array.isArray(account.assets.$values) ? (
+            {/* Display the astro asset as a row */}
+            {account?.astro && (
+              <AssetRow
+                key={account.astro.astro_id}
+                image={TempImage}
+                name={account.astro.name}
+                price={`R${account.astro.price.toFixed(2)}`}
+                balance={`R${(
+                  account.astro.price * account.astro.tokens
+                ).toFixed(2)}`}
+                proportion={`${(
+                  ((account.astro.price * account.astro.tokens) /
+                    account.balance) *
+                  100
+                ).toFixed(2)}%`}
+                abbreviation={account.astro.abbreviation}
+              />
+            )}
+
+            {/* Display other assets */}
+            {account &&
+              Array.isArray(account.assets.$values) &&
               account.assets.$values.map((asset) => (
                 <AssetRow
                   key={asset.asset_id}
@@ -159,10 +199,7 @@ const Overview: React.FC = () => {
                   ).toFixed(2)}%`}
                   abbreviation={asset.abbreviation}
                 />
-              ))
-            ) : (
-              <p>No assets to display</p>
-            )}
+              ))}
           </div>
         </div>
 
@@ -171,6 +208,30 @@ const Overview: React.FC = () => {
             <div className={styles.title}>Recent Transactions</div>
           </div>
           <div className={styles.transactionTableContainer}>
+            <TransactionRow
+              icon={TempImage}
+              transactionType="DUMMY"
+              date="Jul 25 2024 11:00"
+              amount="+R230.00"
+            />
+            <TransactionRow
+              icon={TempImage}
+              transactionType="DUMMY"
+              date="Jul 25 2024 11:00"
+              amount="+R230.00"
+            />
+            <TransactionRow
+              icon={TempImage}
+              transactionType="DUMMY"
+              date="Jul 25 2024 11:00"
+              amount="+R230.00"
+            />
+            <TransactionRow
+              icon={TempImage}
+              transactionType="DUMMY"
+              date="Jul 25 2024 11:00"
+              amount="+R230.00"
+            />
             <TransactionRow
               icon={TempImage}
               transactionType="DUMMY"
