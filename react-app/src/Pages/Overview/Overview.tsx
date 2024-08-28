@@ -8,13 +8,14 @@ import styles from "./Overview.module.scss";
 import FilterIcon from "../../assets/icons/FilterIcon.svg";
 import SearchIcon from "../../assets/icons/SearchIcon.svg";
 import TempImage from "../../assets/login/logo.png";
-import { Account, User } from "../../Models/models";
+import { Account, User, Status } from "../../Models/models";
 
 const Overview: React.FC = () => {
   const [account, setAccount] = useState<Account | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [statuses, setStatuses] = useState<Status[]>([]);
 
   useEffect(() => {
     const email = localStorage.getItem("email_to_validate");
@@ -45,15 +46,52 @@ const Overview: React.FC = () => {
         setError(err.toString());
         setLoading(false);
       });
+
+    // Fetch all statuses
+    fetch("http://localhost:5122/api/Status")
+      .then((response) => response.json())
+      .then((data) => setStatuses(data.$values))
+      .catch((err) => console.error("Error fetching statuses:", err))
+      .finally(() => setLoading(false));
   }, []);
 
+  const handleUpgrade = (newStatusId: number) => {
+    if (user) {
+      const accountId = account?.accountId;
+
+      fetch(`http://localhost:5122/api/Account/upgradeStatus`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ accountId, newStatusId }),
+      })
+        .then(response => {
+          if (response.ok) {
+            // Update the user's account status locally
+            setUser(prev => prev ? {
+                ...prev,
+                account: {
+                  ...prev.account,
+                  account_status_id: newStatusId
+                }
+              } : null);
+          } else {
+            throw new Error("Failed to upgrade account status");
+          }
+        })
+        .catch(err => console.error("Error upgrading account status:", err));
+    }
+  };
+
   console.log(account);
+  console.log(statuses);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
     <div className={styles.overview}>
-      <Banner user={user} />
+      {user && <Banner user={user} statuses={statuses} onUpgrade={handleUpgrade} />}
       <div className={styles["text-title"]}>Overview</div>
 
       <div className={styles.filterContainer}>
@@ -90,7 +128,13 @@ const Overview: React.FC = () => {
       </div>
 
       <div className={styles.assetTableContainer}>
-        <div className={styles["titles"]}>{/* Asset Table Headers */}</div>
+        <div className={styles["titles"]}>
+          <div className={styles["title"]}>Asset</div>
+          <div className={styles["title"]}>Price</div>
+          <div className={styles["title"]}>Balance</div>
+          <div className={styles["title"]}>Proportion</div>
+          
+        </div>
         <div className={styles["divider"]}></div>
         <div className={styles["rows"]}>
           {account && Array.isArray(account.assets.$values) ? (

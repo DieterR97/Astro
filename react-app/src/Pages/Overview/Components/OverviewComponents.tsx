@@ -5,41 +5,60 @@ import StatsIcon from "../../../assets/icons/StatsIcon.svg";
 import StackIcon from "../../../assets/icons/StackIcon.svg";
 import LevelIcon from "../../../assets/icons/LevelIcon.svg";
 import MoreIcon from "../../../assets/icons/MoreIcon.svg";
-import { User } from "../../../Models/models";
+import { User, Status, Asset } from "../../../Models/models";
 
 interface BannerProps {
-  user: User | null;
+  user: User;
+  statuses: Status[];
+  onUpgrade: (newStatusId: number) => void; // Function to handle status upgrade
 }
 
-export const Banner: React.FC<BannerProps> = ({ user }) => {
+export const Banner: React.FC<BannerProps> = ({ user, statuses, onUpgrade }) => {
+  const currentAccountStatus = statuses.find(status => status.status_id === user.account.account_status_id) ; 
+  const nextStatus = statuses.find(status => status.status_id === user.account.account_status_id + 1);
+
+  const transactionsFrom = user.account.transactionsFrom.$values;
+  const transactionsTo = user.account.transactionsTo.$values;
+
+  const totalTransactions = transactionsFrom.length + transactionsTo.length;
+  const totalAmountFrom = transactionsFrom.reduce((sum, transaction) => sum + transaction.amount, 0);
+  const totalAmountTo = transactionsTo.reduce((sum, transaction) => sum + transaction.amount, 0);
+  const totalAmount = totalAmountFrom + totalAmountTo;
+
+  const canUpgrade = nextStatus &&
+    (totalTransactions >= nextStatus.transactions_criteria || totalAmount >= nextStatus.total_amount_criteria);
+
   return (
     <div className={styles.banner}>
-      <div className={styles["text-wrapper-1"]}>Welcome back, {user?.username}</div>
+      <div className={styles["text-wrapper-1"]}>Welcome back, {user.username}</div>
 
       <div className={styles.frameContainer}>
         <Frame
           title="Current Level"
-          content={user?.account.status.status_name || "Not Yet"}
-          description={`Criteria: ${user?.account.status.transactions_criteria} transactions`}
+          content={currentAccountStatus?.status_name || 'Unknown'}
+          description={`Criteria: ${currentAccountStatus?.transactions_criteria} transactions`}
           icon={ShipIcon}
         />
         <Frame
           title="Interest Rate"
-          content={`${user?.account.status.annual_interest_rate}%`}
-          description={`Next -> ${user?.account.status.annual_interest_rate? + 1 : 0}%`}
+          content={`${currentAccountStatus?.annual_interest_rate ?? 0 * 100}%`}
+          description={`Next -> ${(nextStatus?.annual_interest_rate || 0) * 100}%`}
           icon={StatsIcon}
         />
         <Frame
           title="Transaction Fee"
-          content={`${user?.account.status.transaction_fee} Coins`}
+          content={`${currentAccountStatus?.transaction_fee} Coins`}
           description="Per Transaction"
           icon={StackIcon}
         />
         <Frame
           title="Next Upgrade"
-          content="Not Yet"
-          description={`Need ${user?.account.status.total_amount_criteria? - user.account.balance : 0} more Coins`}
+          content={canUpgrade ? "Available" : "Not Yet"}
+          description={canUpgrade
+            ? `Click to upgrade to ${nextStatus?.status_name}`
+            : `Need ${Math.max(nextStatus!.transactions_criteria - totalTransactions || 0, 0)} more transactions or ${Math.max(nextStatus!.total_amount_criteria - totalAmount || 0, 0)} more Coins`}
           icon={LevelIcon}
+          onClick={() => canUpgrade && nextStatus ? onUpgrade(nextStatus.status_id) : null}
         />
       </div>
     </div>
@@ -51,30 +70,32 @@ type FrameProps = {
   content: string;
   description: string;
   icon: string;
+  onClick?: () => void;
 };
 
-export const Frame = ({ title, content, description, icon }: FrameProps) => {
+export const Frame = ({ title, content, description, icon, onClick }: FrameProps) => {
   return (
-    <div className={styles.frame}>
+    <div className={styles.frame}  >
       <div className={styles["div"]}>
         <div className={styles["text-wrapper"]}>{title}</div>
         <img className={styles.img} alt="Frame" src={icon} />
       </div>
-      <div className={styles["text-wrapper-2"]}>{content}</div>
+      <div className={styles["text-wrapper-2"]} onClick={onClick}>{content}</div>
       <div className={styles["text-wrapper-3"]}>{description}</div>
       <div className={styles.vector} />
     </div>
   );
 };
 
-export const AssetComponent = () => {
+
+export const AssetComponent = (asset : Asset) => {
   return (
     <div className={styles.asset}>
       <div className={styles["image"]} />
       <div className={styles["content"]}>
-        <div className={styles["name"]}>COIN (CWN)</div>
-        <div className={styles["amount"]}>R2324.23</div>
-        <div className={styles["change"]}>+2.3%</div>
+        <div className={styles["name"]}>{asset.name} ({asset.abbreviation})</div>
+        <div className={styles["amount"]}>R{asset.amount * asset.price}</div>
+        <div className={styles["change"]}>{asset.price}</div>
       </div>
       <div className={styles["button"]}>
         <div className={styles["details"]}>View Details</div>
