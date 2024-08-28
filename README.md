@@ -136,9 +136,13 @@ The `Conceptual Process` is the set of actions, activities and research that was
 
 ![Wireframe1](react-app/src/assets/Wireframe1.jpg)![Wireframe2](react-app/src/assets/Wireframe2.jpg)![Wireframe3](react-app/src/assets/Wireframe3.jpg)![Wireframe4](react-app/src/assets/Wireframe4.jpg)![Wireframe5](react-app/src/assets/Wireframe5.jpg)![Wireframe6](react-app/src/assets/Wireframe6.jpg)![Wireframe7](react-app/src/assets/Wireframe7.jpg)![Wireframe8](react-app/src/assets/Wireframe8.jpg)![Wireframe9](react-app/src/assets/Wireframe9.jpg)![Wireframe10](react-app/src/assets/Wireframe10.jpg)
 
+### ER Diagram
+
+![ER Diagram](react-app/src/assets/ER%20Diagram.jpg)
+
 ### User-flow
 
-![ER Diagram](react-app/src/assets/ER%20Diagram.jpg)![User Flow](react-app/src/assets/User%20Flow.jpg)
+![User Flow](react-app/src/assets/User%20Flow.jpg)
 
 <!-- DEVELOPMENT PROCESS -->
 ## Development Process
