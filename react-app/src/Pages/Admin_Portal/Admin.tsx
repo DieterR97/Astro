@@ -15,6 +15,7 @@ interface User {
 }
 
 interface Status {
+    account_id: number;
     active: boolean;
     balance: number;
     user_id: number;
@@ -71,7 +72,7 @@ function Admin() {
     };
 
     // Click function to be able to click between different option on the popup box
-    const handleOptionClick = (userId: number, option: 'active' | 'inactive') => {
+    const handleOptionClick = (userId: number, accountId: number, option: 'active' | 'inactive') => {
         const isFreezing = option === 'inactive';
 
         setSelectedStatus(prevState => ({
@@ -84,45 +85,24 @@ function Admin() {
         }));
 
         //To change the sate of the user status for when a account is frozen from active to inactive
-        fetch(`http://localhost:5122/api/Account/${userId}`, {
+        fetch(`http://localhost:5122/api/Account/accountId?accountId=${accountId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ active: !isFreezing }), // Toggle account status
+            body: JSON.stringify({ active: !isFreezing }) // Toggle account status
         })
-            .then(response => response.json())
-            .then(data => {
-                console.log("Account status updated:", data);
-                setStatus(prevStatus =>
-                    prevStatus.map(s =>
-                        s.user_id === userId ? { ...s, active: !isFreezing } : s
-                    )
-                );
-            })
-            .catch(error => console.error('Error updating account status:', error));
-        // if (option === 'inactive') {
-        //     // Make a PUT request to update the status
-        //     fetch(`http://localhost:5122/api/Account/${userId}`, {
-        //         method: 'PUT',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify({ active: !isFreezing }), // Set the account status to inactive
-        //     })
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         console.log("Account status updated:", data);
-        //         setStatus(prevStatus =>
-        //             prevStatus.map(s =>
-        //                 s.user_id === userId ? { ...s, active: !isFreezing } : s
-        //             )
-        //         );
-        //     })
-        //     .catch(error => {
-        //         console.error('Error updating account status:', error);
-        //     });
-        // }
+        .then(response => response.json())
+        .then(data => {
+            console.log("Account status updated:", data);
+            setStatus(prevStatus =>
+                prevStatus.map(s =>
+                    s.account_id === accountId ? { ...s, active: !isFreezing } : s
+                )
+            )
+        })
+        .catch(error => console.error('Error updating account status:', error));
+
 
     };
 
@@ -197,12 +177,19 @@ function Admin() {
                                             {/* Pop up box to display different options */}
                                             {popupVisible[user.user_id] && (
                                                 <div className={styles.popup}>
-                                                    <p onClick={() => handleOptionClick(user.user_id, 'active')}>Profile</p>
+                                                    <p>Profile</p>
                                                     <p onClick={() => userStatus && navigate(`/transactions/${userStatus.user_id}`)}>Transactions</p>
-                                                    <p onClick={() => handleOptionClick(user.user_id, userStatus?.active ? 'inactive' : 'active')}>
+                                                    <p 
+                                                        onClick={() => {
+                                                            if (userStatus?.account_id !== undefined) {
+                                                            handleOptionClick(user.user_id, userStatus.account_id, userStatus.active ? 'inactive' : 'active');
+                                                            } else {
+                                                            console.error('Error: account_id is undefined');
+                                                            }
+                                                        }}
+                                                        >
                                                         {userStatus?.active ? 'Freeze acct.' : 'Unfreeze acct.'}
                                                     </p>
-                                                    {/* <p onClick={() => handleOptionClick(user.user_id, 'inactive')}>Freeze acct.</p> */}
                                                 </div>
                                             )}
 
