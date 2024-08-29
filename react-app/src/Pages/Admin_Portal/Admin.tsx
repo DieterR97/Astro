@@ -12,6 +12,7 @@ interface User {
     username: string;
     otp: string;
     created_at: string;
+    email: string;
 }
 
 interface Status {
@@ -71,7 +72,7 @@ function Admin() {
         }));
     };
 
-    // Click function to be able to click between different option on the popup box
+    //Click function to be able to click between different option on the popup box
     const handleOptionClick = (userId: number, accountId: number, option: 'active' | 'inactive') => {
         const isFreezing = option === 'inactive';
 
@@ -133,10 +134,11 @@ function Admin() {
                     <div className={styles.admin_card}>
                         <div className={styles.admin_container_three}>
                             <p className={styles.paragraph}>Name</p>
-                            <p className={styles.paragraph_two}>Join Date</p>
-                            <p className={styles.paragraph_three}>User ID</p>
-                            <p className={styles.paragraph_four}>Status</p>
-                            <p className={styles.paragraph_five}>Action</p>
+                            <p className={styles.paragraph_two}>Email</p>
+                            <p className={styles.paragraph_three}>Join Date</p>
+                            <p className={styles.paragraph_four}>User ID</p>
+                            <p className={styles.paragraph_five}>Status</p>
+                            <p className={styles.paragraph_five_two}>Action</p>
                         </div>
 
                         {/* map all the users that created an account */}
@@ -151,6 +153,7 @@ function Admin() {
                                             <p className={styles.paragraph_six}>{user.username}</p>
                                             <p className={styles.paragraph_seven}>{user.otp}</p>
                                         </div>
+                                        <p className={styles.paragraph_eleven}>{user.email}</p>
                                         <div className={styles.join_date_box}>
                                             <p className={styles.paragraph_six}>{new Date(user.created_at).toLocaleDateString()}</p>
                                             <p className={styles.paragraph_seven}>{new Date(user.created_at).toLocaleTimeString()}</p>
@@ -177,7 +180,6 @@ function Admin() {
                                             {/* Pop up box to display different options */}
                                             {popupVisible[user.user_id] && (
                                                 <div className={styles.popup}>
-                                                    <p>Profile</p>
                                                     <p onClick={() => userStatus && navigate(`/transactions/${userStatus.user_id}`)}>Transactions</p>
                                                     <p 
                                                         onClick={() => {
@@ -190,6 +192,7 @@ function Admin() {
                                                         >
                                                         {userStatus?.active ? 'Freeze acct.' : 'Unfreeze acct.'}
                                                     </p>
+                                                    <p>Delete acct.</p>
                                                 </div>
                                             )}
 
