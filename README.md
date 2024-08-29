@@ -1,5 +1,5 @@
 <!-- HEADER SECTION -->
-<h5 align="center" style="padding:0;margin:0;">Dieter | Erik | Ungerer | Marine | Hannah</h5>
+<h5 align="center" style="padding:0;margin:0;">Dieter | Erik | Ungerer | Mariné | Hannah</h5>
 <h5 align="center" style="padding:0;margin:0;">221122 | 221147 | 221302 | 221326 | 21100366</h5>
 <h6 align="center">Interactive Development 300</h6>
 <p align="center">
@@ -55,9 +55,9 @@ Develop a cross-platform desktop application simulating an e-banking system. Thi
 
 ### Built With
 
-* [Electron](https://www.electronjs.org/)
-* [.NET](https://dotnet.microsoft.com/en-us/)
-* [PostgreSQL](https://www.postgresql.org/)
+* <a href="https://www.electronjs.org/"> ![Static Badge](https://img.shields.io/badge/electron-url?style=for-the-badge&logo=electron&logoColor=lightblue&color=grey) </a>
+* <a href="https://dotnet.microsoft.com/en-us/"> ![Static Badge](https://img.shields.io/badge/.NET-url?style=for-the-badge&logoColor=lightblue&color=purple) </a>
+* <a href="https://www.postgresql.org/"> ![Static Badge](https://img.shields.io/badge/MySQL-url?style=for-the-badge&logo=MySQL&logoColor=darkblue&color=white) </a>
 
 <!-- GETTING STARTED -->
 <!-- Make sure to add appropriate information about what prerequisite technologies the user would need and also the steps to install your project on their own machines -->
@@ -202,7 +202,7 @@ Contributions are what makes the open-source community such an amazing place to 
 * **Dieter Roelofse** - [DieterR97](https://github.com/DieterR97)
 * **Erik Conradie** - [EConradie](https://github.com/EConradie)
 * **Ungerer Hattingh** - [Ungerer221](https://github.com/Ungerer221)
-* **Marine Du Plessis** - [DupieM](https://github.com/DupieM)
+* **Mariné Du Plessis** - [DupieM](https://github.com/DupieM)
 * **Hannah Naidoo** - [HannahAmaria](https://github.com/HannahAmaria)
 
 <!-- LICENSE -->
@@ -216,7 +216,7 @@ Distributed under the MIT License. See `LICENSE` for more information.\
 * **Dieter Roelofse** - [221122@virtualwindow.co.za](221122@virtualwindow.co.za)
 * **Erik Conradie** - [221147@virtualwindow.co.za](221147@virtualwindow.co.za)
 * **Ungerer Hattingh** - [221302@virtualwindow.co.za](221302@virtualwindow.co.za)
-* **Marine Du Plessis** - [221326@virtualwindow.co.za](221326@virtualwindow.co.za)
+* **Mariné Du Plessis** - [221326@virtualwindow.co.za](221326@virtualwindow.co.za)
 * **Hannah Naidoo** - [21100366@virtualwindow.co.za](21100366@virtualwindow.co.za)
 * **Project Link** - https://github.com/DieterR97/Astro
 
