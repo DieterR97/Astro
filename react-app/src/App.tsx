@@ -14,6 +14,7 @@ import Purchasing from "./Pages/Purchasing_Currency/Purchasing";
 import Transactions from "./Pages/Transactions/Transactions";
 import Withdrawals from "./Pages/Withdrawals/Withdrawals";
 import Navbar from "./Components/Navbar/Navbar";
+import AdminTransactionView from "./Pages/AdminTransactionView/AdminTransactionView";
 
 function App() {
   return (
@@ -32,9 +33,9 @@ function NavRoutes() {
   const contentStyle = showNavbar
     ? { flex: 1, marginLeft: "264px" }
     : {
-        height: "100vh",
-        width: "100vw",
-      };
+      height: "100vh",
+      width: "100vw",
+    };
 
   return (
     <>
@@ -48,8 +49,10 @@ function NavRoutes() {
           <Route path="/overview" element={<Overview />} />
           <Route path="/purchasing" element={<Purchasing />} />
           <Route path="/transactions" element={<Transactions />} />
+          <Route path="/transactions" element={<AdminTransactionView />} /> 
           <Route path="/withdrawals" element={<Withdrawals />} />
-          <Route path="/transactions/:user_id" element={<Transactions />} />
+          {/* <Route path="/transactions/:user_id" element={<Transactions />} /> */}
+          <Route path="/transactions/:user_id" element={<AdminTransactionView />} />
         </Routes>
       </div>
     </>
