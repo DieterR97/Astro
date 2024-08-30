@@ -77,7 +77,47 @@
     outline: none;
     border: none;
     background-color: transparent;
-  }
+}
+
+.research {
+    margin-top: 17px;
+    margin-left: 710px;
+}
+
+.filterOption {
+    cursor: pointer;
+    transition: all ease-in-out .1s;
+    color: white;
+    background-color: #7049a460;
+    width: 80px;
+    height: 40px;
+    border-radius: 5px;
+
+
+    &:hover {
+        transition: all ease-in-out .1s;
+        // Glass Effect
+        background: rgba(144, 19, 254, 0.25);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+    }
+}
+
+.filterOptionText {
+    font-size: 12pt;
+    font-weight: 700px;
+}
+
+.thrityDaysFilterBtn {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    margin: -5px;
+    padding-left: 16px;
+    cursor: pointer;
+    color: white;
+}
 
 .admin_card {
     padding: 5px;

@@ -40,30 +40,69 @@ function Admin() {
     var url2 = "http://localhost:5122/api/Account";
 
     // Useeffect is used here to set each url to a specific usestate to be able to map it later on
-    useEffect(() => {
+    // useEffect(() => {
+    //     fetch(url)
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             console.log("Fetched data:", data); 
+    //             setUsers(data.$values); 
+    //         })
+    //         .catch(error => {
+    //             console.error('Error fetching data:', error);
+    //         });
+    // }, []);
+
+    // useEffect(() => {
+    //     fetch(url2)
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         console.log("Fetched data:", data);
+    //         setStatus(data.$values);
+    //     })
+    //     .catch(error => {
+    //         console.error('Error fetching data:', error);
+    //     });
+    // }, []);
+
+    
+    
+    // Function to fetch user data
+    const fetchUsers = () => {
         fetch(url)
             .then(response => response.json())
             .then(data => {
-                console.log("Fetched data:", data); 
-                setUsers(data.$values); 
+                setUsers(data.$values);
             })
             .catch(error => {
-                console.error('Error fetching data:', error);
+                console.error('Error fetching user data:', error);
             });
-    }, []);
+    };
 
-    useEffect(() => {
+    // Function to fetch account status data
+    const fetchStatus = () => {
         fetch(url2)
         .then(response => response.json())
         .then(data => {
-            console.log("Fetched data:", data);
             setStatus(data.$values);
         })
         .catch(error => {
-            console.error('Error fetching data:', error);
+            console.error('Error fetching status data:', error);
         });
+    };
+
+    // Fetch data on initial render
+    useEffect(() => {
+        fetchUsers();
+        fetchStatus();
     }, []);
 
+    // Function to refresh user data when refresh button is clicked
+    const handleRefreshClick = () => {
+        console.log("Refresh button clicked");
+        fetchUsers();
+        fetchStatus();
+    };
+    
     // Click function to activate the popup state
     const handleDetailsClick = (userId: number) => {
         setPopupVisible(prevState => ({
@@ -149,7 +188,17 @@ function Admin() {
                                 placeholder="Search"
                             />
                         </div>
+                        <div className={styles.research}>
+                            <div className={styles.filterOption}>
+                                <button className={styles.thrityDaysFilterBtn} onClick={handleRefreshClick}>
+                                    <p className={styles.filterOptionText} >Refresh</p>
+                                </button>
+                            </div>
+                        </div>
+                        
                     </div>
+
+                    
 
                     <div className={styles.admin_card}>
                         <div className={styles.admin_container_three}>
@@ -220,6 +269,7 @@ function Admin() {
                                                         >
                                                         {userStatus?.active ? 'Freeze acct.' : 'Unfreeze acct.'}
                                                     </p>
+                                                    {/* <p>Delete acct.</p> */}
                                                     <p onClick={() => handleDeleteClick(user.user_id)}>Delete acct.</p>
                                                 </div>
                                             )}
