@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Transactions.module.scss';
 
+
 // logo
 import Logo from "../../assets/login/logo.png";
 // Icons SVG
@@ -13,6 +14,7 @@ import { useParams } from 'react-router-dom';
 
 type FilterOption = 'ALL' | 'LAST_7_DAYS' | 'LAST_30_DAYS' | 'LAST_24_HOURS';
 type SortOption = 'TIMESTAMP' | 'AMOUNT' | 'TRANSACTION_ID';
+type TransactionTypeOption = 'ALLTRANSACTIONS' | 'WITHDRAW' | 'DEPOSIT' | 'TRANSACTION';
 
 function Transactions() {
 
@@ -35,22 +37,22 @@ function Transactions() {
 
     // * DUMMY DATA ...............................................................................
     const incomingData: Transaction[] = [
-        { transactions_id: 1, userName: 'Ungerer Hattingh', from_account_id: 2, transaction_type: "big", amount: 2500, timestamp: new Date('2024-06-12T12:00:00Z') },
-        { transactions_id: 2, userName: 'Ungerer Hattingh', from_account_id: 2, transaction_type: "big", amount: 2500, timestamp: new Date('2024-06-13T12:00:00Z') },
-        { transactions_id: 3, userName: 'Ungerer Hattingh', from_account_id: 2, transaction_type: "big", amount: 2500, timestamp: new Date('2024-06-27T12:00:00Z') },
-        { transactions_id: 4, userName: 'Ungerer Hattingh', from_account_id: 12, transaction_type: "big", amount: 2500, timestamp: new Date('2024-07-17T12:00:00Z') },
-        { transactions_id: 5, userName: 'Ungerer Hattingh', from_account_id: 10, transaction_type: "big", amount: 2500, timestamp: new Date('2024-07-18T12:00:00Z') },
-        { transactions_id: 6, userName: 'Ungerer Hattingh', from_account_id: 2, transaction_type: "big", amount: 2500, timestamp: new Date('2024-07-15T12:00:00Z') },
-        { transactions_id: 7, userName: 'Ungerer Hattingh', from_account_id: 2, transaction_type: "small", amount: 3000, timestamp: new Date('2024-08-01T09:00:00Z') },
-        { transactions_id: 8, userName: 'Test for date sorting', from_account_id: 2, transaction_type: "medium", amount: 500, timestamp: new Date('2024-08-21T15:00:00Z') },
-        { transactions_id: 9, userName: 'Ungerer Hattingh', from_account_id: 2, transaction_type: "medium", amount: 5000000, timestamp: new Date('2024-08-22T15:00:00Z') },
-        { transactions_id: 10, userName: 'Ungerer Hattingh', from_account_id: 2, transaction_type: "medium", amount: 54500, timestamp: new Date('2024-08-23T15:00:00Z') },
-        { transactions_id: 11, userName: 'Ungerer Hattingh', from_account_id: 4, transaction_type: "medium", amount: 67000, timestamp: new Date('2024-08-24T15:00:00Z') },
-        { transactions_id: 12, userName: 'Test for date sorting', from_account_id: 5, transaction_type: "medium", amount: 500, timestamp: new Date('2024-08-25T16:40:00Z') },
-        { transactions_id: 13, userName: 'Test for date sorting', from_account_id: 7, transaction_type: "medium", amount: 500, timestamp: new Date('2024-08-25T16:45:00Z') },
-        { transactions_id: 14, userName: 'Test for date sorting', from_account_id: 4, transaction_type: "medium", amount: 500, timestamp: new Date('2024-08-25T16:45:00Z') },
-        { transactions_id: 15, userName: 'Test for date sorting', from_account_id: 4, transaction_type: "medium", amount: 500, timestamp: new Date('2024-08-27T16:45:00Z') },
-        { transactions_id: 16, userName: 'Test for date sorting', from_account_id: 3, transaction_type: "medium", amount: 500, timestamp: new Date('2024-08-26T14:45:00Z') },
+        { transactions_id: 1, userName: 'Ungerer Hattingh', from_account_id: 2, transaction_type: "withdraw", amount: 2500, timestamp: new Date('2024-06-12T12:00:00Z') },
+        { transactions_id: 2, userName: 'Ungerer Hattingh', from_account_id: 2, transaction_type: "deposit", amount: 2500, timestamp: new Date('2024-06-13T12:00:00Z') },
+        { transactions_id: 3, userName: 'Ungerer Hattingh', from_account_id: 2, transaction_type: "deposit", amount: 2500, timestamp: new Date('2024-06-27T12:00:00Z') },
+        { transactions_id: 4, userName: 'Ungerer Hattingh', from_account_id: 12, transaction_type: "withdraw", amount: 2500, timestamp: new Date('2024-07-17T12:00:00Z') },
+        { transactions_id: 5, userName: 'Ungerer Hattingh', from_account_id: 10, transaction_type: "withdraw", amount: 2500, timestamp: new Date('2024-07-18T12:00:00Z') },
+        { transactions_id: 6, userName: 'Ungerer Hattingh', from_account_id: 2, transaction_type: "withdraw", amount: 2500, timestamp: new Date('2024-07-15T12:00:00Z') },
+        { transactions_id: 7, userName: 'Ungerer Hattingh', from_account_id: 2, transaction_type: "deposit", amount: 3000, timestamp: new Date('2024-08-01T09:00:00Z') },
+        { transactions_id: 8, userName: 'Test for date sorting', from_account_id: 2, transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-21T15:00:00Z') },
+        { transactions_id: 9, userName: 'Ungerer Hattingh', from_account_id: 2, transaction_type: "transfer", amount: 5000000, timestamp: new Date('2024-08-22T15:00:00Z') },
+        { transactions_id: 10, userName: 'Ungerer Hattingh', from_account_id: 2, transaction_type: "transfer", amount: 54500, timestamp: new Date('2024-08-23T15:00:00Z') },
+        { transactions_id: 11, userName: 'Ungerer Hattingh', from_account_id: 4, transaction_type: "transfer", amount: 67000, timestamp: new Date('2024-08-24T15:00:00Z') },
+        { transactions_id: 12, userName: 'Test for date sorting', from_account_id: 5, transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-25T16:40:00Z') },
+        { transactions_id: 13, userName: 'Test for date sorting', from_account_id: 7, transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-25T16:45:00Z') },
+        { transactions_id: 14, userName: 'Test for date sorting', from_account_id: 4, transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-25T16:45:00Z') },
+        { transactions_id: 15, userName: 'Test for date sorting', from_account_id: 4, transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-27T16:45:00Z') },
+        { transactions_id: 16, userName: 'Test for date sorting', from_account_id: 3, transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-26T14:45:00Z') },
     ];
     // to change months from numbers to names
     // console.table(incomingData)
@@ -70,6 +72,8 @@ function Transactions() {
         primary: 'timestamp',
         secondary: 'amount'
     });
+    const [transactionTypeOption, setTransactionTypeOption] = useState<TransactionTypeOption>('ALLTRANSACTIONS'); // state for filtering by transaction type
+
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     // const [userId, setUserId] = useState<User[]>([]);
@@ -118,7 +122,7 @@ function Transactions() {
     // }, [user_id]);
 
 
-    // * filtering Currently Logged in user transaction .................................................
+    // * filtering Currently Logged in user transaction ...........................................
     // filters all the transaction data and only displays the data with the according from_account_id
 
     // useEffect(() => {
@@ -127,11 +131,31 @@ function Transactions() {
     // }, [fromAccountId]);
     // console.table(filteredTransactions); // displays data only specific to the from_account_id
 
-    // Filter transactions based on fromAccountId number
+    // * Filter transactions based on fromAccountId number.........................................
     const filteredTransactions = incomingData.filter(transaction => transaction.from_account_id === fromAccountId);
     console.table(filteredTransactions);
 
     // * FILTERING FUNCTOINALITY ..................................................................
+    // transaction type filtering 
+    const filteredByTransactionType = (() => {
+        switch (transactionTypeOption) {
+            case 'WITHDRAW':
+                const withdrawTransactions = incomingData.filter(transaction => transaction.transaction_type === "withdraw");
+                return withdrawTransactions;
+            case 'DEPOSIT':
+                const depositTransactions = incomingData.filter(transaction => transaction.transaction_type === "deposit");
+                return depositTransactions;
+            case 'TRANSACTION':
+                const transactionTransactions = incomingData.filter(transaction => transaction.transaction_type === "transfer");
+                return transactionTransactions;
+            case 'ALLTRANSACTIONS':
+            default:
+                return incomingData;
+
+        }
+    })();
+    // * Could send the filtered data to the filter below..
+
     // the filtering functionality that will filter by different options - all | 30 days | 7 days | 24 hours
     // takes in the incoming data which will be filter to show only the users transactions from_account_id
     const filteredData = (() => {
@@ -139,16 +163,16 @@ function Transactions() {
         switch (filterOption) {
             case 'LAST_24_HOURS':
                 const twentyFourHoursAgo = new Date(today.setDate(today.getDate() - 24 / 60 / 60 / 1000)); // 24 hours
-                return incomingData.filter(item => new Date(item.timestamp) >= twentyFourHoursAgo); // change incoming data to filteredTransactions
+                return filteredByTransactionType.filter(item => new Date(item.timestamp) >= twentyFourHoursAgo); // change incoming data to filteredTransactions
             case 'LAST_7_DAYS':
                 const sevenDaysAgo = new Date(today.setDate(today.getDate() - 7)); // 7 days
-                return incomingData.filter(item => new Date(item.timestamp) >= sevenDaysAgo);
+                return filteredByTransactionType.filter(item => new Date(item.timestamp) >= sevenDaysAgo);
             case 'LAST_30_DAYS':
                 const thirtyDaysAgo = new Date(today.setDate(today.getDate() - 30)); // 30 days
-                return incomingData.filter(item => new Date(item.timestamp) >= thirtyDaysAgo);
+                return filteredByTransactionType.filter(item => new Date(item.timestamp) >= thirtyDaysAgo);
             case 'ALL':
             default:
-                return incomingData;
+                return filteredByTransactionType;
         }
     })();
     console.log(filteredData.length);
@@ -184,7 +208,7 @@ function Transactions() {
         });
     };
 
-    // * Combining the filtering functioniality and the sorting functionality into one filtered variable
+    // * Combining the `filtering` functioniality and the `sorting` functionality into one filtered variable
     // by taking the filteredData, both soted options and puting it all together
     const sortedAndFilteredData = sortData(filteredData, sortOptions.primary, sortOptions.secondary);
 
@@ -199,20 +223,19 @@ function Transactions() {
 
     // * Details button Modal .....................................................................
     // TODO : the details button
-    // const [isModalOpen, setIsModalOpen] = useState(false);
-    // const openModal = () => {
-    //     setIsModalOpen(true);
-    // };
-
-    // const closeModal = () => {
-    //     setIsModalOpen(false);
-    // };
-    // const openDetailsModal = (event: React.MouseEvent<HTMLDivElement>) => {
-    //     // Close the modal if the user clicks on the overlay (outside the modal content)
-    //     if (event.target === event.currentTarget) {
-    //         closeModal();
-    //     }
-    // };
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+    const openDetailsModal = (event: React.MouseEvent<HTMLDivElement>) => {
+        // Close the modal if the user clicks on the overlay (outside the modal content)
+        if (event.target === event.currentTarget) {
+            closeModal();
+        }
+    };
 
     // ...
 
@@ -223,7 +246,7 @@ function Transactions() {
                 <h1>Transactions</h1>
                 {/* filter section START */}
                 <div className={styles.filterContainer}>
-                    {/* filter bar */}
+                    {/* //* filter bar */}
                     <div className={styles.filterBar}>
                         <div className={styles.filterOption01}>
                             <button id={styles.allFilterBtn} onClick={() => setFilterOption('ALL')}>
@@ -272,6 +295,29 @@ function Transactions() {
                 </div>
                 {/* filter section END */}
                 <h1>Your Transactions</h1>
+                <div className={styles.filterBar}>
+                        <div className={styles.filterOption01}>
+                            <button id={styles.allFilterBtn} onClick={() => setTransactionTypeOption('ALLTRANSACTIONS')}>
+                                <p className={styles.filterOptionText}>All</p>
+                            </button>
+                        </div>
+                        <div className={styles.filterOption}>
+                            <button id={styles.thrityDaysFilterBtn} onClick={() => setTransactionTypeOption('WITHDRAW')}>
+                                {/* {showRecent ? 'Show All Data' : 'Show Data from Last 30 Days'} */}
+                                <p className={styles.filterOptionText} >withdraws</p>
+                            </button>
+                        </div>
+                        <div className={styles.filterOption} >
+                            <button id={styles.sevenDaysFilterBtn} onClick={() => setTransactionTypeOption('DEPOSIT')}>
+                                <p className={styles.filterOptionText} >deposits</p>
+                            </button>
+                        </div>
+                        <div className={styles.filterOption04}>
+                            <button id={styles.twentyFourHoursFilterBtn} onClick={() => setTransactionTypeOption('TRANSACTION')}>
+                                <p className={styles.filterOptionText}>transfers</p>
+                            </button>
+                        </div>
+                    </div>
                 {/* Transactions Table  */}
                 <div className={styles.transactionTableMianCon}>
                     {/* TOP ROW COLUMNS */}
@@ -289,8 +335,8 @@ function Transactions() {
                     <div className={styles.innerTableCon}>
                         {/* // * row of user data */}
 
+                        {/* //*  mapping data */}
                         {/* row of user data */}
-                        {/* map testing */}
                         {userTransactions && userTransactions.length > 0 ? (
                             userTransactions.map(transaction => (
                                 <div className={styles.contentRowTile}>
