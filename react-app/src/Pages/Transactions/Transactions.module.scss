@@ -1,15 +1,3 @@
-:root {
-    --positiveColor: #0B9457;
-    --negative: #FC684E;
-    --white: #fff;
-    --black: #000;
-    --primaryColor: #7E4AC0;
-    --grayedTextColor: #909498;
-    --darkBackground: #19252F;
-    --darkBackground02: #0E1922;
-    --darkGray: #36434F;
-    --darkStroke: #242424;
-}
 
 $base-color: #c6538c; // example of scss color variable
 $border-dark: rgba($base-color, 0.88);
@@ -18,6 +6,7 @@ $border-dark: rgba($base-color, 0.88);
 $negative: #FC684E;
 $positiveColor: #0B9457;
 $primaryColor: #7E4AC0;
+$lighterprimaryColor: #7049a460;
 $white: #fff;
 $grayedTextColor: #909498;
 $borderColor02: #606060;
@@ -25,6 +14,8 @@ $darkGray: #36434F;
 $darkBackground: #19252F;
 $darkerBackground: #0E1922;
 $black: #000;
+$darkStroke: #242424;
+
 
 .mainContainer {
     background-color: $darkBackground;
@@ -34,7 +25,6 @@ $black: #000;
     display: flex;
     user-select: none; // to prevent text highlighting
     height: 100vh;
-    margin-bottom: 40px;
 
     h3 {
         color: $white;
@@ -92,17 +82,20 @@ $black: #000;
 }
 
 .contentContainer {
-    // background-color: var(--darkBackground);
     background-color: $darkBackground;
     padding-left: 20px;
     padding-right: 20px;
     width: 100%;
     height: fit-content;
-    margin-bottom: 40px;
 
     h1 {
         font-size: 42px;
-        color: var(--white);
+        color: $white;
+        font-weight: 900;
+    }
+
+    h2 {
+        color: $white;
     }
 }
 
@@ -114,12 +107,12 @@ $black: #000;
     padding: 20px;
     width: 500px;
     border-radius: 12px;
-    background-color: var(--darkBackground02);
+    background-color: $darkerBackground;
     margin-bottom: 20px;
 
     h1 {
         font-size: 32px;
-        color: var(--white);
+        color: $white;
         text-transform: capitalize;
         margin: 0;
     }
@@ -127,17 +120,17 @@ $black: #000;
     .detailsTextBox {
         h2 {
             font-size: 16px;
-            color: var(--white);
+            color: $white;
         }
 
         p {
-            color: var(--white);
+            color: $white;
             font-size: 12px;
             margin: 0;
         }
 
         .totalBox {
-            background-color: var(--primaryColor);
+            background-color: $primaryColor;
             width: fit-content;
             padding: 5px 12px 5px 12px;
             border-radius: 6px;
@@ -178,7 +171,7 @@ $black: #000;
             border: 1px solid rgba(255, 255, 255, 0.18);
         }
 
-       
+
 
         #thrityDaysFilterBtn {
             background-color: transparent;
@@ -237,12 +230,12 @@ $black: #000;
     }
 
     .filterOption04 {
-        border: 1px solid var(--white);
+        border: 1px solid $white;
         // padding: 0px 20px 0px 20px;
         cursor: pointer;
         border-radius: 0px 10px 10px 0px;
         transition: all ease-in-out .1s;
-        color: var(--white);
+        color: $white;
         overflow: hidden;
 
         &:hover {
@@ -257,7 +250,119 @@ $black: #000;
             border: 1px solid rgba(255, 255, 255, 0.18);
         }
 
-        #twentyFourHoursFilterBtn{
+        #twentyFourHoursFilterBtn {
+            background-color: transparent;
+            outline: none;
+            border: none;
+            margin: 0;
+            padding: 0px 20px 0px 20px;
+            width: auto;
+            height: auto;
+            cursor: pointer;
+        }
+    }
+
+    .filterOptionText {
+        font-size: 12px;
+        font-weight: 600px;
+    }
+}
+
+.filterBarByType {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    .filterOption {
+        cursor: pointer;
+        transition: all ease-in-out .1s;
+        color: $white;
+        overflow: hidden;
+        background-color: $lighterprimaryColor;
+
+        &:hover {
+            transition: all ease-in-out .1s;
+            // Glass Effect
+            background: rgba(144, 19, 254, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+
+
+        #thrityDaysFilterBtn {
+            background-color: transparent;
+            outline: none;
+            border: none;
+            margin: 0;
+            padding: 0px 20px 0px 20px;
+            width: auto;
+            height: auto;
+            cursor: pointer;
+        }
+
+        #sevenDaysFilterBtn {
+            background-color: transparent;
+            outline: none;
+            border: none;
+            margin: 0;
+            padding: 0px 20px 0px 20px;
+            width: auto;
+            height: auto;
+            cursor: pointer;
+        }
+    }
+
+    .filterOption01 {
+        cursor: pointer;
+        border-radius: 10px 0px 0px 10px;
+        transition: all ease-in-out .1s;
+        color: $white;
+        overflow: hidden;
+        background-color: $lighterprimaryColor;
+
+        &:hover {
+            transition: all ease-in-out .1s;
+            // Glass Effect
+            background: rgba(144, 19, 254, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        #allFilterBtn {
+            background-color: transparent;
+            outline: none;
+            border: none;
+            margin: 0;
+            padding: 0px 20px 0px 20px;
+            width: auto;
+            height: auto;
+            cursor: pointer;
+        }
+    }
+
+    .filterOption04 {
+        // padding: 0px 20px 0px 20px;
+        cursor: pointer;
+        border-radius: 0px 10px 10px 0px;
+        transition: all ease-in-out .1s;
+        color: $white;
+        background-color: $lighterprimaryColor;
+        overflow: hidden;
+
+        &:hover {
+            transition: all ease-in-out .1s;
+            // Glass Effect
+            background: rgba(144, 19, 254, 0.25);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        #twentyFourHoursFilterBtn {
             background-color: transparent;
             outline: none;
             border: none;
@@ -305,14 +410,14 @@ $black: #000;
     background-color: transparent;
     outline: none;
     border: none;
-    color: var(--white);
+    color: $white;
 }
 
 .dropDownMenu {
 
     .filterButton {
         background-color: transparent;
-        border: 1px solid var(--white);
+        border: 1px solid $white;
         border-radius: 5px;
         cursor: pointer;
         transition: all ease-in-out .1s;
@@ -321,7 +426,7 @@ $black: #000;
         justify-content: center;
         align-items: center;
         gap: 6px;
-        color: var(--white);
+        color: $white;
         padding: 6px;
 
         img {
@@ -347,13 +452,12 @@ $black: #000;
             border: none;
             cursor: pointer;
             width: 100%;
-            // background-color: var(--darkGray);
             background-color: transparent;
-            color: var(--white);
+            color: $white;
 
             &:hover {
-                background-color: var(--primaryColor);
-                color: var(--white);
+                background-color: $primaryColor;
+                color: $white;
             }
         }
     }
@@ -377,6 +481,39 @@ $black: #000;
     }
 }
 
+.detailsDropblock {
+    .detailsDropContent {
+        display: none;
+        position: absolute;
+        right: 180px;
+        background-color: $positiveColor;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    &:hover .detailsDropContent {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 12px 12px 12px 12px;
+        padding: 10px 20px 10px 20px;
+        overflow: hidden;
+
+        h3 {
+            margin: 10px;
+        }
+
+        .detailsTextContent {
+
+            p {
+                color: $white;
+                margin: 0;
+            }
+        }
+    }
+}
+
 
 .transactionTableMianCon {
     display: flex;
@@ -386,27 +523,23 @@ $black: #000;
     margin-top: 20px;
     padding: 0px 24px 10px 24px;
     border-radius: 10px;
-    border: 2px solid var(--darkStroke);
-    background-color: var(--darkBackground02);
+    border: 2px solid $darkStroke;
+    background-color: $darkerBackground;
     gap: 10px;
     width: 95%;
-    margin-bottom: 40px;
+    margin-bottom: 80px;
     // width: 1098px;
 }
 
 .tableTopRow {
-    // display: flex;
-    // align-items: center;
-    // justify-content: space-between;
     width: 100%;
     display: grid;
     grid-template-columns: auto auto auto auto auto auto;
     justify-content: space-between;
-    // background-color: var(--negative);
     column-gap: 40px;
 
     p {
-        color: var(--white);
+        color: $white;
     }
 }
 
