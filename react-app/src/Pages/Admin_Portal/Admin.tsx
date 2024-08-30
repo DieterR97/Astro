@@ -134,11 +134,12 @@ function Admin() {
                     <div className={styles.admin_card}>
                         <div className={styles.admin_container_three}>
                             <p className={styles.paragraph}>Name</p>
-                            <p className={styles.paragraph_two}>Email</p>
-                            <p className={styles.paragraph_three}>Join Date</p>
-                            <p className={styles.paragraph_four}>User ID</p>
-                            <p className={styles.paragraph_five}>Status</p>
-                            <p className={styles.paragraph_five_two}>Action</p>
+                            <p className={styles.paragraph_one_two}>Email</p>
+                            <p className={styles.paragraph_two}>Join Date</p>
+                            <p className={styles.paragraph_three}>User ID</p>
+                            <p className={styles.paragraph_four_two}>Balance</p>
+                            <p className={styles.paragraph_four}>Status</p>
+                            <p className={styles.paragraph_five}>Action</p>
                         </div>
 
                         {/* map all the users that created an account */}
@@ -153,21 +154,27 @@ function Admin() {
                                             <p className={styles.paragraph_six}>{user.username}</p>
                                             <p className={styles.paragraph_seven}>{user.otp}</p>
                                         </div>
-                                        <p className={styles.paragraph_eleven}>{user.email}</p>
+                                        <p className={styles.paragraph_seven_two}>{user.email}</p>
                                         <div className={styles.join_date_box}>
                                             <p className={styles.paragraph_six}>{new Date(user.created_at).toLocaleDateString()}</p>
                                             <p className={styles.paragraph_seven}>{new Date(user.created_at).toLocaleTimeString()}</p>
                                         </div>
                                         <p className={styles.paragraph_eight}>{user.user_id}</p>
                                         <div className={styles.box}></div>
+                                        {userStatus ? (
+                                                <p className={styles.paragraph_eight_two}>R {userStatus.balance}</p>
+                                        ) : (
+                                            <p className={styles.paragraph_nine}>Loading...</p>
+                                        )}
+                                        <div className={styles.box_two}></div>
                                         {/* Map the status to say active(true) and inactive(false) */}
                                         {userStatus ? (
-                                            <p 
-                                                className={styles.paragraph_nine}
-                                                style={{ color: userStatus.active ? '#0B9457' : '#FC684E' }}
-                                            >
-                                                {userStatus.active ? 'Active' : 'Inactive'}
-                                            </p>
+                                                <p 
+                                                    className={styles.paragraph_nine}
+                                                    style={{ color: userStatus.active ? '#0B9457' : '#FC684E' }}
+                                                >
+                                                    {userStatus.active ? 'Active' : 'Inactive'}
+                                                </p>
                                         ) : (
                                             <p className={styles.paragraph_nine}>Loading...</p>
                                         )}

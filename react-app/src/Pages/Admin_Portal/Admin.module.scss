@@ -82,7 +82,7 @@
 .admin_card {
     padding: 5px;
     margin-left: 35px;
-    width: 990px;
+    width: 1104px;
     display: flex;
     flex-direction: column;
     // height: 820px;
@@ -104,32 +104,54 @@
     font-size: 15pt;
     font-weight: lighter;
     color: white;
-    margin-right: 116px;
+    margin-right: 123px;
     margin-top: 10px;
+    // background-color: lightcoral;
+}
+
+.paragraph_one_two {
+    font-size: 15pt;
+    font-weight: lighter;
+    color: white;
+    margin-right: 220px;
+    margin-top: 10px;
+    // background-color: lightskyblue;
 }
 
 .paragraph_two {
     font-size: 15pt;
     font-weight: lighter;
     color: white;
-    margin-right: 100px;
+    margin-right: 54px;
     margin-top: 10px;
+    // background-color: lightseagreen;
 }
 
 .paragraph_three {
     font-size: 15pt;
     font-weight: lighter;
     color: white;
-    margin-right: 90px;
+    margin-right: 50px;
     margin-top: 10px;
+    // background-color: lightcoral;
 }
 
 .paragraph_four {
     font-size: 15pt;
     font-weight: lighter;
     color: white;
-    margin-right: 70px;
+    margin-right: 62px;
     margin-top: 10px;
+    // background-color: lightseagreen;
+}
+
+.paragraph_four_two {
+    font-size: 15pt;
+    font-weight: lighter;
+    color: white;
+    margin-right: 78px;
+    margin-top: 10px;
+    // background-color: lightskyblue;
 }
 
 .paragraph_five {
@@ -137,6 +159,7 @@
     font-weight: lighter;
     color: white;
     margin-top: 10px;
+    // background-color: lightcoral;
 }
 
 .admin_card_two {
@@ -157,7 +180,8 @@
 
 .name_box {
     margin-right: 0px;
-    width: 124px;
+    width: 130px;
+    // background-color: lightcoral;
 }
 
 .paragraph_six {
@@ -175,9 +199,22 @@
     line-height: 12px;
 }
 
-.join_date_box {
+.paragraph_seven_two {
+    font-size: 13pt;
+    font-weight: lighter;
+    text-align: left;
+    color: #909498;
+    line-height: 0px;
+    width: 270px;
+    margin-top: 33px;
     margin-right: 0px;
-    width: 185px;
+    // background-color: lightskyblue;
+}
+
+.join_date_box {
+    text-align: left;
+    width: 138px;
+    // background-color: lightseagreen;
 }
 
 .paragraph_eight {
@@ -189,10 +226,27 @@
     width: 80px;
     margin-top: 33px;
     margin-right: 0px;
+    // background-color: lightcoral;
+}
+
+.paragraph_eight_two {
+    font-size: 13pt;
+    font-weight: lighter;
+    text-align: left;
+    color: white;
+    line-height: 0px;
+    width: 124px;
+    margin-top: 33px;
+    margin-right: 0px;
+    // background-color: lightskyblue;
 }
 
 .box {
-    width: 80px;
+    width: 37px;
+}
+
+.box_two {
+    width: 28px;
 }
 
 .paragraph_nine {
@@ -201,7 +255,8 @@
     color: #0B9457;
     line-height: 5px;
     margin-top: 33px;
-    width: 125px;
+    width: 117px;
+    // background-color: lightseagreen;
 }
 
 .paragraph_ten {
@@ -210,15 +265,6 @@
     color: #FC684E;
     line-height: 0px;
     margin-top: 33px;
-}
-
-.paragraph_eleven {
-    font-size: 13pt;
-    font-weight: lighter;
-    color: #909498;
-    line-height: 0px;
-    margin-top: 33px;
-    margin-right: 105px;
 }
 
 .body_three {
