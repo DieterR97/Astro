@@ -38,22 +38,22 @@ function Transactions() {
 
     // * DUMMY DATA ...............................................................................
     const incomingData: Transaction[] = [
-        { transactions_id: 1, userName: 'Ungerer Hattingh', from_account_id: 2, to_account_id: 3, transaction_type: "withdrawal", amount: 2500, timestamp: new Date('2024-06-12T12:00:00Z') },
-        { transactions_id: 2, userName: 'Ungerer Hattingh', from_account_id: 2, to_account_id: 3, transaction_type: "deposit", amount: 25000, timestamp: new Date('2024-06-13T12:00:00Z') },
-        { transactions_id: 3, userName: 'Ungerer Hattingh', from_account_id: 2, to_account_id: 3, transaction_type: "deposit", amount: 2500, timestamp: new Date('2024-06-27T12:00:00Z') },
-        { transactions_id: 4, userName: 'Ungerer Hattingh', from_account_id: 12,to_account_id: 3, transaction_type: "withdrawal", amount: 2500, timestamp: new Date('2024-07-17T12:00:00Z') },
-        { transactions_id: 5, userName: 'Ungerer Hattingh', from_account_id: 10, to_account_id: 3,transaction_type: "withdrawal", amount: 2500, timestamp: new Date('2024-07-18T12:00:00Z') },
-        { transactions_id: 6, userName: 'Ungerer Hattingh', from_account_id: 2,to_account_id: 3, transaction_type: "withdrawal", amount: 2500, timestamp: new Date('2024-07-15T12:00:00Z') },
-        { transactions_id: 7, userName: 'Ungerer Hattingh', from_account_id: 2,to_account_id: 3, transaction_type: "deposit", amount: 3000, timestamp: new Date('2024-08-01T09:00:00Z') },
-        { transactions_id: 8, userName: 'Test for date sorting', from_account_id: 2,to_account_id: 3, transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-21T15:00:00Z') },
-        { transactions_id: 9, userName: 'Ungerer Hattingh', from_account_id: 2,to_account_id: 3, transaction_type: "transfer", amount: 5000000, timestamp: new Date('2024-08-22T15:00:00Z') },
-        { transactions_id: 10, userName: 'Ungerer Hattingh', from_account_id: 2,to_account_id: 3, transaction_type: "transfer", amount: 54500, timestamp: new Date('2024-08-23T15:00:00Z') },
-        { transactions_id: 11, userName: 'Ungerer Hattingh', from_account_id: 4,to_account_id: 3, transaction_type: "transfer", amount: 67000, timestamp: new Date('2024-08-24T15:00:00Z') },
-        { transactions_id: 12, userName: 'Test for date sorting', from_account_id: 5, to_account_id: 3,transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-25T16:40:00Z') },
-        { transactions_id: 13, userName: 'Test for date sorting', from_account_id: 7, to_account_id: 3,transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-25T16:45:00Z') },
-        { transactions_id: 14, userName: 'Test for date sorting', from_account_id: 4,to_account_id: 3, transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-25T16:45:00Z') },
-        { transactions_id: 15, userName: 'Test for date sorting', from_account_id: 4,to_account_id: 3, transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-27T16:45:00Z') },
-        { transactions_id: 16, userName: 'Test for date sorting', from_account_id: 3, to_account_id: 3,transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-26T14:45:00Z') },
+        { transactions_id: 1, userName: 'Ungerer', from_account_id: 2, to_account_id: 3, transaction_type: "withdrawal", amount: 2500, timestamp: new Date('2024-06-12T12:00:00Z') },
+        { transactions_id: 2, userName: 'Ungerer', from_account_id: 7, to_account_id: 3, transaction_type: "deposit", amount: 25000, timestamp: new Date('2024-06-13T12:00:00Z') },
+        { transactions_id: 3, userName: 'Ungerer', from_account_id: 7, to_account_id: 3, transaction_type: "deposit", amount: 2500, timestamp: new Date('2024-06-27T12:00:00Z') },
+        { transactions_id: 4, userName: 'Ungerer', from_account_id: 12, to_account_id: 3, transaction_type: "withdrawal", amount: 2500, timestamp: new Date('2024-07-17T12:00:00Z') },
+        { transactions_id: 5, userName: 'Ungerer', from_account_id: 10, to_account_id: 3, transaction_type: "withdrawal", amount: 2500, timestamp: new Date('2024-07-18T12:00:00Z') },
+        { transactions_id: 6, userName: 'Ungerer', from_account_id: 2, to_account_id: 3, transaction_type: "withdrawal", amount: 2500, timestamp: new Date('2024-07-15T12:00:00Z') },
+        { transactions_id: 7, userName: 'Ungerer', from_account_id: 2, to_account_id: 3, transaction_type: "deposit", amount: 3000, timestamp: new Date('2024-08-01T09:00:00Z') },
+        { transactions_id: 8, userName: 'Test for date sorting', from_account_id: 2, to_account_id: 3, transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-21T15:00:00Z') },
+        { transactions_id: 9, userName: 'Ungerer', from_account_id: 2, to_account_id: 3, transaction_type: "transfer", amount: 5000000, timestamp: new Date('2024-08-22T15:00:00Z') },
+        { transactions_id: 10, userName: 'Ungerer', from_account_id: 2, to_account_id: 3, transaction_type: "transfer", amount: 54500, timestamp: new Date('2024-08-23T15:00:00Z') },
+        { transactions_id: 11, userName: 'Ungerer', from_account_id: 4, to_account_id: 3, transaction_type: "transfer", amount: 67000, timestamp: new Date('2024-08-24T15:00:00Z') },
+        { transactions_id: 12, userName: 'Test for date sorting', from_account_id: 5, to_account_id: 3, transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-25T16:40:00Z') },
+        { transactions_id: 13, userName: 'Ungerer', from_account_id: 7, to_account_id: 3, transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-25T16:45:00Z') },
+        { transactions_id: 14, userName: 'Test for date sorting', from_account_id: 4, to_account_id: 3, transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-25T16:45:00Z') },
+        { transactions_id: 15, userName: 'Test for date sorting', from_account_id: 4, to_account_id: 3, transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-27T16:45:00Z') },
+        { transactions_id: 16, userName: 'Test for date sorting', from_account_id: 3, to_account_id: 3, transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-26T14:45:00Z') },
     ];
     // to change months from numbers to names
     // console.table(incomingData)
@@ -75,13 +75,14 @@ function Transactions() {
     });
     const [transactionTypeOption, setTransactionTypeOption] = useState<TransactionTypeOption>('ALLTRANSACTIONS'); // state for filtering by transaction type
 
-    const [user, setUser] = useState<User | null>(null);
+    // const [user, setUser] = useState<User | null>(null); // check if this is doing anything
     const [loading, setLoading] = useState<boolean>(true);
     // const [userId, setUserId] = useState<User[]>([]);
     const [error, setError] = useState<string | null>(null);
 
     // for the get data acording to from_account_id
-    const [currentUser, setCurrentUser] = useState();
+    const [currentUser, setCurrentUser] = useState<any|null>(''); // for getting logged in user id
+
     // const [fromAccountId, setFromAccountId] = useState(4); // the usetate for the from_account_id data for the logged user - // TODO: need to get current account number and make it equal to the from account id
     const [fromAccountId, setFromAccountId] = useState<number | null>(null);
     // const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>([]); // to filter incoming date to produce specific date
@@ -123,18 +124,61 @@ function Transactions() {
     // }, [user_id]);
 
 
-    // * filtering Currently Logged in user transaction ...........................................
-    // filters all the transaction data and only displays the data with the according from_account_id
+    // * getting the currently logged in user account id ..........................................
+    // code from erik's navbar to get the current user
+    const fetchUserDetails = async () => {
+        const email = localStorage.getItem('email_to_validate');
+        if (!email) {
+            console.error('No email found');
+            return;
+        }
+        const url = `http://localhost:5122/api/User/email?email=${encodeURIComponent(email)}`;
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error('Failed to fetch user details');
+            }
+            const data = await response.json();
+            setCurrentUser({
+                userId: data.account.accountId, // to get the id from the logged user
+            });
+            console.log(data)
+        } catch (err) {
+            console.error('Error fetching user details:', err);
+        }
+    };
 
+    useEffect(() => {
+        fetchUserDetails()
+    }, []);
+
+    console.log(currentUser.userId);
+
+    // filters all the transaction data and only displays the data with the according from_account_id
     // useEffect(() => {
     //     const filtered = incomingData.filter(transaction => transaction.from_account_id === fromAccountId);
     //     setFilteredTransactions(filtered);
     // }, [fromAccountId]);
     // console.table(filteredTransactions); // displays data only specific to the from_account_id
 
+
+    // * Filter to get all the transactions for the currently logged in user ......................
+    // const filterLoggedUserTransactions = async () => {
+    //     incomingData.filter(transaction => transaction.from_account_id === currentUser.userId)
+    // };
+    // console.table(filterLoggedUserTransactions);
+
+    const filterLoggedUserTransactions = incomingData.filter(transaction => transaction.from_account_id === currentUser.userId);
+    console.table(filterLoggedUserTransactions)
+
+
     // * Filter transactions based on fromAccountId number.........................................
     const filteredTransactions = incomingData.filter(transaction => transaction.from_account_id === fromAccountId);
     console.table(filteredTransactions);
+
+    // * Switch from logged view to admin view ....................................................
+    // Quick solution is to have an admin transaction view page that handles this
+
 
     // * FILTERING FUNCTOINALITY ..................................................................
     // * transaction type filtering 
@@ -175,7 +219,7 @@ function Transactions() {
                 return filteredByTransactionType;
         }
     })();
-    console.log(filteredData.length);
+    // console.log(filteredData.length);
 
 
     // * SORTING FUNCTOINALITY ....................................................................
@@ -223,27 +267,6 @@ function Transactions() {
 
     // * Details button Modal .....................................................................
     // TODO : the details button
-
-    // const [isModalOpen, setIsModalOpen] = useState(false);
-
-    // const openModal = () => setIsModalOpen(true);
-    // const closeModal = () => setIsModalOpen(false);
-
-
-
-    // const [isModalOpen, setIsModalOpen] = useState(false);
-    // const openModal = () => {
-    //     setIsModalOpen(true);
-    // };
-    // const closeModal = () => {
-    //     setIsModalOpen(false);
-    // };
-    // const openDetailsModal = (event: React.MouseEvent<HTMLDivElement>) => {
-    //     // Close the modal if the user clicks on the overlay (outside the modal content)
-    //     if (event.target === event.currentTarget) {
-    //         closeModal();
-    //     }
-    // };
 
     // ...
 
@@ -391,7 +414,7 @@ function Transactions() {
                             <p>No transactions Found</p>
                         )}
 
-                        <p>Testing Dummy data below:</p>
+                        {/* <p>Testing Dummy data below:</p> */}
 
                         {/* // * MAPPING FROM DUMMY DATA -------------------------------------------------------------- */}
                         {sortedAndFilteredData && sortedAndFilteredData.length > 0 ? (
