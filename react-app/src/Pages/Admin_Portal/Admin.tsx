@@ -76,15 +76,6 @@ function Admin() {
     const handleOptionClick = (userId: number, accountId: number, option: 'active' | 'inactive') => {
         const isFreezing = option === 'inactive';
 
-        setSelectedStatus(prevState => ({
-            ...prevState,
-            [userId]: option
-        }));
-        setPopupVisible(prevState => ({
-            ...prevState,
-            [userId]: false
-        }));
-
         //To change the sate of the user status for when a account is frozen from active to inactive
         fetch(`http://localhost:5122/api/Account/accountId?accountId=${accountId}`, {
             method: 'PUT',
@@ -104,8 +95,37 @@ function Admin() {
         })
         .catch(error => console.error('Error updating account status:', error));
 
-
+        setPopupVisible(prevState => ({
+            ...prevState,
+            [userId]: false
+        }));
     };
+
+    //Click function to delete a user
+    const handleDeleteClick = (userId: number) => {
+        fetch(`http://localhost:5122/api/User/${userId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log(`User with ID ${userId} deleted successfully`);
+                // Remove the user from the state to update the UI
+                setUsers(prevUsers => prevUsers.filter(user => user.user_id !== userId));
+            } else {
+                console.error('Failed to delete the user');
+            }
+        })
+        .catch(error => console.error('Error deleting user:', error));
+
+        setPopupVisible(prevState => ({
+            ...prevState,
+            [userId]: false
+        }));
+    };
+
 
     console.log("Users" + users); //Test
 
@@ -161,8 +181,9 @@ function Admin() {
                                         </div>
                                         <p className={styles.paragraph_eight}>{user.user_id}</p>
                                         <div className={styles.box}></div>
+                                        {/* Map balance of each user */}
                                         {userStatus ? (
-                                                <p className={styles.paragraph_eight_two}>R {userStatus.balance}</p>
+                                                <p className={styles.paragraph_eight_two}>R {(Math.ceil(userStatus.balance * 100) / 100).toFixed(2)}</p>
                                         ) : (
                                             <p className={styles.paragraph_nine}>Loading...</p>
                                         )}
@@ -199,7 +220,7 @@ function Admin() {
                                                         >
                                                         {userStatus?.active ? 'Freeze acct.' : 'Unfreeze acct.'}
                                                     </p>
-                                                    <p>Delete acct.</p>
+                                                    <p onClick={() => handleDeleteClick(user.user_id)}>Delete acct.</p>
                                                 </div>
                                             )}
 
