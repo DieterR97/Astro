@@ -8,6 +8,7 @@ import VerticalDots from '../../assets/icons/more-vertical-stroke-rounded.svg'
 import FilterIcon from '../../assets/icons/FilterIcon.svg'
 import SearchIcon from '../../assets/icons/SearchIcon.svg'
 import { useParams } from 'react-router-dom';
+import { timeStamp } from 'console';
 // ...
 // ...
 
@@ -22,7 +23,7 @@ function Transactions() {
 
     // * Interfaces ...............................................................................
     interface Transaction {
-        transactions_id: number;
+        transaction_id: number;
         userName: string;
         from_account_id: number;
         to_account_id: number;
@@ -33,30 +34,32 @@ function Transactions() {
 
     interface User {
         user_id: number;
+        email: string;
+        username: string;
     }
 
 
     // * DUMMY DATA ...............................................................................
     const incomingData: Transaction[] = [
-        { transactions_id: 1, userName: 'Ungerer', from_account_id: 2, to_account_id: 3, transaction_type: "withdrawal", amount: 2500, timestamp: new Date('2024-06-12T12:00:00Z') },
-        { transactions_id: 2, userName: 'Ungerer', from_account_id: 7, to_account_id: 3, transaction_type: "deposit", amount: 25000, timestamp: new Date('2024-06-13T12:00:00Z') },
-        { transactions_id: 3, userName: 'Ungerer', from_account_id: 7, to_account_id: 3, transaction_type: "deposit", amount: 2500, timestamp: new Date('2024-06-27T12:00:00Z') },
-        { transactions_id: 4, userName: 'Ungerer', from_account_id: 12, to_account_id: 3, transaction_type: "withdrawal", amount: 2500, timestamp: new Date('2024-07-17T12:00:00Z') },
-        { transactions_id: 5, userName: 'Ungerer', from_account_id: 10, to_account_id: 3, transaction_type: "withdrawal", amount: 2500, timestamp: new Date('2024-07-18T12:00:00Z') },
-        { transactions_id: 6, userName: 'Ungerer', from_account_id: 2, to_account_id: 3, transaction_type: "withdrawal", amount: 2500, timestamp: new Date('2024-07-15T12:00:00Z') },
-        { transactions_id: 7, userName: 'Ungerer', from_account_id: 2, to_account_id: 3, transaction_type: "deposit", amount: 3000, timestamp: new Date('2024-08-01T09:00:00Z') },
-        { transactions_id: 8, userName: 'Test for date sorting', from_account_id: 2, to_account_id: 3, transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-21T15:00:00Z') },
-        { transactions_id: 9, userName: 'Ungerer', from_account_id: 2, to_account_id: 3, transaction_type: "transfer", amount: 5000000, timestamp: new Date('2024-08-22T15:00:00Z') },
-        { transactions_id: 10, userName: 'Ungerer', from_account_id: 2, to_account_id: 3, transaction_type: "transfer", amount: 54500, timestamp: new Date('2024-08-23T15:00:00Z') },
-        { transactions_id: 11, userName: 'Ungerer', from_account_id: 4, to_account_id: 3, transaction_type: "transfer", amount: 67000, timestamp: new Date('2024-08-24T15:00:00Z') },
-        { transactions_id: 12, userName: 'Test for date sorting', from_account_id: 5, to_account_id: 3, transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-25T16:40:00Z') },
-        { transactions_id: 13, userName: 'Ungerer', from_account_id: 7, to_account_id: 3, transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-25T16:45:00Z') },
-        { transactions_id: 14, userName: 'Test for date sorting', from_account_id: 4, to_account_id: 3, transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-25T16:45:00Z') },
-        { transactions_id: 15, userName: 'Test for date sorting', from_account_id: 4, to_account_id: 3, transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-27T16:45:00Z') },
-        { transactions_id: 16, userName: 'Test for date sorting', from_account_id: 3, to_account_id: 3, transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-26T14:45:00Z') },
+        { transaction_id: 1, userName: 'Ungerer', from_account_id: 2, to_account_id: 3, transaction_type: "withdrawal", amount: 2500, timestamp: new Date('2024-06-12T12:00:00Z') },
+        { transaction_id: 2, userName: 'Ungerer', from_account_id: 7, to_account_id: 3, transaction_type: "deposit", amount: 25000, timestamp: new Date('2024-06-13T12:00:00Z') },
+        { transaction_id: 3, userName: 'Ungerer', from_account_id: 7, to_account_id: 3, transaction_type: "deposit", amount: 2500, timestamp: new Date('2024-06-27T12:00:00Z') },
+        { transaction_id: 4, userName: 'Ungerer', from_account_id: 12, to_account_id: 3, transaction_type: "withdrawal", amount: 2500, timestamp: new Date('2024-07-17T12:00:00Z') },
+        { transaction_id: 5, userName: 'Ungerer', from_account_id: 10, to_account_id: 3, transaction_type: "withdrawal", amount: 2500, timestamp: new Date('2024-07-18T12:00:00Z') },
+        { transaction_id: 6, userName: 'Ungerer', from_account_id: 2, to_account_id: 3, transaction_type: "withdrawal", amount: 2500, timestamp: new Date('2024-07-15T12:00:00Z') },
+        { transaction_id: 7, userName: 'Ungerer', from_account_id: 2, to_account_id: 3, transaction_type: "deposit", amount: 3000, timestamp: new Date('2024-08-01T09:00:00Z') },
+        { transaction_id: 8, userName: 'Test for date sorting', from_account_id: 2, to_account_id: 3, transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-21T15:00:00Z') },
+        { transaction_id: 9, userName: 'Ungerer', from_account_id: 2, to_account_id: 3, transaction_type: "transfer", amount: 5000000, timestamp: new Date('2024-08-22T15:00:00Z') },
+        { transaction_id: 10, userName: 'Ungerer', from_account_id: 2, to_account_id: 3, transaction_type: "transfer", amount: 54500, timestamp: new Date('2024-08-23T15:00:00Z') },
+        { transaction_id: 11, userName: 'Ungerer', from_account_id: 4, to_account_id: 3, transaction_type: "transfer", amount: 67000, timestamp: new Date('2024-08-24T15:00:00Z') },
+        { transaction_id: 12, userName: 'Test for date sorting', from_account_id: 5, to_account_id: 3, transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-25T16:40:00Z') },
+        { transaction_id: 13, userName: 'Ungerer', from_account_id: 7, to_account_id: 3, transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-25T16:45:00Z') },
+        { transaction_id: 14, userName: 'Test for date sorting', from_account_id: 4, to_account_id: 3, transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-25T16:45:00Z') },
+        { transaction_id: 15, userName: 'Test for date sorting', from_account_id: 4, to_account_id: 3, transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-27T16:45:00Z') },
+        { transaction_id: 16, userName: 'Test for date sorting', from_account_id: 3, to_account_id: 3, transaction_type: "transfer", amount: 500, timestamp: new Date('2024-08-26T14:45:00Z') },
     ];
     // to change months from numbers to names
-    // console.table(incomingData)
+    console.table(incomingData)
 
     // TODO : If the status = the status value of the data - it must change to according color 
     // Define the color mapping for transaction types
@@ -81,7 +84,7 @@ function Transactions() {
     const [error, setError] = useState<string | null>(null);
 
     // for the get data acording to from_account_id
-    const [currentUser, setCurrentUser] = useState<any|null>(''); // for getting logged in user id
+    const [currentUser, setCurrentUser] = useState<any | null>(''); // for getting logged in user id
 
     // const [fromAccountId, setFromAccountId] = useState(4); // the usetate for the from_account_id data for the logged user - // TODO: need to get current account number and make it equal to the from account id
     const [fromAccountId, setFromAccountId] = useState<number | null>(null);
@@ -104,7 +107,7 @@ function Transactions() {
                 console.log("Error Fetching Data: ", error);
             });
     }, []);
-    // console.log(userTransactions);
+    console.table(userTransactions);
 
 
     // * recieve the id from the accounts and users tabel .........................................
@@ -117,11 +120,9 @@ function Transactions() {
         }
     }, [user_id]);
 
-    // Old code - DONT REMOVE YET
-    // useEffect(() => {
-    //     console.log("User ID from params:", user_id);
-    //     // Fetch and display transactions for the user_id
-    // }, [user_id]);
+    // * converting the date string from transactions to a time stamp .............................
+
+
 
 
     // * getting the currently logged in user account id ..........................................
@@ -141,6 +142,8 @@ function Transactions() {
             const data = await response.json();
             setCurrentUser({
                 userId: data.account.accountId, // to get the id from the logged user
+                name: data.username,
+                email: data.email
             });
             console.log(data)
         } catch (err) {
@@ -152,32 +155,17 @@ function Transactions() {
         fetchUserDetails()
     }, []);
 
-    console.log(currentUser.userId);
-
-    // filters all the transaction data and only displays the data with the according from_account_id
-    // useEffect(() => {
-    //     const filtered = incomingData.filter(transaction => transaction.from_account_id === fromAccountId);
-    //     setFilteredTransactions(filtered);
-    // }, [fromAccountId]);
-    // console.table(filteredTransactions); // displays data only specific to the from_account_id
+    // console.table(currentUser);
 
 
     // * Filter to get all the transactions for the currently logged in user ......................
-    // const filterLoggedUserTransactions = async () => {
-    //     incomingData.filter(transaction => transaction.from_account_id === currentUser.userId)
-    // };
-    // console.table(filterLoggedUserTransactions);
-
-    const filterLoggedUserTransactions = incomingData.filter(transaction => transaction.from_account_id === currentUser.userId);
-    console.table(filterLoggedUserTransactions)
+    const filterLoggedUserTransactions = userTransactions.filter(transaction => transaction.from_account_id === currentUser.userId);
+    // console.table(filterLoggedUserTransactions)
 
 
-    // * Filter transactions based on fromAccountId number.........................................
-    const filteredTransactions = incomingData.filter(transaction => transaction.from_account_id === fromAccountId);
-    console.table(filteredTransactions);
-
-    // * Switch from logged view to admin view ....................................................
-    // Quick solution is to have an admin transaction view page that handles this
+    // * Filter transactions based on fromAccountId number......................................... see admin transaction view 
+    // const filteredTransactions = incomingData.filter(transaction => transaction.from_account_id === fromAccountId);
+    // console.table(filteredTransactions);
 
 
     // * FILTERING FUNCTOINALITY ..................................................................
@@ -185,17 +173,17 @@ function Transactions() {
     const filteredByTransactionType = (() => {
         switch (transactionTypeOption) {
             case 'WITHDRAWAL':
-                const withdrawTransactions = incomingData.filter(transaction => transaction.transaction_type === "withdrawal");
+                const withdrawTransactions = filterLoggedUserTransactions.filter(transaction => transaction.transaction_type === "withdrawal");
                 return withdrawTransactions;
             case 'DEPOSIT':
-                const depositTransactions = incomingData.filter(transaction => transaction.transaction_type === "deposit");
+                const depositTransactions = filterLoggedUserTransactions.filter(transaction => transaction.transaction_type === "deposit");
                 return depositTransactions;
             case 'TRANSACTION':
-                const transactionTransactions = incomingData.filter(transaction => transaction.transaction_type === "transfer");
+                const transactionTransactions = filterLoggedUserTransactions.filter(transaction => transaction.transaction_type === "transfer");
                 return transactionTransactions;
             case 'ALLTRANSACTIONS':
             default:
-                return incomingData;
+                return filterLoggedUserTransactions;
 
         }
     })(); // this transaction type filter is sending data into the time filter
@@ -227,24 +215,26 @@ function Transactions() {
     const sortData = (data: Transaction[], primary: 'timestamp' | 'amount' | 'transactions_id', secondary?: 'timestamp' | 'amount' | 'transactions_id') => {
         return [...data].sort((b, a) => {
             let comparison = 0;
+            const aTimestamp = new Date(a.timestamp);
+            const bTimestamp = new Date(b.timestamp);
             // Primary sorting
             // Determines the initial order of items based on the selection.
             if (primary === 'timestamp') {
-                comparison = a.timestamp.getTime() - b.timestamp.getTime(); // compare the timestamp data
+                comparison = aTimestamp.getTime() - bTimestamp.getTime(); // compare the timestamp data
             } else if (primary === 'amount') {
                 comparison = a.amount - b.amount; //directly compares the amounts of the two transactions.
             } else if (primary === 'transactions_id') {
-                comparison = a.transactions_id - b.transactions_id;
+                comparison = a.transaction_id - b.transaction_id;
             }
             // Secondary sorting
             // If two items are equal based on the primary criterion, this further sorts them based on the secondary criterion.
             if (comparison === 0 && secondary) {
                 if (secondary === 'timestamp') {
-                    comparison = a.timestamp.getTime() - b.timestamp.getTime(); //
+                    comparison = aTimestamp.getTime() - bTimestamp.getTime(); //
                 } else if (secondary === 'amount') {
                     comparison = a.amount - b.amount;
                 } else if (secondary === 'transactions_id') {
-                    comparison = a.transactions_id - b.transactions_id;
+                    comparison = a.transaction_id - b.transaction_id;
                 }
             }
 
@@ -255,6 +245,7 @@ function Transactions() {
     // * Combining the `filtering` functioniality and the `sorting` functionality into one filtered variable
     // by taking the filteredData, both soted options and puting it all together
     const sortedAndFilteredData = sortData(filteredData, sortOptions.primary, sortOptions.secondary);
+    // const sortedAndFilteredData = filteredData
 
 
     // * OTHER ....................................................................................
@@ -274,7 +265,7 @@ function Transactions() {
         <div className={styles.mainContainer}>
             {/* The Content Container */}
             <div className={styles.contentContainer}>
-                <h1>Transactions</h1>
+                <h1>Your Transactions</h1>
                 {/* filter section START */}
                 <div className={styles.filterContainer}>
                     {/* //* filter bar */}
@@ -366,79 +357,29 @@ function Transactions() {
                     {/* Content */}
                     <div className={styles.innerTableCon}>
                         {/* // * row of user data */}
-
-                        {/* //*  mapping data */}
-                        {/* row of user data */}
-                        {userTransactions && userTransactions.length > 0 ? (
-                            userTransactions.map(transaction => (
-                                <div className={styles.contentRowTile}>
-                                    {/* name data block */}
-                                    <div className={styles.nameDataBlock}>
-                                        <div className={styles.userProfilePlacholder}></div>
-                                        {/* User name data and number data block */}
-                                        <div className={styles.userNameData}>
-                                            <p className={styles.tableText01}>Name Surname</p>
-                                            <p className={styles.dataIdNumber}>{transaction.transactions_id}</p>
-                                        </div>
-                                    </div>
-                                    {/* Date data block */}
-                                    <div className={styles.dateDataBlock}>
-                                        <p className={styles.tableText01}>11 july 2024</p>
-                                        <p className={styles.timeData}>At 11:00 pm</p>
-                                    </div>
-                                    {/* Amount Data Block */}
-                                    <div className={styles.amountDataBlock}>
-                                        <p className={styles.tableText01}>R850.99</p>
-                                    </div>
-                                    {/* invoice Id Data Block */}
-                                    <div className={styles.invoiceDataBlock}>
-                                        <p>INV34598</p>
-                                    </div>
-                                    {/* states data block */}
-                                    <div className={styles.statusDataBlock}>
-                                        <p className={styles.positiveText}>Recieved</p>
-                                    </div>
-                                    {/* Action data block */}
-                                    <div className={styles.actionDataBlock}>
-                                        <div className={styles.detailsDropblock}>
-                                            <button className={styles.detailsBtn}>Details
-                                                <img src={VerticalDots} alt="vertical" />
-                                            </button>
-                                            <div className={styles.detailsDropContent}>
-                                                <p>hey</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))) : (
-                            <p>No transactions Found</p>
-                        )}
-
-                        {/* <p>Testing Dummy data below:</p> */}
-
-                        {/* // * MAPPING FROM DUMMY DATA -------------------------------------------------------------- */}
+                        {/* // * MAPPING LIVE DATA -------------------------------------------------------------- */}
                         {sortedAndFilteredData && sortedAndFilteredData.length > 0 ? (
                             sortedAndFilteredData.map(transaction => (
-                                <div key={transaction.transactions_id} className={styles.contentRowTile}>
+                                <div key={transaction.transaction_id} className={styles.contentRowTile}>
                                     {/* name data block */}
                                     <div className={styles.nameDataBlock}>
                                         <div className={styles.userProfilePlacholder}></div>
                                         {/* User name data and number data block */}
                                         <div className={styles.userNameData}>
-                                            <p className={styles.tableText01}>{transaction.userName}</p>
-                                            <p className={styles.dataIdNumber}>{transaction.transactions_id}</p>
+                                            <p className={styles.tableText01}>{currentUser.name}</p>
+                                            <p className={styles.dataIdNumber}>{transaction.transaction_id}</p>
                                         </div>
                                     </div>
                                     {/* Date data block */}
                                     <div className={styles.dateDataBlock}>
                                         <div className={styles.transactionDateBlock}>
-                                            <p className={styles.tableText01}>{transaction.timestamp.getDate()} :</p>
-                                            <p className={styles.tableText01}>{transaction.timestamp.getMonth()} :</p>
-                                            <p className={styles.tableText01}>{transaction.timestamp.getFullYear()}</p>
+                                            <p className={styles.tableText01}>{new Date(transaction.timestamp).toLocaleDateString()}</p>
+                                            {/* <p className={styles.tableText01}>{transaction.timestamp.getMonth()} :</p> */}
+                                            {/* <p className={styles.tableText01}>{transaction.timestamp.getFullYear()}</p> */}
                                         </div>
                                         <div className={styles.timeDataBlock}>
-                                            <p className={styles.timeData}>At {transaction.timestamp.getHours()} : </p>
-                                            <p className={styles.timeData}>{transaction.timestamp.getMinutes()}</p>
+                                            <p className={styles.timeData}>At {new Date(transaction.timestamp).toLocaleTimeString()}</p>
+                                            {/* <p className={styles.timeData}>{transaction.timestamp.getMinutes()}</p> */}
                                         </div>
                                     </div>
                                     {/* Amount Data Block */}
@@ -447,7 +388,7 @@ function Transactions() {
                                     </div>
                                     {/* invoice Id Data Block */}
                                     <div className={styles.invoiceDataBlock}>
-                                        <p>INV34598</p>
+                                        <p>INV{transaction.transaction_id}</p>
                                     </div>
                                     {/* states data block */}
                                     <div className={styles.statusDataBlock}>
