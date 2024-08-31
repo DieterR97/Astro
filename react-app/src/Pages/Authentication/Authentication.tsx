@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import styles from './authenticationStyle.module.scss';
 import logo from '../../assets/login/logo.png';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../Context/AuthContext';
 
 const Authentication = () => {
     const [otp, setOtp] = useState('');
     const [loading, setLoading] = useState(false);
     const email = localStorage.getItem('email_to_validate'); // Retrieve the email from local storage
+    const { login } = useAuth();
 
     const navigate = useNavigate();
 
@@ -32,6 +34,7 @@ const Authentication = () => {
                 const data = await response.json();
                 console.log('Received token:', data.token);
                 localStorage.setItem('token', data.token); // Store token in local storage
+                login(); //Set the user as logged in in auth context
                 alert(data.message); // Display success message
                 navigate('/overview');
             } else {

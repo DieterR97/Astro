@@ -7,6 +7,7 @@ import AdminIcon from "../../assets/icons/AdminIcon.svg";
 import MoreIcon from "../../assets/icons/MoreIcon.svg";
 import Logo from "../../assets/login/logo.png";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../../Context/AuthContext";
 // import axios from "axios";
 
 const Navbar = () => {
@@ -15,6 +16,7 @@ const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [user, setUser] = useState<any>(null);
+  const { logout } = useAuth();
 
   const isActive = (path: string) => {
     return location.pathname === path;
@@ -99,6 +101,7 @@ const Navbar = () => {
         localStorage.removeItem('token'); // Clear the token from local storage
         localStorage.removeItem('email_to_validate');
         alert(data.message || 'Logout successful.');
+        logout(); //Set the user as logged out in auth context
         navigate("/login");
       } else {
         // Handle server errors

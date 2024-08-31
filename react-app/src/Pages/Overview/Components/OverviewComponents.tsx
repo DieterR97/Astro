@@ -28,9 +28,10 @@ export const Banner: React.FC<BannerProps> = ({
     (status) => status.status_id === user.account.account_status_id + 1
   );
 
-  const transactions = user.account.transactions.$values;
+  const transactionsTo = user.account.transactionsFrom.$values ?? [];
+  const transactionsFrom = user.account.transactionsTo.$values ?? [];
 
-  const totalTransactions = transactions.length;
+  const totalTransactions = transactionsTo.length + transactionsFrom.length;
   const totalAmount = user.account.balance;
 
   const canUpgrade =
@@ -201,6 +202,7 @@ type TransactionRowProps = {
   transactionType: string;
   date: string;
   amount: string;
+  isFromTransaction?: boolean;
 };
 
 export const TransactionRow: React.FC<TransactionRowProps> = ({
@@ -208,6 +210,7 @@ export const TransactionRow: React.FC<TransactionRowProps> = ({
   transactionType,
   date,
   amount,
+  isFromTransaction,
 }) => {
   return (
     <div className={styles.transactionRow}>
@@ -218,7 +221,9 @@ export const TransactionRow: React.FC<TransactionRowProps> = ({
         <div className={styles.transactionType}>{transactionType}</div>
         <div className={styles.date}>{date}</div>
       </div>
-      <div className={styles.amount}>{amount}</div>
+      <div className={styles.amount} style={{ color: isFromTransaction ? '#0b9457' : '#fc684e' }}>
+        R{amount}
+      </div>
     </div>
   );
 };
@@ -226,13 +231,11 @@ export const TransactionRow: React.FC<TransactionRowProps> = ({
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 interface AssetChartProps {
-  assets: Asset[];
   astro: Astro[];
 }
 
-export const AssetChart: React.FC<AssetChartProps> = ({ assets, astro }) => {
+export const AssetChart: React.FC<AssetChartProps> = ({ astro }) => {
   const combinedAssets = [
-    ...assets.map(asset => ({ name: asset.name, tokens: asset.tokens })),
     ...astro.map(a => ({ name: a.name, tokens: a.tokens })),
   ];
 

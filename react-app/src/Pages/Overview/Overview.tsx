@@ -10,7 +10,7 @@ import styles from "./Overview.module.scss";
 import FilterIcon from "../../assets/icons/FilterIcon.svg";
 import SearchIcon from "../../assets/icons/SearchIcon.svg";
 import TempImage from "../../assets/login/logo.png";
-import { Account, User, Status } from "../../Models/models";
+import { Account, User, Status, Transaction } from "../../Models/models";
 import Loader from "../../Components/Navbar/Loader";
 
 const Overview: React.FC = () => {
@@ -19,6 +19,22 @@ const Overview: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [statuses, setStatuses] = useState<Status[]>([]);
+
+  const mergeAndSortTransactions = (transactionsFrom : Transaction[], transactionsTo: Transaction[]) => {
+    const fromTransactions = transactionsFrom.map(transaction => ({
+      ...transaction,
+      isFromTransaction: true  
+    }));
+  
+    const toTransactions = transactionsTo.map(transaction => ({
+      ...transaction,
+      isFromTransaction: false  
+    }));
+  
+    return [...fromTransactions, ...toTransactions].sort((a, b) => {
+      return a.timestamp.getTime() - b.timestamp.getTime();
+    });
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,6 +59,19 @@ const Overview: React.FC = () => {
         const userData = await userResponse.json();
         setUser(userData);
         setAccount(userData.account);
+
+        const sortedTransactions = mergeAndSortTransactions(
+          userData.account.transactionsFrom.$values,
+          userData.account.transactionsTo.$values
+        );
+        setAccount((prev) =>
+          prev
+            ? {
+                ...prev,
+                transactions: sortedTransactions,
+              }
+            : null
+        );
 
         const statusResponse = await fetch("http://localhost:5122/api/Status");
         if (!statusResponse.ok) throw new Error("Failed to fetch statuses");
@@ -114,10 +143,7 @@ const Overview: React.FC = () => {
             {account ? `R${account.balance.toFixed(2)}` : "R0.00"}
           </div>
           <div className={styles.graph}>
-            <AssetChart
-              assets={account?.assets.$values ?? []}
-              astro={account?.astro ? [account.astro] : []} 
-            />
+            <AssetChart astro={account?.astro ? [account.astro] : []} />
           </div>
         </div>
 
@@ -133,14 +159,6 @@ const Overview: React.FC = () => {
                     {...account.astro}
                   />
                 )}
-
-                {/* Display other assets */}
-                {Array.isArray(account.assets.$values) &&
-                  account.assets.$values
-                    .slice(0, 2)
-                    .map((asset) => (
-                      <AssetComponent key={asset.asset_id} {...asset} />
-                    ))}
               </>
             )}
             {!account && <p>No assets to display</p>}
@@ -182,24 +200,6 @@ const Overview: React.FC = () => {
                 abbreviation={account.astro.abbreviation}
               />
             )}
-
-            {/* Display other assets */}
-            {account &&
-              Array.isArray(account.assets.$values) &&
-              account.assets.$values.map((asset) => (
-                <AssetRow
-                  key={asset.asset_id}
-                  image={TempImage}
-                  name={asset.name}
-                  price={`R${asset.price.toFixed(2)}`}
-                  balance={`R${(asset.price * asset.tokens).toFixed(2)}`}
-                  proportion={`${(
-                    ((asset.price * asset.tokens) / account.balance) *
-                    100
-                  ).toFixed(2)}%`}
-                  abbreviation={asset.abbreviation}
-                />
-              ))}
           </div>
         </div>
 
@@ -208,44 +208,17 @@ const Overview: React.FC = () => {
             <div className={styles.title}>Recent Transactions</div>
           </div>
           <div className={styles.transactionTableContainer}>
-            <TransactionRow
-              icon={TempImage}
-              transactionType="DUMMY"
-              date="Jul 25 2024 11:00"
-              amount="+R230.00"
-            />
-            <TransactionRow
-              icon={TempImage}
-              transactionType="DUMMY"
-              date="Jul 25 2024 11:00"
-              amount="+R230.00"
-            />
-            <TransactionRow
-              icon={TempImage}
-              transactionType="DUMMY"
-              date="Jul 25 2024 11:00"
-              amount="+R230.00"
-            />
-            <TransactionRow
-              icon={TempImage}
-              transactionType="DUMMY"
-              date="Jul 25 2024 11:00"
-              amount="+R230.00"
-            />
-            <TransactionRow
-              icon={TempImage}
-              transactionType="DUMMY"
-              date="Jul 25 2024 11:00"
-              amount="+R230.00"
-            />
-            {account && Array.isArray(account.transactions.$values) ? (
-              account.transactions.$values.map((transaction) => (
+            {account &&
+            account.transactions &&
+            account.transactions.length > 0 ? (
+              account.transactions.map((transaction) => (
                 <TransactionRow
                   key={transaction.transaction_id}
                   icon={TempImage}
                   transactionType={transaction.transaction_type}
                   date={transaction.timestamp.toString()}
-                  amount={`+R${transaction.amount.toFixed(2)}`}
+                  amount={transaction.amount.toFixed(2)}
+                  isFromTransaction={transaction.isFromTransaction} 
                 />
               ))
             ) : (

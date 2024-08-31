@@ -16,6 +16,7 @@ export interface Transaction {
   to_account_id: number;
   from_account?: Account; 
   to_account?: Account; 
+  isFromTransaction?: boolean;
 }
 
 export interface Asset {
@@ -36,11 +37,16 @@ export interface Account {
   status: Status;
   account_status_id: number;
   active: boolean;
-  transactions: {
-    $values: Transaction[];
-  }
+  transactionsTo: {
+    $values?: Transaction[];
+  },
+  transactionsFrom: {
+    $values?: Transaction[];
+  },
+  astro_id: number;
   astro: Astro;
   totalTransactions: number;
+  transactions?: Transaction[];
 }
 
 export interface User {
