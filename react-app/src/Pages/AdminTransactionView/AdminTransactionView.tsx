@@ -9,7 +9,7 @@ import SearchIcon from '../../assets/icons/SearchIcon.svg'
 
 type FilterOption = 'ALL' | 'LAST_7_DAYS' | 'LAST_30_DAYS' | 'LAST_24_HOURS';
 type SortOption = 'TIMESTAMP' | 'AMOUNT' | 'TRANSACTION_ID';
-type TransactionTypeOption = 'ALLTRANSACTIONS' | 'WITHDRAWAL' | 'DEPOSIT' | 'TRANSACTION';
+type TransactionTypeOption = 'ALLTRANSACTIONS' | 'WITHDRAWAL' | 'PURCHASE' | 'RECEIVED';
 
 function AdminTransactionView() {
 
@@ -102,11 +102,11 @@ function AdminTransactionView() {
             case 'WITHDRAWAL':
                 const withdrawTransactions = filteredTransactions.filter(transaction => transaction.transaction_type === "withdrawal");
                 return withdrawTransactions;
-            case 'DEPOSIT':
-                const depositTransactions = filteredTransactions.filter(transaction => transaction.transaction_type === "deposit");
+            case 'PURCHASE':
+                const depositTransactions = filteredTransactions.filter(transaction => transaction.transaction_type === "purchase");
                 return depositTransactions;
-            case 'TRANSACTION':
-                const transactionTransactions = filteredTransactions.filter(transaction => transaction.transaction_type === "transfer");
+            case 'RECEIVED':
+                const transactionTransactions = filteredTransactions.filter(transaction => transaction.transaction_type === "received");
                 return transactionTransactions;
             case 'ALLTRANSACTIONS':
             default:
@@ -177,7 +177,7 @@ function AdminTransactionView() {
         <div className={styles.mainContainer}>
         {/* The Content Container */}
         <div className={styles.contentContainer}>
-            <h1>User Id Transactions</h1>
+            <h1>User Id {fromAccountId} Transactions</h1>
             {/* filter section START */}
             <div className={styles.filterContainer}>
                 {/* //* filter bar */}
@@ -227,7 +227,7 @@ function AdminTransactionView() {
                 </div>
             </div>
             {/* filter section END */}
-            <h2>Your Transactions History</h2>
+            <h2>Transactions History</h2>
             <div className={styles.filterBarByType}>
                 <div className={styles.filterOption01}>
                     <button id={styles.allFilterBtn} onClick={() => setTransactionTypeOption('ALLTRANSACTIONS')}>
@@ -237,17 +237,17 @@ function AdminTransactionView() {
                 <div className={styles.filterOption}>
                     <button id={styles.thrityDaysFilterBtn} onClick={() => setTransactionTypeOption('WITHDRAWAL')}>
                         {/* {showRecent ? 'Show All Data' : 'Show Data from Last 30 Days'} */}
-                        <p className={styles.filterOptionText} >withdrawals</p>
+                        <p className={styles.filterOptionText} >Withdrawals</p>
                     </button>
                 </div>
                 <div className={styles.filterOption} >
-                    <button id={styles.sevenDaysFilterBtn} onClick={() => setTransactionTypeOption('DEPOSIT')}>
-                        <p className={styles.filterOptionText} >deposits</p>
+                    <button id={styles.sevenDaysFilterBtn} onClick={() => setTransactionTypeOption('PURCHASE')}>
+                        <p className={styles.filterOptionText} >Purchased</p>
                     </button>
                 </div>
                 <div className={styles.filterOption04}>
-                    <button id={styles.twentyFourHoursFilterBtn} onClick={() => setTransactionTypeOption('TRANSACTION')}>
-                        <p className={styles.filterOptionText}>transfers</p>
+                    <button id={styles.twentyFourHoursFilterBtn} onClick={() => setTransactionTypeOption('RECEIVED')}>
+                        <p className={styles.filterOptionText}>Received</p>
                     </button>
                 </div>
             </div>
@@ -261,7 +261,7 @@ function AdminTransactionView() {
                     <p>Date</p>
                     <p>Amount</p>
                     <p>Invoice ID</p>
-                    <p>Status</p>
+                    <p>Type</p>
                     <p>Action</p>
                 </div>
                 {/* divider Line */}
@@ -279,7 +279,7 @@ function AdminTransactionView() {
                                         <div className={styles.userProfilePlacholder}></div>
                                         {/* User name data and number data block */}
                                         <div className={styles.userNameData}>
-                                            <p className={styles.tableText01}>Username</p>
+                                            <p className={styles.tableText01}>User ID {fromAccountId}</p>
                                             <p className={styles.dataIdNumber}>{transaction.transaction_id}</p>
                                         </div>
                                     </div>
@@ -316,7 +316,7 @@ function AdminTransactionView() {
                                             <div className={styles.detailsDropContent}>
                                                 <h3>Transaction details</h3>
                                                 <div className={styles.detailsTextContent}>
-                                                    <p><b>From:</b> {transaction.userName}</p>
+                                                    <p><b>From:</b> {fromAccountId}</p>
                                                     <p>To: {transaction.to_account_id}</p>
                                                 </div>
                                             </div>
