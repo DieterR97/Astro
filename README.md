@@ -47,7 +47,7 @@
 <!--PROJECT DESCRIPTION-->
 ## About the Project
 <!-- header image of project -->
-![Mockup1]
+![Mockup1](react-app/src/assets/mockup_one.jpg)
 
 ### Project Description
 
@@ -179,9 +179,9 @@ The `Development Process` is the technical implementations and functionality don
 
 ### Mockups
 
-![Mockup2]()
+![Mockup2](react-app/src/assets/mockup_two.png)
 <br>
-![Mockup3]()
+![Mockup3](react-app/src/assets/mockup_three.jpg)
 
 <!-- VIDEO DEMONSTRATION -->
 ### Video Demonstration
