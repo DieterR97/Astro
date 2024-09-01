@@ -13,6 +13,7 @@ interface User {
     otp: string;
     created_at: string;
     email: string;
+    role: string;
 }
 
 interface Status {
@@ -213,7 +214,10 @@ function Admin() {
 
                         {/* map all the users that created an account */}
                         {users && users.length > 0 ? (
-                            users.sort((a, b) => a.user_id - b.user_id).map(user => {
+                            users
+                            .filter(user => user.role === 'user') // Filter users by role
+                            .sort((a, b) => a.user_id - b.user_id)
+                            .map(user => {
                                 const userStatus = status.find(s => s.user_id === user.user_id);
 
                                 return (

@@ -117,7 +117,7 @@ The account holders user should be able to view and edit their bank account info
 
 The account holders user should be able to see all of their past transactions as well as perform new transactions. These transactions include the purchasing of new tokens, the withdrawal of tokens and the transferring of tokens.
 
-![Admin Portal]()
+![Admin Portal](react-app/src/assets/Admin_Portal.jpg)
 ### Admin Portal
 
 Admin users should be able to view all of the account holders and their respective transaction history. The admin user should also be able to freeze an account.
