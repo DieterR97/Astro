@@ -57,8 +57,8 @@ Develop a cross-platform desktop application simulating an e-banking system. Thi
 
 * <a href="https://www.electronjs.org/"> ![Static Badge](https://img.shields.io/badge/electron-url?style=for-the-badge&logo=electron&logoColor=lightblue&color=grey) </a>
 * <a href="https://dotnet.microsoft.com/en-us/"> ![Static Badge](https://img.shields.io/badge/.NET-url?style=for-the-badge&logoColor=lightblue&color=purple) </a>
-* <a href="https://www.postgresql.org/"> ![Static Badge](https://img.shields.io/badge/MySQL-url?style=for-the-badge&logo=MySQL&logoColor=darkblue&color=white) </a>
-
+* <a href="https://www.pgadmin.org/"> ![Static Badge](https://img.shields.io/badge/pgAdmin-url?style=for-the-badge&logo=postgresql&logoColor=white&labelColor=grey&color=grey) </a>
+* <a href="https://reactnative.dev/">![Static Badge](https://img.shields.io/badge/react%20native-url?style=for-the-badge&logo=react&color=black)</a>
 <!-- GETTING STARTED -->
 <!-- Make sure to add appropriate information about what prerequisite technologies the user would need and also the steps to install your project on their own machines -->
 ## Getting Started
