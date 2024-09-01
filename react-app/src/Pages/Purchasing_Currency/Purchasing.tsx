@@ -15,6 +15,9 @@ function Purchasing() {
     const [transactionFee, setTransactionFee] = useState(0);
     const [tokensToPurchase, setTokensToPurchase] = useState(0);
     const [tokensToWithdraw, setTokensToWithdraw] = useState(0);
+    const [availableUsers, setAvailableUsers] = useState<{ username: string, email: string }[]>([]);
+    const [selectedUserEmail, setSelectedUserEmail] = useState<string>('');
+    const [tokensToPay, setTokensToPay] = useState<number>(0);
 
     const email = localStorage.getItem("email_to_validate");
 
@@ -125,6 +128,54 @@ function Purchasing() {
         }
     };
 
+    useEffect(() => {
+        const fetchAvailableUsers = async () => {
+            try {
+                const response = await fetch(`http://localhost:5122/api/Purchasing/available-users?email=${email}`);
+                const data = await response.json();
+                console.log("Fetched users:", data); // Log the raw data
+                const users = data.$values || []; // Extract the $values property if it exists
+                setAvailableUsers(users);
+                console.log("Available users state:", users); // Log after state update
+            } catch (error) {
+                console.error("Error fetching available users:", error);
+            }
+        };
+
+        fetchAvailableUsers();
+    }, [email]);
+
+    const handleMakePayment = async () => {
+        if (!email || !selectedUserEmail) {
+            console.error("Email or recipient email is not available.");
+            return;
+        }
+
+        try {
+            const response = await fetch("http://localhost:5122/api/Purchasing/make-payment", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    senderEmail: email,
+                    recipientEmail: selectedUserEmail,
+                    tokens: tokensToPay
+                })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setAstroTokens(data.updatedTokens);
+                alert("Payment successful!");
+                closeModal();
+            } else {
+                console.error("Payment failed:", await response.text());
+            }
+        } catch (error) {
+            console.error("Error making payment:", error);
+        }
+    };
 
     return (
         <>
@@ -142,25 +193,104 @@ function Purchasing() {
                 <div className={styles.purchasingContainer}>
 
 
+                    <div className={styles.containerParent}>
 
-                    <div className={styles.container}>
-                        <div className={styles.tabs}>
-                            <button
-                                className={`${styles.tab} ${activeTab === 'buy' ? styles.active : ''}`}
-                                onClick={() => setActiveTab('buy')}
-                            >
-                                Buy
-                            </button>
-                            <button
-                                className={`${styles.tab} ${activeTab === 'withdraw' ? styles.active : ''}`}
-                                onClick={() => setActiveTab('withdraw')}
-                            >
-                                Withdraw
-                            </button>
+                        <div className={styles.container}>
+                            <div className={styles.tabs}>
+                                <button
+                                    className={`${styles.tab} ${activeTab === 'buy' ? styles.active : ''}`}
+                                    onClick={() => setActiveTab('buy')}
+                                >
+                                    Buy
+                                </button>
+                                <button
+                                    className={`${styles.tab} ${activeTab === 'withdraw' ? styles.active : ''}`}
+                                    onClick={() => setActiveTab('withdraw')}
+                                >
+                                    Withdraw
+                                </button>
+                            </div>
+
+
+                            {activeTab === 'buy' ? (
+                                <>
+                                    <div className={styles.card}>
+                                        <div className={styles.balance}>
+                                            Available balance
+                                            <span className={styles.balanceAmount}>{astroTokens} AST</span>
+                                            <div className={styles.dropdownWrapper}>
+                                                <span className={styles.circle}></span>
+                                                <select className={styles.dropdown}>
+                                                    <option>AST</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <hr className={styles.hrAfterBalance} />
+                                        <div className={styles.row}>
+                                            <span>I want to buy</span>
+                                            <input
+                                                type="number"
+                                                className={styles.input}
+                                                placeholder="0.00"
+                                                onChange={(e) => setTokensToPurchase(parseFloat(e.target.value))}
+                                            />
+                                            <div className={styles.dropdownWrapper}>
+                                                <span className={styles.circle}></span>
+                                                <select className={styles.dropdown}>
+                                                    <option>AST</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button className={styles.continueButton} onClick={openModal}>Continue</button>
+                                </>
+                            ) : (
+                                <>
+                                    <div className={styles.card}>
+                                        <div className={styles.balance}>
+                                            Available balance
+                                            <span className={styles.balanceAmount}>{astroTokens} AST</span>
+                                            <div className={styles.dropdownWrapper}>
+                                                <span className={styles.circle}></span>
+                                                <select className={styles.dropdown}>
+                                                    <option>AST</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <hr className={styles.hrAfterBalance} />
+                                        <div className={styles.row}>
+                                            <span>I want to withdraw</span>
+                                            <input
+                                                type="number"
+                                                className={styles.input}
+                                                placeholder="0.00"
+                                                onChange={(e) => setTokensToWithdraw(parseFloat(e.target.value))}
+                                            />
+                                            <div className={styles.dropdownWrapper}>
+                                                <span className={styles.circle}></span>
+                                                <select className={styles.dropdown}>
+                                                    <option>AST</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button className={styles.continueButton} onClick={handleWithdraw}>Continue</button>
+
+                                </>
+                            )}
+
+                            {/* <button className={styles.continueButton} onClick={openModal}>Continue</button> */}
+
                         </div>
 
-
-                        {activeTab === 'buy' ? (
+                        <div className={styles.container2}>
+                            <div className={styles.tabs}>
+                                <button
+                                    className={styles.tab2}
+                                >
+                                    Pay
+                                </button>
+                            </div>
                             <>
                                 <div className={styles.card}>
                                     <div className={styles.balance}>
@@ -175,12 +305,12 @@ function Purchasing() {
                                     </div>
                                     <hr className={styles.hrAfterBalance} />
                                     <div className={styles.row}>
-                                        <span>I want to buy</span>
+                                        <span>I want to pay</span>
                                         <input
                                             type="number"
                                             className={styles.input}
                                             placeholder="0.00"
-                                            onChange={(e) => setTokensToPurchase(parseFloat(e.target.value))}
+                                            onChange={(e) => setTokensToPay(parseFloat(e.target.value))}
                                         />
                                         <div className={styles.dropdownWrapper}>
                                             <span className={styles.circle}></span>
@@ -189,45 +319,27 @@ function Purchasing() {
                                             </select>
                                         </div>
                                     </div>
-                                </div>
-                                <button className={styles.continueButton} onClick={openModal}>Continue</button>
-                            </>
-                        ) : (
-                            <>
-                                <div className={styles.card}>
-                                    <div className={styles.balance}>
-                                        Available balance
-                                        <span className={styles.balanceAmount}>{astroTokens} AST</span>
-                                        <div className={styles.dropdownWrapper}>
-                                            <span className={styles.circle}></span>
-                                            <select className={styles.dropdown}>
-                                                <option>AST</option>
+                                    <div className={styles.row3}>
+                                        <span>to the following user</span>
+
+                                        <div className={styles.dropdownWrapper2}>
+                                            <select
+                                                className={styles.dropdown}
+                                                value={selectedUserEmail}
+                                                onChange={(e) => setSelectedUserEmail(e.target.value)}
+                                            >
+                                                <option value="">Select a user</option>
+                                                {availableUsers.map(user => (
+                                                    <option key={user.email} value={user.email}>{user.username}</option>
+                                                ))}
                                             </select>
                                         </div>
-                                    </div>
-                                    <hr className={styles.hrAfterBalance} />
-                                    <div className={styles.row}>
-                                        <span>I want to withdraw</span>
-                                        <input
-                                            type="number"
-                                            className={styles.input}
-                                            placeholder="0.00"
-                                            onChange={(e) => setTokensToWithdraw(parseFloat(e.target.value))}
-                                        />
-                                        <div className={styles.dropdownWrapper}>
-                                            <span className={styles.circle}></span>
-                                            <select className={styles.dropdown}>
-                                                <option>AST</option>
-                                            </select>
-                                        </div>
+
                                     </div>
                                 </div>
-                                <button className={styles.continueButton} onClick={handleWithdraw}>Continue</button>
-
+                                <button className={styles.continueButton} onClick={handleMakePayment}>Pay</button>
                             </>
-                        )}
-
-                        {/* <button className={styles.continueButton} onClick={openModal}>Continue</button> */}
+                        </div>
 
                     </div>
 
