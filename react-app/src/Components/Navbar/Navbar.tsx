@@ -10,6 +10,31 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
 // import axios from "axios";
 
+export const fetchUserDetails = async (setUser: (user: any) => void) => {
+  const email = localStorage.getItem('email_to_validate');
+  if (!email) {
+    console.error('No email found');
+    return;
+  }
+
+  const url = `http://localhost:5122/api/User/email?email=${encodeURIComponent(email)}`;
+
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error('Failed to fetch user details');
+    }
+    const data = await response.json();
+    setUser({
+      name: data.username,
+      email: data.email,
+      role: data.role, // Include role in the user object
+    });
+  } catch (err) {
+    console.error('Error fetching user details:', err);
+  }
+};
+
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -25,7 +50,6 @@ const Navbar = () => {
   const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);
   };
-
 
   // const handleLogout = async () => {
   //   try {
@@ -50,44 +74,21 @@ const Navbar = () => {
   //   }
   // };
 
-  const fetchUserDetails = async () => {
-    const email = localStorage.getItem('email_to_validate');
-    if (!email) {
-      console.error('No email found');
-      return;
-    }
-  
-    const url = `http://localhost:5122/api/User/email?email=${encodeURIComponent(email)}`;
-  
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error('Failed to fetch user details');
-      }
-      const data = await response.json();
-      setUser({
-        name: data.username,
-        email: data.email
-      });
-    } catch (err) {
-      console.error('Error fetching user details:', err);
-    }
-  };
 
 
   const handleLogout = async () => {
-    const email = localStorage.getItem('email_to_validate');
+    const email = localStorage.getItem("email_to_validate");
 
     if (!email) {
-      alert('No email found for logout.');
+      alert("No email found for logout.");
       return;
     }
 
     try {
-      const response = await fetch('http://localhost:5122/api/Auth/logout', {
-        method: 'POST',
+      const response = await fetch("http://localhost:5122/api/Auth/logout", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           // Optionally add token if needed, otherwise remove this line
           // 'Authorization': `Bearer ${token}`,
         },
@@ -98,30 +99,32 @@ const Navbar = () => {
       const responseText = await response.text();
       if (response.ok) {
         const data = responseText ? JSON.parse(responseText) : {};
-        localStorage.removeItem('token'); // Clear the token from local storage
-        localStorage.removeItem('email_to_validate');
-        alert(data.message || 'Logout successful.');
+        localStorage.removeItem("token"); // Clear the token from local storage
+        localStorage.removeItem("email_to_validate");
+        alert(data.message || "Logout successful.");
         logout(); //Set the user as logged out in auth context
         navigate("/login");
       } else {
         // Handle server errors
-        alert(responseText || 'Logout failed.');
+        alert(responseText || "Logout failed.");
       }
     } catch (error) {
-      console.error('Logout error:', error);
-      alert('An error occurred. Please try again.');
+      console.error("Logout error:", error);
+      alert("An error occurred. Please try again.");
     }
   };
 
-
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setDropdownOpen(false);
       }
     };
 
-    fetchUserDetails();
+    fetchUserDetails(setUser);
 
     // Add the event listener
     document.addEventListener("mousedown", handleClickOutside);
@@ -146,8 +149,9 @@ const Navbar = () => {
         <div className={styles.tab} onClick={() => navigate("/overview")}>
           <img className={styles.img} alt="Frame" src={HomeIcon} />
           <div
-            className={`${styles["text-wrapper-tab"]} ${isActive("/overview") ? styles.active : ""
-              }`}
+            className={`${styles["text-wrapper-tab"]} ${
+              isActive("/overview") ? styles.active : ""
+            }`}
           >
             Overview
           </div>
@@ -155,8 +159,9 @@ const Navbar = () => {
         <div className={styles.tab} onClick={() => navigate("/purchasing")}>
           <img className={styles.img} alt="Frame" src={CurrencyIcon} />
           <div
-            className={`${styles["text-wrapper-tab"]} ${isActive("/purchasing") ? styles.active : ""
-              }`}
+            className={`${styles["text-wrapper-tab"]} ${
+              isActive("/purchasing") ? styles.active : ""
+            }`}
           >
             Trade
           </div>
@@ -164,21 +169,25 @@ const Navbar = () => {
         <div className={styles.tab} onClick={() => navigate("/transactions")}>
           <img className={styles.img} alt="Frame" src={StackIcon} />
           <div
-            className={`${styles["text-wrapper-tab"]} ${isActive("/transactions") ? styles.active : ""
-              }`}
+            className={`${styles["text-wrapper-tab"]} ${
+              isActive("/transactions") ? styles.active : ""
+            }`}
           >
             Transactions
           </div>
         </div>
-        <div className={styles.tab} onClick={() => navigate("/admin")}>
-          <img className={styles.img} alt="Frame" src={AdminIcon} />
-          <div
-            className={`${styles["text-wrapper-tab"]} ${isActive("/admin") ? styles.active : ""
+        {user?.role === "admin" && (
+          <div className={styles.tab} onClick={() => navigate("/admin")}>
+            <img className={styles.img} alt="Frame" src={AdminIcon} />
+            <div
+              className={`${styles["text-wrapper-tab"]} ${
+                isActive("/admin") ? styles.active : ""
               }`}
-          >
-            Admin
+            >
+              Admin
+            </div>
           </div>
-        </div>
+        )}
       </div>
       <div className={styles["user-info"]}>
         <div className={styles.vector}></div>

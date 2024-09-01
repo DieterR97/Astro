@@ -4,7 +4,7 @@ import {
   Routes,
   Route,
   useLocation,
-  Navigate
+  Navigate,
 } from "react-router-dom";
 import Admin from "./Pages/Admin_Portal/Admin";
 import Authentication from "./Pages/Authentication/Authentication";
@@ -18,6 +18,8 @@ import Navbar from "./Components/Navbar/Navbar";
 import AdminTransactionView from "./Pages/AdminTransactionView/AdminTransactionView";
 import { AuthProvider } from "./Context/AuthContext";
 import { useAuth } from "./Context/AuthContext";
+import { useState, useEffect } from "react";
+import { fetchUserDetails } from "./Components/Navbar/Navbar";
 
 function App() {
   return (
@@ -33,6 +35,7 @@ function NavRoutes() {
   const auth = useAuth();
   const location = useLocation();
   const noNavbarRoutes = ["/login", "/authentication", "/"];
+  const [user, setUser] = useState<any>(null);
 
   const showNavbar = !noNavbarRoutes.includes(location.pathname);
 
@@ -43,6 +46,10 @@ function NavRoutes() {
         width: "100vw",
       };
 
+  useEffect(() => {
+    fetchUserDetails(setUser);
+  }, []);
+
   return (
     <>
       {showNavbar && <Navbar />}
@@ -51,12 +58,62 @@ function NavRoutes() {
           <Route path="/login" element={<Login />} />
           <Route path="/authentication" element={<Authentication />} />
           <Route path="/" element={<CreateAccount />} />
-          <Route path="/admin" element={auth?.isLoggedIn ? <Admin /> : <Navigate to="/login" replace />} />
-          <Route path="/overview" element={auth?.isLoggedIn ? <Overview /> : <Navigate to="/login" replace />} />
-          <Route path="/purchasing" element={auth?.isLoggedIn ? <Purchasing /> : <Navigate to="/login" replace />} />
-          <Route path="/transactions" element={auth?.isLoggedIn ? <Transactions /> : <Navigate to="/login" replace />} />
-          <Route path="/withdrawals" element={auth?.isLoggedIn ? <Withdrawals /> : <Navigate to="/login" replace />} />
-          <Route path="/transactions/:user_id" element={auth?.isLoggedIn ? <AdminTransactionView /> : <Navigate to="/login" replace />} />
+          <Route
+            path="/admin"
+            element={
+              auth?.isLoggedIn && user?.role === "admin" ? (
+                <Admin />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
+          <Route
+            path="/overview"
+            element={
+              auth?.isLoggedIn ? <Overview /> : <Navigate to="/login" replace />
+            }
+          />
+          <Route
+            path="/purchasing"
+            element={
+              auth?.isLoggedIn ? (
+                <Purchasing />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
+          <Route
+            path="/transactions"
+            element={
+              auth?.isLoggedIn ? (
+                <Transactions />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
+          <Route
+            path="/withdrawals"
+            element={
+              auth?.isLoggedIn ? (
+                <Withdrawals />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
+          <Route
+            path="/transactions/:user_id"
+            element={
+              auth?.isLoggedIn ? (
+                <AdminTransactionView />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
         </Routes>
       </div>
     </>
