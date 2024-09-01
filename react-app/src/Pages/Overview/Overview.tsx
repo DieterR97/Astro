@@ -127,12 +127,13 @@ const Overview: React.FC = () => {
   };
 
   console.log(account);
+  console.log(statuses)
   if (loading) return <Loader />;
   if (error) return <p>Error: {error}</p>;
 
   return (
     <div className={styles.overview}>
-      {user && (
+      {user &&  (
         <Banner user={user} statuses={statuses} onUpgrade={handleUpgrade} />
       )}
       <div className={styles["text-title"]}>Overview</div>

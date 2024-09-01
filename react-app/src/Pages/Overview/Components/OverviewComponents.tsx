@@ -23,12 +23,12 @@ import {
   Tooltip,
   Legend,
   BarElement,
-  TimeScale
+  TimeScale,
 } from "chart.js";
 import TempImage from "../../../assets/login/logo.png";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { ChartData, ChartOptions  } from "chart.js";
+import { ChartData, ChartOptions } from "chart.js";
 
 interface BannerProps {
   user: User;
@@ -41,16 +41,22 @@ export const Banner: React.FC<BannerProps> = ({
   statuses,
   onUpgrade,
 }) => {
-  const currentAccountStatus = statuses.find(
-    (status) => status.status_id === user.account.account_status_id
+  const [currentStatusId, setCurrentStatusId] = useState(user?.account?.status?.statusId);
+
+  useEffect(() => {
+    setCurrentStatusId(user?.account?.status?.statusId);
+  }, [user?.account?.status?.statusId]);
+
+  const currentAccountStatus = statuses?.find(
+    (status) => status.status_id === currentStatusId
   );
-  const nextStatus = statuses.find(
-    (status) => status.status_id === user.account.account_status_id + 1
+
+  const nextStatus = statuses?.find(
+    (status) => status.status_id === currentStatusId + 1 && status.status_id <= 4
   );
 
   const transactionsTo = user.account.transactionsFrom.$values ?? [];
   const transactionsFrom = user.account.transactionsTo.$values ?? [];
-
   const totalTransactions = transactionsTo.length + transactionsFrom.length;
   const totalAmount = user.account.balance;
 
@@ -58,6 +64,12 @@ export const Banner: React.FC<BannerProps> = ({
     nextStatus &&
     (totalTransactions >= nextStatus.transactions_criteria ||
       totalAmount >= nextStatus.total_amount_criteria);
+
+  const isMaxStatus = currentAccountStatus?.status_id === 4;
+
+  const handleUpgrade = (statusId : number) => {
+    onUpgrade(statusId);
+  };
 
   return (
     <div className={styles.banner}>
@@ -94,22 +106,22 @@ export const Banner: React.FC<BannerProps> = ({
         />
         <Frame
           title="Next Upgrade"
-          content={canUpgrade ? "Available" : "Not Yet"}
+          content={canUpgrade ? "Available" : isMaxStatus ? "Max Status" : "Not Yet"}
           description={
             canUpgrade
               ? `Upgrade to ${nextStatus?.status_name}`
-              : `Need ${Math.max(
-                  nextStatus!.transactions_criteria - totalTransactions || 0,
-                  0
-                )} more transactions or R${Math.max(
-                  nextStatus!.total_amount_criteria - totalAmount || 0,
-                  0
-                ).toFixed(2)} more`
+              : isMaxStatus
+                ? "You have reached the highest status."
+                : `Need ${Math.max(
+                    nextStatus?.transactions_criteria? - totalTransactions : 0,
+                    0
+                  )} more transactions or R${Math.max(
+                    nextStatus?.total_amount_criteria? - totalAmount : 0,
+                    0
+                  ).toFixed(2)} more`
           }
           icon={LevelIcon}
-          onClick={() =>
-            canUpgrade && nextStatus ? onUpgrade(nextStatus.status_id) : null
-          }
+          onClick={() => canUpgrade && nextStatus ? handleUpgrade(nextStatus.status_id) : null}
           className={canUpgrade ? styles.upgradeAvailable : ""}
         />
         {canUpgrade && (
@@ -118,9 +130,7 @@ export const Banner: React.FC<BannerProps> = ({
             content="Click to apply"
             description="Get the next level benefits now"
             icon={LevelIcon}
-            onClick={() =>
-              nextStatus ? onUpgrade(nextStatus.status_id) : null
-            }
+            onClick={() => nextStatus ? handleUpgrade(nextStatus.status_id) : null}
             className={styles.upgradeFrame}
           />
         )}
@@ -435,20 +445,22 @@ export const BalanceChart: React.FC<BalanceChartProps> = ({ transactions }) => {
       .map((transaction) => transaction.amount);
 
     const data = {
-      labels: transactions.map((transaction) => transaction.isFromTransaction ? 'Sent' : 'Received'),
+      labels: transactions.map((transaction) =>
+        transaction.isFromTransaction ? "Sent" : "Received"
+      ),
       datasets: [
         {
-          label: 'Received',
+          label: "Received",
           data: dataFrom,
-          borderColor: '#00e396',
-          backgroundColor: 'rgba(0, 227, 150, 0.5)',
+          borderColor: "#00e396",
+          backgroundColor: "rgba(0, 227, 150, 0.5)",
           fill: false,
         },
         {
-          label: 'Sent',
+          label: "Sent",
           data: dataTo,
-          borderColor: '#ff4560',
-          backgroundColor: 'rgba(255, 69, 96, 0.5)',
+          borderColor: "#ff4560",
+          backgroundColor: "rgba(255, 69, 96, 0.5)",
           fill: false,
         },
       ],
@@ -467,30 +479,30 @@ export const BalanceChart: React.FC<BalanceChartProps> = ({ transactions }) => {
       legend: {
         display: true,
         labels: {
-          color: 'white', 
+          color: "white",
         },
       },
       title: {
         display: true,
-        text: 'Transaction History',
-        color: 'white', 
+        text: "Transaction History",
+        color: "white",
       },
     },
     scales: {
       x: {
-        type: 'category',
+        type: "category",
         ticks: {
           autoSkip: true,
-          maxTicksLimit: 20
-        }
+          maxTicksLimit: 20,
+        },
       },
       y: {
         beginAtZero: true,
         ticks: {
-          color: 'white',
-        }
+          color: "white",
+        },
       },
-    }
+    },
   };
 
   return (

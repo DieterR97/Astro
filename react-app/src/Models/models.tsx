@@ -7,6 +7,15 @@ export interface Status {
   transaction_fee: number;
 }
 
+export interface UserStatus {
+annualInterestRate: number;
+statusId: number;
+statusName: string
+totalAmountCriteria: number
+transactionFee: number
+transactionsCriteria: number
+}
+
 export interface Transaction {
   transaction_id: number;
   transactionType: string;
@@ -34,7 +43,7 @@ export interface Account {
   assets: {
     $values: Asset[];
   };
-  status: Status;
+  status: UserStatus;
   account_status_id: number;
   active: boolean;
   transactionsTo: {
