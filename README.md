@@ -102,17 +102,22 @@ Run the following in the front-end command-line:
 <!-- You can add the links to all of your imagery at the bottom of the file as references -->
 ## Features and Functionality
 
-![Authentication]()
+![Authentication](react-app/src/assets/Authentication.jpg)
 ### Authentication
 
 The account holders user must create an account/profile so that they can log on to and out of the app. Administering users should be able to log on to the system. Both the client and the admin users will need to be authenticated with 2-Factor authentication.
 
-![Accounts]()
+![Account](react-app/src/assets/Overview.jpg)
 ### Accounts
 
 The account holders user should be able to view and edit their bank account information, view their account balance and status, and view a summary of their transactions. Their account’s status level is based on the amount of tokens, which has allows for better interest rates and lower transaction fees.
 
-![Transactions]()
+![Pjrchasings](react-app/src/assets/Purchasing_Currency.jpg)
+### Purchasing
+
+??.
+
+![Transactions](react-app/src/assets/Transactions.jpg)
 ### Transactions
 
 The account holders user should be able to see all of their past transactions as well as perform new transactions. These transactions include the purchasing of new tokens, the withdrawal of tokens and the transferring of tokens.
