@@ -11,7 +11,7 @@ export interface Transaction {
   transaction_id: number;
   transaction_type: string;
   amount: number;
-  timestamp: Date;
+  timestamp: Date ;
   from_account_id: number;
   to_account_id: number;
   from_account?: Account; 

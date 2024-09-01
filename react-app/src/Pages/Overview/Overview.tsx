@@ -5,6 +5,8 @@ import {
   AssetRow,
   TransactionRow,
   AssetChart,
+  TransactionsChart,
+  BalanceChart,
 } from "./Components/OverviewComponents";
 import styles from "./Overview.module.scss";
 import FilterIcon from "../../assets/icons/FilterIcon.svg";
@@ -20,17 +22,20 @@ const Overview: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [statuses, setStatuses] = useState<Status[]>([]);
 
-  const mergeAndSortTransactions = (transactionsFrom : Transaction[], transactionsTo: Transaction[]) => {
-    const fromTransactions = transactionsFrom.map(transaction => ({
+  const mergeAndSortTransactions = (
+    transactionsFrom: Transaction[],
+    transactionsTo: Transaction[]
+  ) => {
+    const fromTransactions = transactionsFrom.map((transaction) => ({
       ...transaction,
-      isFromTransaction: true  
+      isFromTransaction: true,
     }));
-  
-    const toTransactions = transactionsTo.map(transaction => ({
+
+    const toTransactions = transactionsTo.map((transaction) => ({
       ...transaction,
-      isFromTransaction: false  
+      isFromTransaction: false,
     }));
-  
+
     return [...fromTransactions, ...toTransactions].sort((a, b) => {
       return a.timestamp.getTime() - b.timestamp.getTime();
     });
@@ -132,21 +137,8 @@ const Overview: React.FC = () => {
       )}
       <div className={styles["text-title"]}>Overview</div>
 
-      <div className={styles.filterContainer}>
-        <div className={styles.filterBar}>{/* Filter options */}</div>
-      </div>
-
+     
       <div className={styles.statsContainer}>
-        <div className={styles.portfolio}>
-          <div className={styles["title"]}>Portfolio</div>
-          <div className={styles["value"]}>
-            {account ? `R${account.balance.toFixed(2)}` : "R0.00"}
-          </div>
-          <div className={styles.graph}>
-            <AssetChart astro={account?.astro ? [account.astro] : []} />
-          </div>
-        </div>
-
         <div className={styles.assets}>
           <div className={styles["title"]}>Top Assets</div>
           <div className={styles.assetsList}>
@@ -164,11 +156,63 @@ const Overview: React.FC = () => {
             {!account && <p>No assets to display</p>}
           </div>
         </div>
+
+        <div className={styles.portfolioasset}>
+          <div className={styles["title"]}>Portfolio</div>
+          <div className={styles["value"]}>
+            {account ? `R${account.balance.toFixed(2)}` : "R0.00"}
+          </div>
+          <div className={styles.graphasset}>
+            <AssetChart astro={account?.astro ? [account.astro] : []} />
+          </div>
+        </div>
+
+        <div className={styles.portfolio}>
+          <div className={styles["title"]}>Transactions</div>
+          <div className={styles["value"]}>
+            {account ? `${account.transactions?.length} Total` : "0"}
+          </div>
+          <div className={styles.graph}>
+            <TransactionsChart
+              transactionsFrom={account?.transactionsFrom.$values || []}
+              transactionsTo={account?.transactionsTo.$values || []}
+            />
+          </div>
+        </div>
       </div>
 
-      <div className={styles.assetTable}>
-        <div className={styles.secondaryFilterCon}>
-          {/* Search and filter */}
+      <div className={styles.AssetTransactionContainer}>
+        <div className={styles.portfolio3}>
+          <div className={styles.graph3}>
+            <BalanceChart
+              transactionsFrom={account?.transactionsFrom.$values || []}
+              transactionsTo={account?.transactionsTo.$values || []}
+            />
+          </div>
+        </div>
+
+        <div className={styles.transactionTable}>
+          <div className={styles.transactionTitle}>
+            <div className={styles.title}>Recent Transactions</div>
+          </div>
+          <div className={styles.transactionTableContainer}>
+            {account &&
+            account.transactions &&
+            account.transactions.length > 0 ? (
+              account.transactions.map((transaction) => (
+                <TransactionRow
+                  key={transaction.transaction_id}
+                  icon={TempImage}
+                  transactionType={transaction.transaction_type}
+                  date={transaction.timestamp.toString()}
+                  amount={transaction.amount.toFixed(2)}
+                  isFromTransaction={transaction.isFromTransaction}
+                />
+              ))
+            ) : (
+              <p>No transactions to display</p>
+            )}
+          </div>
         </div>
       </div>
 
@@ -199,30 +243,6 @@ const Overview: React.FC = () => {
                 ).toFixed(2)}%`}
                 abbreviation={account.astro.abbreviation}
               />
-            )}
-          </div>
-        </div>
-
-        <div className={styles.transactionTable}>
-          <div className={styles.transactionTitle}>
-            <div className={styles.title}>Recent Transactions</div>
-          </div>
-          <div className={styles.transactionTableContainer}>
-            {account &&
-            account.transactions &&
-            account.transactions.length > 0 ? (
-              account.transactions.map((transaction) => (
-                <TransactionRow
-                  key={transaction.transaction_id}
-                  icon={TempImage}
-                  transactionType={transaction.transaction_type}
-                  date={transaction.timestamp.toString()}
-                  amount={transaction.amount.toFixed(2)}
-                  isFromTransaction={transaction.isFromTransaction} 
-                />
-              ))
-            ) : (
-              <p>No transactions to display</p>
             )}
           </div>
         </div>

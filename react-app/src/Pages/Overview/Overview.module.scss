@@ -192,11 +192,58 @@ body {
   }
 }
 
+.portfolioasset {
+  display: flex;
+  flex-direction: column;
+  height: 345px;
+  background-color: var(--secondaryColor);
+  padding: 10px 20px 10px 20px;
+  border-radius: 10px;
+
+  .title {
+    color: white;
+    font-size: var(--fontSize-md);
+    font-weight: var(--fontWeight-semibold);
+    letter-spacing: 1px;
+    margin-top: 20px;
+  }
+
+  .value {
+    color: white;
+    font-size: var(--fontSize-xl);
+    font-weight: var(--fontWeight-semibold);
+    letter-spacing: 1px;
+    margin-top: 10px;
+  }
+}
+
+.portfolio3 {
+  display: flex;
+  flex-direction: column;
+  height: 360px;
+  background-color: var(--secondaryColor);
+  padding: 10px 20px 10px 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.graph3 {
+  display: flex;
+  flex-direction: column;
+  width: 695px;
+  height: 400px;
+}
+
 .graph {
   display: flex;
   flex-direction: column;
   width: 500px;
+}
 
+.graphasset {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
 }
 
 .assets {
@@ -223,20 +270,6 @@ body {
   margin-top: 10px;
 }
 
-// <div className={styles.assetTableContainer}>
-//         <div className={styles["titles"]}>
-//           <div className={styles["title"]}>Asset</div>
-//           <div className={styles["title"]}>Price</div>
-//           <div className={styles["title"]}>Balance</div>
-//           <div className={styles["title"]}>Asset Proportion</div>
-//         </div>
-
-//         {/* Table Rows */}
-//         <div className={styles["rows"]}>
-//           <AssetRow  image="" name="Coin" price="R203.00" balance="R203.00" proportion="70%" abreviation="CWN"/>
-//         </div>
-//       </div>
-
 .assetTableContainer {
   display: flex;
   flex-direction: column;
@@ -244,6 +277,7 @@ body {
   padding: 10px 20px 20px;
   border-radius: 10px;
   width: 700px;
+  margin-top: 20px;
 
   .divider {
     width: 100%;
@@ -299,7 +333,7 @@ body {
   padding-left: 20px;
   padding-top: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  
+  margin-top: 20px;
 }
 
 .transactionTitle {
@@ -322,8 +356,8 @@ body {
   &::-webkit-scrollbar {
     display: none;
   }
-  -ms-overflow-style: none; 
-  scrollbar-width: none; 
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .AssetTransactionContainer {

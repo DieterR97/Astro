@@ -5,15 +5,34 @@ import StatsIcon from "../../../assets/icons/StatsIcon.svg";
 import StackIcon from "../../../assets/icons/StackIcon.svg";
 import LevelIcon from "../../../assets/icons/LevelIcon.svg";
 import MoreIcon from "../../../assets/icons/MoreIcon.svg";
-import { User, Status, Asset, Astro } from "../../../Models/models";
-import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend } from 'chart.js';
-
+import {
+  User,
+  Status,
+  Asset,
+  Astro,
+  Transaction,
+} from "../../../Models/models";
+import { Bar, Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+} from "chart.js";
+import TempImage from "../../../assets/login/logo.png";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { ChartData } from "chart.js";
 
 interface BannerProps {
   user: User;
   statuses: Status[];
-  onUpgrade: (newStatusId: number) => void; 
+  onUpgrade: (newStatusId: number) => void;
 }
 
 export const Banner: React.FC<BannerProps> = ({
@@ -49,7 +68,11 @@ export const Banner: React.FC<BannerProps> = ({
         <Frame
           title="Current Level"
           content={currentAccountStatus?.status_name || "Unknown"}
-          description={`Criteria: ${currentAccountStatus?.transactions_criteria} transactions or R${currentAccountStatus?.total_amount_criteria.toFixed(2)}`}
+          description={`Criteria: ${
+            currentAccountStatus?.transactions_criteria
+          } transactions or R${currentAccountStatus?.total_amount_criteria.toFixed(
+            2
+          )}`}
           icon={ShipIcon}
         />
         <Frame
@@ -73,7 +96,7 @@ export const Banner: React.FC<BannerProps> = ({
           content={canUpgrade ? "Available" : "Not Yet"}
           description={
             canUpgrade
-              ? `Click to upgrade to ${nextStatus?.status_name}`
+              ? `Upgrade to ${nextStatus?.status_name}`
               : `Need ${Math.max(
                   nextStatus!.transactions_criteria - totalTransactions || 0,
                   0
@@ -88,6 +111,18 @@ export const Banner: React.FC<BannerProps> = ({
           }
           className={canUpgrade ? styles.upgradeAvailable : ""}
         />
+        {canUpgrade && (
+          <Frame
+            title="Upgrade Now!"
+            content="Click to apply"
+            description="Get the next level benefits now"
+            icon={LevelIcon}
+            onClick={() =>
+              nextStatus ? onUpgrade(nextStatus.status_id) : null
+            }
+            className={styles.upgradeFrame}
+          />
+        )}
       </div>
     </div>
   );
@@ -142,17 +177,23 @@ export const AssetComponent = ({
   tokens,
   astro_price,
 }: AssetComponentProps) => {
+  const navigate = useNavigate();
+
+  const handleViewDetails = () => {
+    navigate("/purchasing");
+  };
+
   return (
     <div className={styles.asset}>
-      <div className={styles["image"]} />
+      <img className={styles["image"]} src={TempImage} alt="" />
       <div className={styles["content"]}>
         <div className={styles["name"]}>
           {name} ({abbreviation})
         </div>
-        <div className={styles["amount"]}>R{tokens * price}</div>
-        <div className={styles["change"]}>R{price}</div>
+        <div className={styles["amount"]}>{tokens}</div>
+        <div className={styles["change"]}>R{price * tokens}</div>
       </div>
-      <div className={styles["button"]}>
+      <div className={styles["button"]} onClick={handleViewDetails}>
         <div className={styles["details"]}>View Details</div>
       </div>
     </div>
@@ -212,6 +253,17 @@ export const TransactionRow: React.FC<TransactionRowProps> = ({
   amount,
   isFromTransaction,
 }) => {
+  //This is to format the date to a readable format
+  const formattedDate = new Intl.DateTimeFormat("en-GB", {
+    year: "numeric",
+    month: "long",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  }).format(new Date(date));
+
   return (
     <div className={styles.transactionRow}>
       <div className={styles.iconContainer}>
@@ -219,16 +271,28 @@ export const TransactionRow: React.FC<TransactionRowProps> = ({
       </div>
       <div className={styles.detailsContainer}>
         <div className={styles.transactionType}>{transactionType}</div>
-        <div className={styles.date}>{date}</div>
+        <div className={styles.date}>{formattedDate}</div>
       </div>
-      <div className={styles.amount} style={{ color: isFromTransaction ? '#0b9457' : '#fc684e' }}>
+      <div
+        className={styles.amount}
+        style={{ color: isFromTransaction ? "#0b9457" : "#fc684e" }}
+      >
         R{amount}
       </div>
     </div>
   );
 };
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 interface AssetChartProps {
   astro: Astro[];
@@ -236,15 +300,15 @@ interface AssetChartProps {
 
 export const AssetChart: React.FC<AssetChartProps> = ({ astro }) => {
   const combinedAssets = [
-    ...astro.map(a => ({ name: a.name, tokens: a.tokens })),
+    ...astro.map((a) => ({ name: a.name, tokens: a.tokens })),
   ];
 
   const data = {
-    labels: combinedAssets.map(item => item.name),
+    labels: combinedAssets.map((item) => item.name),
     datasets: [
       {
-        label: 'Amount Owned',
-        data: combinedAssets.map(item => item.tokens),
+        label: "Amount Owned",
+        data: combinedAssets.map((item) => item.tokens),
         backgroundColor: "#7E4AC0",
       },
     ],
@@ -254,25 +318,25 @@ export const AssetChart: React.FC<AssetChartProps> = ({ astro }) => {
     responsive: true,
     plugins: {
       legend: {
-        display: false, 
+        display: false,
       },
       title: {
         display: true,
-        color: 'white', 
+        color: "white",
       },
       tooltip: {
-        bodyColor: 'white', 
+        bodyColor: "white",
       },
     },
     scales: {
       x: {
         ticks: {
-          color: 'white', 
+          color: "white",
         },
       },
       y: {
         ticks: {
-          color: 'white',
+          color: "white",
         },
       },
     },
@@ -281,6 +345,134 @@ export const AssetChart: React.FC<AssetChartProps> = ({ astro }) => {
   return (
     <div className={styles.chartContainer}>
       <Bar data={data} options={options} />
+    </div>
+  );
+};
+
+interface TransactionsChartProps {
+  transactionsFrom: Transaction[];
+  transactionsTo: Transaction[];
+}
+
+export const TransactionsChart: React.FC<TransactionsChartProps> = ({
+  transactionsFrom,
+  transactionsTo,
+}) => {
+  const fromCount = transactionsFrom.length;
+  const toCount = transactionsTo.length;
+  const totalCount = fromCount + toCount;
+
+  const data = {
+    labels: ["Total Transactions", "Transactions From", "Transactions To"],
+    datasets: [
+      {
+        label: "Number of Transactions",
+        data: [totalCount, fromCount, toCount],
+        backgroundColor: ["#7E4AC0", "#bb2c50", "#0074a4"],
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      title: {
+        display: true,
+        text: "Transactions Breakdown",
+        color: "white",
+      },
+      tooltip: {
+        bodyColor: "white",
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: "white",
+        },
+      },
+      y: {
+        ticks: {
+          color: "white",
+        },
+      },
+    },
+  };
+
+  return (
+    <div className={styles.chartContainer}>
+      <Bar data={data} options={options} />
+    </div>
+  );
+};
+
+export interface BalanceChartProps {
+  transactionsFrom: Transaction[];
+  transactionsTo: Transaction[];
+}
+
+export const BalanceChart: React.FC<BalanceChartProps> = ({
+  transactionsFrom,
+  transactionsTo,
+}) => {
+  const [chartData, setChartData] = useState<ChartData<"line">>({
+    labels: [],
+    datasets: [],
+  });
+  useEffect(() => {
+    const dataFrom = transactionsFrom.reduce((acc, cur) => acc + cur.amount, 0);
+    const dataTo = transactionsTo.reduce((acc, cur) => acc + cur.amount, 0);
+
+    const data = {
+      labels: ["Transactions From", "Transactions To"],
+      datasets: [
+        {
+          label: "Transaction Volumes",
+          data: [dataFrom, dataTo],
+          backgroundColor: ["#bb2c50", "#0074a4"],
+        },
+      ],
+    };
+
+    setChartData(data);
+  }, [transactionsFrom, transactionsTo]);
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        labels: {
+          color: "white",
+        },
+      },
+      title: {
+        display: true,
+        text: "Cumulative Transaction Amounts",
+        color: "white",
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: "white",
+        },
+      },
+      y: {
+        ticks: {
+          color: "white",
+          beginAtZero: true,
+        },
+      },
+    },
+  };
+
+  return (
+    <div className={styles.chartContainer}>
+      <Line data={chartData} options={options} />
     </div>
   );
 };
