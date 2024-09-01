@@ -9,7 +9,7 @@ export interface Status {
 
 export interface Transaction {
   transaction_id: number;
-  transaction_type: string;
+  transactionType: string;
   amount: number;
   timestamp: Date ;
   from_account_id: number;

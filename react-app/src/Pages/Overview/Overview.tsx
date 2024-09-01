@@ -22,20 +22,20 @@ const Overview: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [statuses, setStatuses] = useState<Status[]>([]);
 
-  const mergeAndSortTransactions = (
-    transactionsFrom: Transaction[],
-    transactionsTo: Transaction[]
-  ) => {
+  //Function to help merge and sort transactions
+  const mergeAndSortTransactions = (transactionsFrom: Transaction[], transactionsTo: Transaction[]) => {
     const fromTransactions = transactionsFrom.map((transaction) => ({
       ...transaction,
+      timestamp: new Date(transaction.timestamp), 
       isFromTransaction: true,
     }));
-
+  
     const toTransactions = transactionsTo.map((transaction) => ({
       ...transaction,
+      timestamp: new Date(transaction.timestamp),
       isFromTransaction: false,
     }));
-
+  
     return [...fromTransactions, ...toTransactions].sort((a, b) => {
       return a.timestamp.getTime() - b.timestamp.getTime();
     });
@@ -184,10 +184,7 @@ const Overview: React.FC = () => {
       <div className={styles.AssetTransactionContainer}>
         <div className={styles.portfolio3}>
           <div className={styles.graph3}>
-            <BalanceChart
-              transactionsFrom={account?.transactionsFrom.$values || []}
-              transactionsTo={account?.transactionsTo.$values || []}
-            />
+            <BalanceChart transactions={account?.transactions || []} />
           </div>
         </div>
 
@@ -203,7 +200,7 @@ const Overview: React.FC = () => {
                 <TransactionRow
                   key={transaction.transaction_id}
                   icon={TempImage}
-                  transactionType={transaction.transaction_type}
+                  transactionType={transaction.transactionType}
                   date={transaction.timestamp.toString()}
                   amount={transaction.amount.toFixed(2)}
                   isFromTransaction={transaction.isFromTransaction}

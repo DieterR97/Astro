@@ -23,11 +23,12 @@ import {
   Tooltip,
   Legend,
   BarElement,
+  TimeScale
 } from "chart.js";
 import TempImage from "../../../assets/login/logo.png";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { ChartData } from "chart.js";
+import { ChartData, ChartOptions  } from "chart.js";
 
 interface BannerProps {
   user: User;
@@ -289,6 +290,7 @@ ChartJS.register(
   PointElement,
   LineElement,
   BarElement,
+  TimeScale,
   Title,
   Tooltip,
   Legend
@@ -409,65 +411,86 @@ export const TransactionsChart: React.FC<TransactionsChartProps> = ({
   );
 };
 
-export interface BalanceChartProps {
-  transactionsFrom: Transaction[];
-  transactionsTo: Transaction[];
+interface BalanceChartProps {
+  transactions: Transaction[] | undefined;
 }
 
-export const BalanceChart: React.FC<BalanceChartProps> = ({
-  transactionsFrom,
-  transactionsTo,
-}) => {
-  const [chartData, setChartData] = useState<ChartData<"line">>({
-    labels: [],
-    datasets: [],
-  });
+export const BalanceChart: React.FC<BalanceChartProps> = ({ transactions }) => {
+  const [chartData, setChartData] = useState<any>({});
+
   useEffect(() => {
-    const dataFrom = transactionsFrom.reduce((acc, cur) => acc + cur.amount, 0);
-    const dataTo = transactionsTo.reduce((acc, cur) => acc + cur.amount, 0);
+    if (!transactions || transactions.length === 0) {
+      console.log("No transactions available.");
+      setChartData({});
+      return;
+    }
+
+    console.log("Transactions on mount:", transactions);
+
+    const dataFrom = transactions
+      .filter((transaction) => transaction.isFromTransaction)
+      .map((transaction) => transaction.amount);
+    const dataTo = transactions
+      .filter((transaction) => !transaction.isFromTransaction)
+      .map((transaction) => transaction.amount);
 
     const data = {
-      labels: ["Transactions From", "Transactions To"],
+      labels: transactions.map((transaction) => transaction.isFromTransaction ? 'Sent' : 'Received'),
       datasets: [
         {
-          label: "Transaction Volumes",
-          data: [dataFrom, dataTo],
-          backgroundColor: ["#bb2c50", "#0074a4"],
+          label: 'Received',
+          data: dataFrom,
+          borderColor: '#00e396',
+          backgroundColor: 'rgba(0, 227, 150, 0.5)',
+          fill: false,
+        },
+        {
+          label: 'Sent',
+          data: dataTo,
+          borderColor: '#ff4560',
+          backgroundColor: 'rgba(255, 69, 96, 0.5)',
+          fill: false,
         },
       ],
     };
 
     setChartData(data);
-  }, [transactionsFrom, transactionsTo]);
+  }, [transactions]);
 
-  const options = {
+  if (!chartData || Object.keys(chartData).length === 0) {
+    return <div>No transaction data available</div>;
+  }
+
+  const options: ChartOptions<"line"> = {
     responsive: true,
     plugins: {
       legend: {
         display: true,
         labels: {
-          color: "white",
+          color: 'white', 
         },
       },
       title: {
         display: true,
-        text: "Cumulative Transaction Amounts",
-        color: "white",
+        text: 'Transaction History',
+        color: 'white', 
       },
     },
     scales: {
       x: {
+        type: 'category',
         ticks: {
-          color: "white",
-        },
+          autoSkip: true,
+          maxTicksLimit: 20
+        }
       },
       y: {
+        beginAtZero: true,
         ticks: {
-          color: "white",
-          beginAtZero: true,
-        },
+          color: 'white',
+        }
       },
-    },
+    }
   };
 
   return (
