@@ -163,6 +163,17 @@ function Purchasing() {
                         {activeTab === 'buy' ? (
                             <>
                                 <div className={styles.card}>
+                                    <div className={styles.balance}>
+                                        Available balance
+                                        <span className={styles.balanceAmount}>{astroTokens} AST</span>
+                                        <div className={styles.dropdownWrapper}>
+                                            <span className={styles.circle}></span>
+                                            <select className={styles.dropdown}>
+                                                <option>AST</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <hr className={styles.hrAfterBalance} />
                                     <div className={styles.row}>
                                         <span>I want to buy</span>
                                         <input
