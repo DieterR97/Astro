@@ -10,7 +10,7 @@
       <a href="https://github.com/DieterR97/Astro"><strong>Explore the docs »</strong></a>
    <br />
    <br />
-   <a href="">View Demo</a>
+    <a href="https://drive.google.com/file/d/1v8MVrl1g98yQJLvkuEm_BxsAA0NvnWFn/view?usp=sharing">View Demo</a>
     ·
     <a href="https://github.com/DieterR97/Astro/issues">Report Bug</a>
     ·
@@ -115,7 +115,7 @@ The account holders user should be able to view and edit their bank account info
 ![Pjrchasings](react-app/src/assets/Purchasing_Currency.jpg)
 ### Purchasing
 
-??.
+Users should be able to purchase one currency. Users should be able to display current exchange rates of the available currency and confirm the purchase and update the user's balance accordingly.
 
 ![Transactions](react-app/src/assets/Transactions.jpg)
 ### Transactions
@@ -188,7 +188,7 @@ The `Development Process` is the technical implementations and functionality don
 
 To see a run through of the application, click below:
 
-[View Demonstration]()
+[View Demonstration](https://drive.google.com/file/d/1v8MVrl1g98yQJLvkuEm_BxsAA0NvnWFn/view?usp=sharing)
 
 <!-- CONTRIBUTING -->
 ## Contributing
